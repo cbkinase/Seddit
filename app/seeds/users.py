@@ -11,10 +11,20 @@ def seed_users():
     bobbie = User(
         username='bobbie', email='bobbie@aa.io', password='password')
 
+    dummy_users = User.create(10)
+
     db.session.add(demo)
     db.session.add(marnie)
     db.session.add(bobbie)
+    for user in dummy_users:
+        db.session.add(user)
     db.session.commit()
+
+    dummy_users.append(demo)
+    dummy_users.append(bobbie)
+    dummy_users.append(marnie)
+
+    return dummy_users
 
 
 # Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't
@@ -28,5 +38,5 @@ def undo_users():
         db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM users"))
-        
+
     db.session.commit()
