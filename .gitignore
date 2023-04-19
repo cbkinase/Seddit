@@ -1,3 +1,8 @@
+.DS_Store
+.vscode/
+*Zone.Identifier
+*.db
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
