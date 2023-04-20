@@ -83,3 +83,51 @@ acronym {
 }
 
 /* CSS reset */
+
+/* Login/Signup Styling */
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 20px 15px 20px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-item {
+    padding: 5px 0 5px 0;
+}
+
+#submit {
+    margin-top: 10px;
+    height: 30px;
+}
+
+#submit,
+#demo,
+.input-field {
+    width: 300px;
+}
+
+#demo {
+    margin: 20px 0 10px 0;
+    height: 30px;
+}
+
+.errors {
+    color: red;
+    padding: 5px 0 5px 0;
+    font-size: 14px;
+}
+
+#title {
+    padding-bottom: 5px;
+    font-size: 18px;
+}
