@@ -25,17 +25,17 @@ function App() {
       {isLoaded && subreddits && (
         <Switch>
           <Route exact path="/">
-          <br></br>
+            <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap", margin: "20px 20px"}}>
             {Object.values(subreddits).map(subreddit =>
-            <>
+            <div className="box-dec-1" style={{flexBasis: "30%"}}>
             <br></br>
             <img style={{width: "100px", height: "100px"}} src={subreddit.main_pic}></img>
             <h1 style={{fontWeight: "bold", fontSize: "28px"}}>{subreddit.name}</h1>
             <h2>{subreddit.about}</h2>
             <h3>Category: {subreddit.category}</h3>
-            <br></br>
-            </>
+            </div>
             )}
+            </div>
           </Route>
           <Route path="/login" >
             <LoginFormPage />
