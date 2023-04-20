@@ -40,7 +40,7 @@ class Subreddit(db.Model):
         fake = Faker()
         return [cls(owner = choice(users),
                     name=fake.sentence(nb_words=1),
-                    about=fake.sentence(nb_words=20),
+                    about=fake.sentence(nb_words=randint(20, 200)),
                     main_pic = fake.image(size=(32, 32), image_format="png"),
                     background_pic = fake.image(size=(1000, 200), image_format="png"),
                     category = randint(1, len(categories.keys())))
