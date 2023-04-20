@@ -4,6 +4,7 @@ import enum
 from random import choice, randint
 from faker import Faker
 from app.models.categories import categories
+import json
 
 
 # class Categories(enum.Enum):
@@ -23,7 +24,7 @@ class Subreddit(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False, unique=True)
     about = db.Column(db.Text)
     main_pic = db.Column(db.String)
     background_pic = db.Column(db.String)
@@ -52,8 +53,8 @@ class Subreddit(db.Model):
         'owner_id': self.owner_id,
         'name': self.name,
         'about': self.about,
-        'main_pic': self.main_pic,
-        'background_pic': self.background_pic,
+        'main_pic': str(self.main_pic),
+        'background_pic': str(self.background_pic),
         'category': categories[self.category],
         'created_at': self.created_at
         }
