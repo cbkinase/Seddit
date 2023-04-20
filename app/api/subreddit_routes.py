@@ -32,7 +32,7 @@ def get_subreddit_by_pk(subreddit_id):
     subreddit = Subreddit.query.get(subreddit_id)
 
     if not subreddit:
-        return {"errors": ["Subreddit not found"]}
+        return {"errors": ["Subreddit not found"]}, 404
 
     return subreddit.to_dict()
 
@@ -45,7 +45,7 @@ def get_subreddit_by_name(subreddit_name):
     subreddit = Subreddit.query.filter(Subreddit.name == subreddit_name).first()
 
     if not subreddit:
-        return {"errors": ["Subreddit not found"]}
+        return {"errors": ["Subreddit not found"]}, 404
 
     return subreddit.to_dict()
 
@@ -58,9 +58,14 @@ def create_subreddit():
     """
     owner = User.query.get(current_user.id)
     new_subreddit = Subreddit(owner = owner, **request.get_json())
-    db.session.add(new_subreddit)
-    db.session.commit()
-    return new_subreddit.to_dict()
+
+    try:
+        db.session.add(new_subreddit)
+        db.session.commit()
+        return new_subreddit.to_dict()
+
+    except:
+        return {"errors": ["That subreddit name is already taken"]}
 
 
 
@@ -73,7 +78,7 @@ def edit_subreddit(subreddit_id):
     subreddit = Subreddit.query.get(subreddit_id)
 
     if not subreddit:
-        return {"errors": ["Subreddit not found"]}
+        return {"errors": ["Subreddit not found"]}, 404
 
     if current_user.id != subreddit.owner_id:
         return {"errors": ["Attempted editor is not owner"]}, 403
@@ -88,16 +93,20 @@ def edit_subreddit(subreddit_id):
 @subreddit_routes.route("/<int:subreddit_id>", methods=["DELETE"])
 @login_required
 def delete_subreddit(subreddit_id):
+    """
+    Deletes a subreddit by id, allowing if you are the Owner.
+    """
     subreddit = Subreddit.query.get(subreddit_id)
 
     if not subreddit:
-        return {"errors": ["Subreddit not found"]}
+        return {"errors": ["Subreddit not found"]}, 404
 
     if current_user.id != subreddit.owner_id:
         return {"errors": ["Attempted deleter is not owner"]}, 403
 
     db.session.delete(subreddit)
     db.session.commit()
+
     return {
         "success": "Successfully deleted"
      }
