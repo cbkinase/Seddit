@@ -132,9 +132,9 @@ acronym {
     font-size: 18px;
 }
 
-
 .box-dec-1 {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     background-color: white;
     margin: 8px 8px;
     padding: 18px 18px;
@@ -142,79 +142,77 @@ acronym {
 
 /* CSS */
 .button-main {
-  background: #FF4742;
-  border: 1px solid #FF4742;
-  border-radius: .5rem;
-  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  cursor: pointer;
-  /* display: inline-block; */
-  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  line-height: 16px;
-  min-height: 40px;
-  outline: 0;
-  margin: 10px;
-  padding: 15px 30px;
-  text-align: center;
-  text-rendering: geometricprecision;
-  text-transform: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
+    background: #ff4742;
+    border: 1px solid #ff4742;
+    border-radius: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    /* display: inline-block; */
+    font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    margin: 10px;
+    padding: 15px 30px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
 }
 
 .button-main:hover,
 .button-main:active {
-  background-color: initial;
-  background-position: 0 0;
-  color: #FF4742;
+    background-color: initial;
+    background-position: 0 0;
+    color: #ff4742;
 }
 
 .button-main:active {
-  opacity: .5;
+    opacity: 0.5;
 }
-
 
 /* CSS */
 .button-alt {
-  background-color: #FFFFFF;
-  border: 1px solid rgb(209,213,219);
-  border-radius: .5rem;
-  box-sizing: border-box;
-  color: #111827;
-  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  line-height: 16px;
-  margin: 10px;
-  padding: 15px 30px;
-  text-align: center;
-  text-decoration: none #D1D5DB solid;
-  text-decoration-thickness: auto;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+    background-color: #ffffff;
+    border: 1px solid rgb(209, 213, 219);
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    color: #111827;
+    font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 16px;
+    margin: 10px;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none #d1d5db solid;
+    text-decoration-thickness: auto;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
 .button-alt:hover {
-  background-color: rgb(249,250,251);
+    background-color: rgb(249, 250, 251);
 }
 
 .button-alt:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
 }
 
 .button-alt:focus-visible {
-  box-shadow: none;
+    box-shadow: none;
 }
-
 
 #nav-container {
     margin: 0px 20px 0px 30px;
@@ -234,6 +232,64 @@ acronym {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 5px
+    padding-top: 5px;
+}
 
+.subreddit-short-main-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 20px 20px;
+    background-color: #dae0e6;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20vw;
+    margin-right: 20vw;
+}
+
+.subreddit-short-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 24px;
+    padding: 10px 0px 10px 0px;
+}
+
+.card-info {
+    flex-grow: 1;
+    padding: 15px 0px 15px;
+}
+
+.card-category {
+    align-self: flex-end;
+}
+
+.subreddit-preview-img {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.subreddit-title-preview {
+    display: flex;
+    align-items: center;
+}
+
+.subreddit-preview-creator {
+    color: grey;
+    font-size: 16px;
+}
+
+@media screen and (max-width: 1000px) {
+    .subreddit-short-main-container {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
 }

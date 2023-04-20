@@ -36,50 +36,26 @@ function App() {
             {isLoaded && subreddits && (
                 <Switch>
                     <Route exact path="/">
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                flexWrap: "wrap",
-                                padding: "20px 20px",
-                                backgroundColor: "#DAE0E6",
-                                marginLeft: "20vw",
-                                marginRight: "20vw",
-                            }}
-                        >
+                        <div className="subreddit-short-main-container">
                             {Object.values(subreddits).map((subreddit) => (
-                                <div
-                                    className="box-dec-1"
-                                    style={{
-                                        width: "100%",
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                    }}
-                                >
-                                    <br></br>
-                                    <img
-                                        style={{
-                                            width: "100px",
-                                            height: "100px",
-                                        }}
-                                        src={subreddit.main_pic}
-                                    ></img>
-                                    <h1
-                                        style={{
-                                            fontWeight: "bold",
-                                            fontSize: "28px",
-                                            padding: "10px 0px 10px 0px",
-                                        }}
-                                    >
-                                        {subreddit.name}
-                                    </h1>
-                                    <h2 style={{ flexGrow: "1" }}>
+                                <div className="box-dec-1 subreddit-short-container">
+                                    <span className="subreddit-title-preview">
+                                        <img
+                                            className="subreddit-preview-img"
+                                            src={subreddit.main_pic}
+                                        ></img>
+                                        <h1 className="card-title">
+                                            r/{subreddit.name}{" "}
+                                            <span className="subreddit-preview-creator">
+                                                • created by{" "}
+                                                {subreddit.owner_info.username}
+                                            </span>
+                                        </h1>
+                                    </span>
+                                    <h2 className="card-info">
                                         {ellipsisIfLong(subreddit.about)}
                                     </h2>
-                                    <br></br>
-                                    <h3 style={{ alignSelf: "flex-end" }}>
+                                    <h3 className="card-category">
                                         Category: {subreddit.category}
                                     </h3>
                                 </div>
