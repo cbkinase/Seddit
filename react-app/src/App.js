@@ -29,7 +29,8 @@ function App() {
             {Object.values(subreddits).map(subreddit =>
             <>
             <br></br>
-            <h1>{subreddit.name}</h1>
+            <img style={{width: "100px", height: "100px"}} src={subreddit.main_pic}></img>
+            <h1 style={{fontWeight: "bold", fontSize: "28px"}}>{subreddit.name}</h1>
             <h2>{subreddit.about}</h2>
             <h3>Category: {subreddit.category}</h3>
             <br></br>
