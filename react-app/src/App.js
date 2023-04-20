@@ -25,9 +25,9 @@ function App() {
       {isLoaded && subreddits && (
         <Switch>
           <Route exact path="/">
-            <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap", margin: "20px 20px"}}>
+            <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap", padding: "20px 20px", backgroundColor: "#DAE0E6", marginLeft: "20vw", marginRight: "20vw"}}>
             {Object.values(subreddits).map(subreddit =>
-            <div className="box-dec-1" style={{flexBasis: "30%", display: "flex", flexDirection: "column", alignItems: "center"}}>
+            <div className="box-dec-1" style={{flexGrow: "0.33", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
             <br></br>
             <img style={{width: "100px", height: "100px"}} src={subreddit.main_pic}></img>
             <h1 style={{fontWeight: "bold", fontSize: "28px", padding: "10px 0px 10px 0px"}}>{subreddit.name}</h1>
