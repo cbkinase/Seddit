@@ -8,7 +8,7 @@ def seed_subreddits(users):
 
     for subreddit in dummy_subreddits:
         db.session.add(subreddit)
-
+        subreddit.subscribers.append(subreddit.owner)
     db.session.commit()
 
     return dummy_subreddits
