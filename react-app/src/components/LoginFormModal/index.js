@@ -35,18 +35,16 @@ function LoginFormModal() {
         e.preventDefault();
         setErrors([]);
         const data = await dispatch(login(credential, password ))
-        if (data) setErrors(data)
-        else closeModal()
+        if (data) setErrors(data);
+        else closeModal();
     };
 
     const handleDemoLogin = async (e) => {
         e.preventDefault();
-        await dispatch(login("demo@aa.io", "password"))
-            .then(closeModal)
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(Object.values(data.errors));
-            });
+        const data = await dispatch(login("demo@aa.io", "password"));
+        if (data) setErrors(data);
+        else closeModal();
+
     };
 
     return (
