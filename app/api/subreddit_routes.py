@@ -110,3 +110,53 @@ def delete_subreddit(subreddit_id):
     return {
         "success": "Successfully deleted"
      }
+
+
+@subreddit_routes.route("/<int:subreddit_id>/subscribers", methods=["POST"])
+@login_required
+def add_subscriber(subreddit_id):
+    """
+    Adds current user as a subscriber to a given subreddit
+    """
+    subreddit = Subreddit.query.get(subreddit_id)
+    user = User.query.get(current_user.id)
+
+    if not subreddit or not user:
+        return {"errors": ["Resource not found"]}, 404
+
+    try:
+        subreddit.subscribers.append(user)
+        db.session.commit()
+        return {"success": f"Successfully subscribed {user.username} to {subreddit.name}"}
+    except:
+        return {"errors": ["Something went wrong..."]}, 500
+
+
+@subreddit_routes.route("/<int:subreddit_id>/subscribers/<int:subscriber_id>", methods=["DELETE"])
+@login_required
+def remove_subscriber(subreddit_id, subscriber_id):
+    subreddit = Subreddit.query.get(subreddit_id)
+    user = User.query.get(subscriber_id)
+
+    if not subreddit or not user:
+        return {"errors": ["Resource not found"]}, 404
+
+    if (current_user.id != subreddit.owner_id) and (user.id != subscriber_id):
+        return {"errors": ["Not authorized to perform this action"]}, 403
+
+    try:
+        subreddit.subscribers.remove(user)
+        db.session.commit()
+        return {"success": f"Successfully unsubscribed {user.username} from {subreddit.name}"}
+    except:
+        return {"errors": ["Something went wrong... user may not be subscriber!"]}, 500
+
+
+@subreddit_routes.route("/<int:subreddit_id>/subscribers")
+def get_subreddit_subscribers(subreddit_id):
+    subreddit = Subreddit.query.get(subreddit_id)
+
+    if not subreddit:
+        return {"errors": ["Subreddit not found"]}, 404
+
+    return {"Subscribers": {subscriber.id : subscriber.to_dict() for subscriber in subreddit.subscribers}}
