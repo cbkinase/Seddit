@@ -8,46 +8,94 @@ import Navigation from "./components/Navigation";
 import { getSubreddits } from "./store/subreddits";
 
 function App() {
-  const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
-  useEffect(() => {
-    dispatch(authenticate()).then(() => setIsLoaded(true));
-    dispatch(getSubreddits())
-  }, [dispatch]);
+    const dispatch = useDispatch();
+    const [isLoaded, setIsLoaded] = useState(false);
+    useEffect(() => {
+        dispatch(authenticate()).then(() => setIsLoaded(true));
+        dispatch(getSubreddits());
+    }, [dispatch]);
 
-  const subreddits = useSelector(state => state.subreddits.Subreddits)
+    const subreddits = useSelector((state) => state.subreddits.Subreddits);
 
-  const baseImgUrl = "data:image/png;base64, "
+    const ellipsisIfLong = (paragraph) => {
+        let wordArr = paragraph.split(" ");
+        let newStr = "";
+        if (wordArr.length > 20) {
+            for (let i = 0; i < 20; i++) {
+                newStr += wordArr[i] + " ";
+            }
+            newStr += "...";
+            return newStr;
+        }
+        return paragraph;
+    };
 
-  return (
-    <>
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && subreddits && (
-        <Switch>
-          <Route exact path="/">
-            <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap", padding: "20px 20px", backgroundColor: "#DAE0E6", marginLeft: "20vw", marginRight: "20vw"}}>
-            {Object.values(subreddits).map(subreddit =>
-            <div className="box-dec-1" style={{flexGrow: "0.33", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
-            <br></br>
-            <img style={{width: "100px", height: "100px"}} src={subreddit.main_pic}></img>
-            <h1 style={{fontWeight: "bold", fontSize: "28px", padding: "10px 0px 10px 0px"}}>{subreddit.name}</h1>
-            <h2 style={{flexGrow: "1"}}>{subreddit.about}</h2>
-            <br></br>
-            <h3 style={{alignSelf: "flex-end"}}>Category: {subreddit.category}</h3>
-            </div>
+    return (
+        <>
+            <Navigation isLoaded={isLoaded} />
+            {isLoaded && subreddits && (
+                <Switch>
+                    <Route exact path="/">
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                flexWrap: "wrap",
+                                padding: "20px 20px",
+                                backgroundColor: "#DAE0E6",
+                                marginLeft: "20vw",
+                                marginRight: "20vw",
+                            }}
+                        >
+                            {Object.values(subreddits).map((subreddit) => (
+                                <div
+                                    className="box-dec-1"
+                                    style={{
+                                        width: "100%",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                    }}
+                                >
+                                    <br></br>
+                                    <img
+                                        style={{
+                                            width: "100px",
+                                            height: "100px",
+                                        }}
+                                        src={subreddit.main_pic}
+                                    ></img>
+                                    <h1
+                                        style={{
+                                            fontWeight: "bold",
+                                            fontSize: "28px",
+                                            padding: "10px 0px 10px 0px",
+                                        }}
+                                    >
+                                        {subreddit.name}
+                                    </h1>
+                                    <h2 style={{ flexGrow: "1" }}>
+                                        {ellipsisIfLong(subreddit.about)}
+                                    </h2>
+                                    <br></br>
+                                    <h3 style={{ alignSelf: "flex-end" }}>
+                                        Category: {subreddit.category}
+                                    </h3>
+                                </div>
+                            ))}
+                        </div>
+                    </Route>
+                    <Route path="/login">
+                        <LoginFormPage />
+                    </Route>
+                    <Route path="/signup">
+                        <SignupFormPage />
+                    </Route>
+                </Switch>
             )}
-            </div>
-          </Route>
-          <Route path="/login" >
-            <LoginFormPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-        </Switch>
-      )}
-    </>
-  );
+        </>
+    );
 }
 
 export default App;
