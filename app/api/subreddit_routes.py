@@ -46,6 +46,9 @@ def get_subreddit_by_name(subreddit_name):
 @subreddit_routes.route("/", methods=["POST"])
 @login_required
 def create_subreddit():
+    """
+    Route for creating a subreddit.
+    """
     owner = User.query.get(current_user.id)
     new_subreddit = Subreddit(owner = owner, **request.get_json())
     db.session.add(new_subreddit)
