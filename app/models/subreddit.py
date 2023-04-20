@@ -5,6 +5,7 @@ from random import choice, randint
 from faker import Faker
 from app.models.categories import categories
 import json
+from .user import User
 
 
 # class Categories(enum.Enum):
@@ -51,6 +52,7 @@ class Subreddit(db.Model):
 
 
     def to_dict(self):
+        subreddit_owner = User.query.get(self.owner_id)
         return {
         'id': self.id,
         'owner_id': self.owner_id,
@@ -59,5 +61,6 @@ class Subreddit(db.Model):
         'main_pic': str(self.main_pic),
         'background_pic': str(self.background_pic),
         'category': categories[self.category],
-        'created_at': self.created_at
+        'created_at': self.created_at,
+        'owner_info': subreddit_owner.to_dict()
         }

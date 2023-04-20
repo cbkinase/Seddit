@@ -6,6 +6,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import { getSubreddits } from "./store/subreddits";
+import moment from "moment";
 
 function App() {
     const dispatch = useDispatch();
@@ -35,7 +36,7 @@ function App() {
             <Navigation isLoaded={isLoaded} />
             {isLoaded && subreddits && (
                 <Switch>
-                    <Route exact path="/">
+                    <Route exact path="/explore">
                         <div className="subreddit-short-main-container">
                             {Object.values(subreddits).map((subreddit) => (
                                 <div className="box-dec-1 subreddit-short-container">
@@ -48,7 +49,12 @@ function App() {
                                             r/{subreddit.name}{" "}
                                             <span className="subreddit-preview-creator">
                                                 • created by{" "}
-                                                {subreddit.owner_info.username}
+                                                {subreddit.owner_info.username}{" "}
+                                                {moment(
+                                                    Date.parse(
+                                                        subreddit.created_at
+                                                    )
+                                                ).fromNow()}
                                             </span>
                                         </h1>
                                     </span>
