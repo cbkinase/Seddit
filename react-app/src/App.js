@@ -27,12 +27,13 @@ function App() {
           <Route exact path="/">
             <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap", margin: "20px 20px"}}>
             {Object.values(subreddits).map(subreddit =>
-            <div className="box-dec-1" style={{flexBasis: "30%"}}>
+            <div className="box-dec-1" style={{flexBasis: "30%", display: "flex", flexDirection: "column", alignItems: "center"}}>
             <br></br>
             <img style={{width: "100px", height: "100px"}} src={subreddit.main_pic}></img>
             <h1 style={{fontWeight: "bold", fontSize: "28px"}}>{subreddit.name}</h1>
-            <h2>{subreddit.about}</h2>
-            <h3>Category: {subreddit.category}</h3>
+            <h2 style={{flexGrow: "1"}}>{subreddit.about}</h2>
+            <br></br>
+            <h3 style={{alignSelf: "flex-end"}}>Category: {subreddit.category}</h3>
             </div>
             )}
             </div>
