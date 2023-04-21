@@ -9,7 +9,7 @@ export default function AbridgedSubredditDisplay({ user }) {
 
     useEffect(() => {
         dispatch(getSubreddits());
-    });
+    }, []);
 
     const shortenWord = (word, long = 20) => {
         if (!word) return null;

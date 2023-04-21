@@ -41,7 +41,7 @@ class Subreddit(db.Model):
         fake = Faker()
         filtered_cat_pics = [pic['url'] for pic in cat_info if pic['url'].endswith("jpg")]
         return [cls(owner = choice(users),
-                    name=fake.word(),
+                    name=fake.unique.word(),
                     about=fake.sentence(nb_words=randint(20, 200)),
                     main_pic = choice(filtered_cat_pics),
                     background_pic = choice(filtered_cat_pics),
@@ -65,5 +65,6 @@ class Subreddit(db.Model):
         'category': category,
         'created_at': self.created_at,
         'owner_info': subreddit_owner.to_dict(),
-        'subscribers': {sub.id : sub.to_dict() for sub in self.subscribers}
+        'subscribers': {sub.id : sub.to_dict() for sub in self.subscribers},
+        "numSubscribers": len(self.subscribers)
         }

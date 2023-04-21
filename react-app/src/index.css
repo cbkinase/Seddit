@@ -84,7 +84,6 @@ acronym {
 
 /* CSS reset */
 
-
 /* %%%%%%%%%% SCROLLBAR STYLING %%%%%%%%%%% */
 
 /* Works on Firefox */
@@ -217,7 +216,6 @@ acronym {
     outline: 1px solid black;
 }
 
-
 .button-main {
     background: #ff4742;
     border: 1px solid #ff4742;
@@ -267,7 +265,6 @@ acronym {
 .button-main:active {
     opacity: 0.5;
 }
-
 
 .button-alt {
     background-color: #ffffff;
@@ -510,7 +507,7 @@ acronym {
 .card-category {
     align-self: flex-end;
     font-size: 18px;
-    color: grey
+    color: grey;
 }
 
 .subreddit-preview-img {
@@ -551,7 +548,7 @@ acronym {
 
 .subreddit-title-nav {
     text-decoration: inherit;
-    color: inherit
+    color: inherit;
 }
 
 .subreddit-abridged-top {
@@ -577,7 +574,6 @@ acronym {
     height: "26px";
 }
 
-
 .modal {
     position: fixed;
     top: 50%;
@@ -592,49 +588,49 @@ acronym {
     max-width: 90%;
     padding: 24px;
     margin-left: 5px;
-  }
+}
 
-  .modal-header {
+.modal-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
     border-bottom: 1px solid #e6e6e6;
     padding-bottom: 20px;
-  }
+}
 
-  .modal-header h2 {
+.modal-header h2 {
     font-size: 24px;
     margin: 0;
     font-family: "Arial";
-  }
+}
 
-  .modal-close-btn {
+.modal-close-btn {
     background-color: transparent;
     border: none;
     color: #777;
     font-size: 24px;
     cursor: pointer;
-  }
+}
 
-  .modal-close-btn:hover {
+.modal-close-btn:hover {
     color: #000;
-  }
+}
 
-  .form-group {
+.form-group {
     margin-bottom: 20px;
-  }
+}
 
-  .create-comm-label {
+.create-comm-label {
     display: block;
     font-weight: 700;
     margin-bottom: 8px;
     font-family: "Arial";
-  }
+}
 
-  .create-comm-input,
-  .create-comm-input,
-  .create-comm-input {
+.create-comm-input,
+.create-comm-input,
+.create-comm-input {
     width: 97%;
     font-family: "Arial";
     padding: 8px;
@@ -644,28 +640,28 @@ acronym {
     color: #333;
     background-color: #f8f8f8;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  }
+}
 
-  .create-comm-input:focus,
-  .create-comm-input:focus,
-  .create-comm-input:focus {
+.create-comm-input:focus,
+.create-comm-input:focus,
+.create-comm-input:focus {
     outline: none;
     border-color: #80bdff;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-  }
+}
 
-  .create-comm-input option {
+.create-comm-input option {
     font-family: "Arial";
     color: #333;
-  }
+}
 
-  .form-actions {
+.form-actions {
     display: flex;
     justify-content: flex-end;
     margin-top: 24px;
-  }
+}
 
-  .btn-primary {
+.btn-primary {
     background-color: #0079d3;
     border: none;
     color: #fff;
@@ -677,13 +673,13 @@ acronym {
     cursor: pointer;
     margin-left: 8px;
     transition: background-color 0.15s ease-in-out;
-  }
+}
 
-  .btn-primary:hover {
+.btn-primary:hover {
     background-color: #006bb3;
-  }
+}
 
-  .btn-secondary {
+.btn-secondary {
     background-color: #f8f8f8;
     border: 1px solid #e6e6e6;
     color: #333;
@@ -693,21 +689,20 @@ acronym {
     font-family: "Arial";
     border-radius: 12px;
     cursor: pointer;
-    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    transition: background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out;
+}
 
-  }
-
-  .btn-secondary:hover {
+.btn-secondary:hover {
     background-color: #e6e6e6;
     border-color: #0079d3;
-  }
+}
 
-
-  #create-comm-btn {
+#create-comm-btn {
     margin-left: 10px;
-  }
+}
 
-  /* .modal input[type="submit"] {
+/* .modal input[type="submit"] {
     margin-top: 20px;
     padding: 10px;
     background-color: #0079d3;
@@ -721,10 +716,11 @@ acronym {
     background-color: #0064ad;
   } */
 
-
-
-
-
+.user-profile-edit-btn {
+    background: inherit;
+    border: none;
+    cursor: pointer;
+}
 
 @media screen and (max-width: 1000px) {
     .subreddit-short-main-container {
@@ -739,5 +735,4 @@ acronym {
     .card-info {
         width: 100%;
     }
-
 }

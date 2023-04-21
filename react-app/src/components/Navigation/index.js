@@ -8,6 +8,7 @@ import SignupFormModal from "../SignupFormModal";
 import OpenModalButton from "../OpenModalButton";
 import CreateCommunityModal from "../CreateCommunityModal";
 import { logout } from "../../store/session";
+import EditModal from "../EditUserInfoModal";
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector((state) => state.session.user);
@@ -115,9 +116,19 @@ function Navigation({ isLoaded }) {
                     </li>
                 )}
                 {isLoaded && sessionUser && onUserOwnPage(sessionUser) && (
-                    <button onClick={handleLogout} className="button-alt">
-                        Log out
-                    </button>
+                    <div>
+                        <OpenModalButton
+                            className="fa fa-cog user-profile-edit-btn"
+                            modalComponent={<EditModal user={sessionUser} />}
+                        />
+                        <button
+                            style={{ marginLeft: "10px" }}
+                            onClick={handleLogout}
+                            className="button-alt"
+                        >
+                            Log out
+                        </button>
+                    </div>
                 )}
                 {isLoaded && !sessionUser && (
                     <div>
