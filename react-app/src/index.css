@@ -213,6 +213,10 @@ acronym {
     padding: 18px 18px;
 }
 
+.box-dec-1:hover {
+    outline: 1px solid black;
+}
+
 
 .button-main {
     background: #ff4742;
