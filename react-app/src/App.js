@@ -17,6 +17,7 @@ function App() {
     }, [dispatch]);
 
     const subreddits = useSelector((state) => state.subreddits.Subreddits);
+    const user = useSelector((state) => state.session.user);
 
     const ellipsisIfLong = (paragraph) => {
         let wordArr = paragraph.split(" ");
@@ -31,6 +32,39 @@ function App() {
         return paragraph;
     };
 
+    const handleJoinCommunity = async (subredditId, userId) => {
+        const res = await fetch(`/api/s/${subredditId}/subscribers`, {
+            method: "POST",
+        });
+
+        const data = await res.json();
+        if (data.success) {
+            let btn = document.getElementById(
+                `subreddit-${subredditId}-button`
+            );
+            btn.classList = "act-subreddit-btn button-leave";
+            btn.innerText = "Joined";
+            btn.onclick = (e) => handleLeaveCommunity(subredditId, userId);
+        }
+    };
+
+    const handleLeaveCommunity = async (subredditId, userId) => {
+        const res = await fetch(`/api/s/${subredditId}/subscribers/${userId}`, {
+            method: "DELETE",
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            let btn = document.getElementById(
+                `subreddit-${subredditId}-button`
+            );
+            btn.classList = "act-subreddit-btn button-join";
+            btn.innerText = "Join Community";
+            btn.onclick = (e) => handleJoinCommunity(subredditId, userId);
+        }
+    };
+
     return (
         <>
             <Navigation isLoaded={isLoaded} />
@@ -40,24 +74,74 @@ function App() {
                         <div className="subreddit-short-main-container">
                             {Object.values(subreddits).map((subreddit) => (
                                 <div className="box-dec-1 subreddit-short-container">
-                                    <span className="subreddit-title-preview">
-                                        <img
-                                            className="subreddit-preview-img"
-                                            src={subreddit.main_pic}
-                                        ></img>
-                                        <h1 className="card-title">
-                                            r/{subreddit.name}{" "}
+                                    <span className="subreddit-abridged-top">
+                                        <span className="subreddit-title-preview">
+                                            <img
+                                                className="subreddit-preview-img"
+                                                src={subreddit.main_pic}
+                                            ></img>
+                                            <h1 className="card-title">
+                                                r/{subreddit.name}{" "}
+                                            </h1>
                                             <span className="subreddit-preview-creator">
+                                                {" "}
                                                 • created by{" "}
-                                                {subreddit.owner_info.username}{" "}
+                                                {
+                                                    subreddit.owner_info
+                                                        .username
+                                                }{" "}
                                                 {moment(
                                                     Date.parse(
                                                         subreddit.created_at
                                                     )
                                                 ).fromNow()}
                                             </span>
-                                        </h1>
+                                        </span>
                                     </span>
+                                    {user &&
+                                        !Object.keys(
+                                            subreddit.subscribers
+                                        ).includes(user.id.toString()) && (
+                                            <button
+                                                id={`subreddit-${subreddit.id}-button`}
+                                                onClick={(e) =>
+                                                    handleJoinCommunity(
+                                                        subreddit.id,
+                                                        user.id
+                                                    )
+                                                }
+                                                className="act-subreddit-btn button-join"
+                                            >
+                                                Join Community
+                                            </button>
+                                        )}
+
+                                    {user &&
+                                        Object.keys(
+                                            subreddit.subscribers
+                                        ).includes(user.id.toString()) && (
+                                            <button
+                                                onClick={(e) =>
+                                                    handleLeaveCommunity(
+                                                        subreddit.id,
+                                                        user.id
+                                                    )
+                                                }
+                                                id={`subreddit-${subreddit.id}-button`}
+                                                onMouseOver={(e) =>
+                                                    (e.target.innerText =
+                                                        "Leave")
+                                                }
+                                                onMouseOut={(e) =>
+                                                    (e.target.innerText =
+                                                        "Joined")
+                                                }
+                                                className="act-subreddit-btn button-leave"
+                                            >
+                                                Joined
+                                            </button>
+                                        )}
+
                                     <h2 className="card-info">
                                         {ellipsisIfLong(subreddit.about)}
                                     </h2>

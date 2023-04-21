@@ -62,5 +62,6 @@ class Subreddit(db.Model):
         'background_pic': str(self.background_pic),
         'category': categories[self.category],
         'created_at': self.created_at,
-        'owner_info': subreddit_owner.to_dict()
+        'owner_info': subreddit_owner.to_dict(),
+        'subscribers': {sub.id : sub.to_dict() for sub in self.subscribers}
         }
