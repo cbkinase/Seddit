@@ -6,6 +6,7 @@ import './Navigation.css';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import OpenModalButton from '../OpenModalButton';
+import CreateCommunityModal from '../CreateCommunityModal';
 
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
@@ -51,6 +52,18 @@ const redditLogoSvg = <svg height="35px" xmlns="http://www.w3.org/2000/svg" view
 					<div>{redditNameSvg}</div>
 					</div></NavLink>
 			</li>
+			<div>
+				<NavLink exact to="/explore">
+					<button className='button-join'>Explore Communities</button></NavLink>
+				{isLoaded && sessionUser &&
+				<OpenModalButton
+        buttonText="Create a Community"
+        className="button-leave"
+        modalComponent={<CreateCommunityModal />}
+
+         />
+				 }
+			</div>
 			{isLoaded && sessionUser ? (
 				<li>
 					<ProfileButton user={sessionUser} />

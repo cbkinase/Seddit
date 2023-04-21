@@ -35,13 +35,33 @@ export const getSubreddits = () => async dispatch => {
     }
 }
 
+export const createSubreddit = (content) => async dispatch => {
+    const res = await fetch ("/api/s/", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(content)
+    })
 
-const initialState = {subreddits: {}};
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(addSubreddit(data))
+        return data;
+    }
+    else {
+        return {errors: "Name already taken"}
+    }
+}
+
+
+const initialState = {Subreddits: {}};
 
 export default function reducer(state = initialState, action) {
     switch(action.type) {
         case LOAD_SUBREDDITS: {
             return action.subreddits
+        }
+        case ADD_SUBREDDIT: {
+            return {...state, Subreddits: {...state.Subreddits, [action.subreddit.id]: action.subreddit}}
         }
         default:
             return state;

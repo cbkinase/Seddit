@@ -19,18 +19,25 @@ function App() {
     const subreddits = useSelector((state) => state.subreddits.Subreddits);
     const user = useSelector((state) => state.session.user);
 
-    const ellipsisIfLong = (paragraph) => {
+    const ellipsisIfLong = (paragraph, long=20) => {
+        if (!paragraph) return null;
         let wordArr = paragraph.split(" ");
         let newStr = "";
-        if (wordArr.length > 20) {
-            for (let i = 0; i < 20; i++) {
-                newStr += wordArr[i] + " ";
+        if (wordArr.length > long) {
+            for (let i = 0; i < long; i++) {
+                newStr += wordArr[i];
+                if (i !== long - 1) newStr += " "
             }
-            newStr += "...";
+
+                newStr += "...";
             return newStr;
         }
         return paragraph;
     };
+
+    const capitalizeFirstLetter = (word) => {
+        return word[0].toUpperCase() + word.slice(1)
+    }
 
     const handleJoinCommunity = async (subredditId, userId, subredditName) => {
         const res = await fetch(`/api/s/${subredditId}/subscribers`, {
@@ -42,12 +49,12 @@ function App() {
             let btn = document.getElementById(
                 `subreddit-${subredditId}-button`
             );
-            btn.classList = "act-subreddit-btn button-leave";
+            btn.classList = "act-subreddit-btn button-leave remove-bottom-margin";
             btn.innerText = "Joined";
             btn.onclick = (e) => alert(`Already joined r/${subredditName}!`);
             // btn.onclick = (e) => handleLeaveCommunity(subredditId, userId);
         } else {
-            alert("Please try again momentarily!");
+            // alert("Please try again momentarily!");
         }
     };
 
@@ -62,12 +69,12 @@ function App() {
             let btn = document.getElementById(
                 `subreddit-${subredditId}-button`
             );
-            btn.classList = "act-subreddit-btn button-join";
+            btn.classList = "act-subreddit-btn button-join remove-bottom-margin";
             btn.innerText = "Join Community";
             btn.onclick = (e) => alert(`Already left r/${subredditName}!`);
             // btn.onclick = (e) => handleJoinCommunity(subredditId, userId);
         } else {
-            alert("Please try again momentarily!");
+            // alert("Please try again momentarily!");
         }
     };
 
@@ -93,7 +100,7 @@ function App() {
                                                 {" "}
                                                 • created by{" "}
                                                 {
-                                                    subreddit.owner_info
+                                                    subreddit?.owner_info
                                                         .username
                                                 }{" "}
                                                 {moment(
@@ -118,7 +125,7 @@ function App() {
                                                         subreddit.name
                                                     )
                                                 }
-                                                className="act-subreddit-btn button-join"
+                                                className="act-subreddit-btn button-join remove-bottom-margin"
                                             >
                                                 Join Community
                                             </button>
@@ -137,7 +144,7 @@ function App() {
                                                     )
                                                 }
                                                 id={`subreddit-${subreddit.id}-button`}
-                                                className="act-subreddit-btn button-leave"
+                                                className="act-subreddit-btn button-leave remove-bottom-margin"
                                             >
                                                 Joined
                                             </button>
@@ -147,7 +154,7 @@ function App() {
                                         {ellipsisIfLong(subreddit.about)}
                                     </h2>
                                     <h3 className="card-category">
-                                        Category: {subreddit.category}
+                                        {subreddit.category && capitalizeFirstLetter(subreddit.category)}
                                     </h3>
                                 </div>
                             ))}

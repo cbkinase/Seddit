@@ -42,7 +42,7 @@ def get_subreddit_by_name(subreddit_name):
     """
     Return the information association with a particular subreddit by name.
     """
-    subreddit = Subreddit.query.filter(Subreddit.name == subreddit_name).first()
+    subreddit = Subreddit.query.filter(Subreddit.name.ilike(subreddit_name)).first()
 
     if not subreddit:
         return {"errors": ["Subreddit not found"]}, 404
@@ -61,11 +61,12 @@ def create_subreddit():
 
     try:
         db.session.add(new_subreddit)
+        new_subreddit.subscribers.append(owner)
         db.session.commit()
         return new_subreddit.to_dict()
 
     except:
-        return {"errors": ["That subreddit name is already taken"]}
+        return {"errors": ["That subreddit name is already taken"]}, 400
 
 
 

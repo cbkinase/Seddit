@@ -53,6 +53,8 @@ class Subreddit(db.Model):
 
     def to_dict(self):
         subreddit_owner = User.query.get(self.owner_id)
+        category = categories.get(self.category)
+        print(self.category)
         return {
         'id': self.id,
         'owner_id': self.owner_id,
@@ -60,7 +62,7 @@ class Subreddit(db.Model):
         'about': self.about,
         'main_pic': str(self.main_pic),
         'background_pic': str(self.background_pic),
-        'category': categories[self.category],
+        'category': category,
         'created_at': self.created_at,
         'owner_info': subreddit_owner.to_dict(),
         'subscribers': {sub.id : sub.to_dict() for sub in self.subscribers}
