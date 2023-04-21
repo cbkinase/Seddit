@@ -94,14 +94,18 @@ function App() {
                             {Object.values(subreddits).map((subreddit) => (
                                 <div className="box-dec-1 subreddit-short-container">
                                     <span className="subreddit-abridged-top">
+
                                         <span className="subreddit-title-preview">
+                                        <NavLink className="subreddit-title-nav" to={`/r/${subreddit.name}`}>
                                             <img
                                                 className="subreddit-preview-img"
                                                 src={subreddit.main_pic}
                                             ></img>
+                                            </NavLink>
+                                            <NavLink className="subreddit-title-nav" to={`/r/${subreddit.name}`}>
                                             <h1 className="card-title">
                                                 r/{subreddit.name}{" "}
-                                            </h1>
+                                            </h1></NavLink>
                                             <span className="subreddit-preview-creator">
                                                 {" "}
                                                 • created by{" "}
@@ -156,10 +160,10 @@ function App() {
                                                 Already Joined
                                             </button>
                                         )}
-
+                                    <NavLink className="subreddit-title-nav" to={`/r/${subreddit.name}`}>
                                     <h2 className="card-info">
                                         {ellipsisIfLong(subreddit.about)}
-                                    </h2>
+                                    </h2></NavLink>
                                     <h3 className="card-category">
                                         {subreddit.category && capitalizeFirstLetter(subreddit.category)}
                                     </h3>
