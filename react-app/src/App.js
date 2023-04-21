@@ -32,7 +32,7 @@ function App() {
         return paragraph;
     };
 
-    const handleJoinCommunity = async (subredditId, userId) => {
+    const handleJoinCommunity = async (subredditId, userId, subredditName) => {
         const res = await fetch(`/api/s/${subredditId}/subscribers`, {
             method: "POST",
         });
@@ -44,11 +44,12 @@ function App() {
             );
             btn.classList = "act-subreddit-btn button-leave";
             btn.innerText = "Joined";
-            btn.onclick = (e) => handleLeaveCommunity(subredditId, userId);
+            btn.onclick = (e) => alert(`Already joined r/${subredditName}!`);
+            // btn.onclick = (e) => handleLeaveCommunity(subredditId, userId);
         }
     };
 
-    const handleLeaveCommunity = async (subredditId, userId) => {
+    const handleLeaveCommunity = async (subredditId, userId, subredditName) => {
         const res = await fetch(`/api/s/${subredditId}/subscribers/${userId}`, {
             method: "DELETE",
         });
@@ -61,7 +62,8 @@ function App() {
             );
             btn.classList = "act-subreddit-btn button-join";
             btn.innerText = "Join Community";
-            btn.onclick = (e) => handleJoinCommunity(subredditId, userId);
+            btn.onclick = (e) => alert(`Already left r/${subredditName}!`);
+            // btn.onclick = (e) => handleJoinCommunity(subredditId, userId);
         }
     };
 
@@ -98,6 +100,7 @@ function App() {
                                             </span>
                                         </span>
                                     </span>
+                                    {/* User is not in community already */}
                                     {user &&
                                         !Object.keys(
                                             subreddit.subscribers
@@ -107,7 +110,8 @@ function App() {
                                                 onClick={(e) =>
                                                     handleJoinCommunity(
                                                         subreddit.id,
-                                                        user.id
+                                                        user.id,
+                                                        subreddit.name
                                                     )
                                                 }
                                                 className="act-subreddit-btn button-join"
@@ -115,7 +119,7 @@ function App() {
                                                 Join Community
                                             </button>
                                         )}
-
+                                    {/* User is in community already */}
                                     {user &&
                                         Object.keys(
                                             subreddit.subscribers
@@ -124,18 +128,11 @@ function App() {
                                                 onClick={(e) =>
                                                     handleLeaveCommunity(
                                                         subreddit.id,
-                                                        user.id
+                                                        user.id,
+                                                        subreddit.name
                                                     )
                                                 }
                                                 id={`subreddit-${subreddit.id}-button`}
-                                                onMouseOver={(e) =>
-                                                    (e.target.innerText =
-                                                        "Leave")
-                                                }
-                                                onMouseOut={(e) =>
-                                                    (e.target.innerText =
-                                                        "Joined")
-                                                }
                                                 className="act-subreddit-btn button-leave"
                                             >
                                                 Joined
