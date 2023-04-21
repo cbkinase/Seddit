@@ -500,6 +500,7 @@ acronym {
     font-size: 19px;
     align-self: flex-start;
     font-weight: bold;
+    width: 600px;
 }
 
 .card-category {
@@ -729,6 +730,10 @@ acronym {
     .act-subreddit-btn {
         position: revert;
         margin-bottom: 10px;
+    }
+
+    .card-info {
+        width: 100%;
     }
 
 }
