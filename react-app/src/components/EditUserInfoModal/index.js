@@ -4,7 +4,7 @@ import { useModal } from "../../context/Modal";
 function EditModal({ user }) {
     const [name, setName] = useState(user.username);
     const [avatar, setAvatar] = useState(user.avatar);
-    const [bio, setBio] = useState(user.bio);
+    const [bio, setBio] = useState(user.bio || "");
     const { closeModal } = useModal();
 
     const handleNameChange = (e) => {
