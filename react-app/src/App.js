@@ -46,6 +46,8 @@ function App() {
             btn.innerText = "Joined";
             btn.onclick = (e) => alert(`Already joined r/${subredditName}!`);
             // btn.onclick = (e) => handleLeaveCommunity(subredditId, userId);
+        } else {
+            alert("Please try again momentarily!");
         }
     };
 
@@ -64,6 +66,8 @@ function App() {
             btn.innerText = "Join Community";
             btn.onclick = (e) => alert(`Already left r/${subredditName}!`);
             // btn.onclick = (e) => handleJoinCommunity(subredditId, userId);
+        } else {
+            alert("Please try again momentarily!");
         }
     };
 
