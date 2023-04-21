@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, NavLink } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
@@ -18,6 +18,12 @@ function App() {
 
     const subreddits = useSelector((state) => state.subreddits.Subreddits);
     const user = useSelector((state) => state.session.user);
+
+    const shortenWord = (word, long=20) => {
+        if (!word) return null;
+        if (word.length < long) return word;
+        return word.slice(0,long) + "..."
+    }
 
     const ellipsisIfLong = (paragraph, long=20) => {
         if (!paragraph) return null;
@@ -70,7 +76,7 @@ function App() {
                 `subreddit-${subredditId}-button`
             );
             btn.classList = "act-subreddit-btn button-join remove-bottom-margin";
-            btn.innerText = "Join Community";
+            btn.innerText = "Left Community";
             btn.onclick = (e) => alert(`Already left r/${subredditName}!`);
             // btn.onclick = (e) => handleJoinCommunity(subredditId, userId);
         } else {
@@ -99,10 +105,11 @@ function App() {
                                             <span className="subreddit-preview-creator">
                                                 {" "}
                                                 • created by{" "}
+                                                <NavLink className="card-username-link" to={`/u/${subreddit.owner_info.username}`}>
                                                 {
-                                                    subreddit?.owner_info
-                                                        .username
-                                                }{" "}
+                                                    shortenWord(subreddit.owner_info
+                                                        .username, 10)
+                                                }</NavLink>{" "}
                                                 {moment(
                                                     Date.parse(
                                                         subreddit.created_at
@@ -146,7 +153,7 @@ function App() {
                                                 id={`subreddit-${subreddit.id}-button`}
                                                 className="act-subreddit-btn button-leave remove-bottom-margin"
                                             >
-                                                Joined
+                                                Already Joined
                                             </button>
                                         )}
 

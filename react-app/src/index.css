@@ -499,6 +499,7 @@ acronym {
     padding: 0px 0px 15px;
     font-size: 19px;
     align-self: flex-start;
+    font-weight: bold;
 }
 
 .card-category {
@@ -532,6 +533,15 @@ acronym {
     position: relative;
     left: 230px;
     bottom: 40px;
+}
+
+.card-username-link {
+    color: grey;
+    text-decoration: none;
+}
+
+.card-username-link:hover {
+    text-decoration: underline;
 }
 
 .subreddit-abridged-top {
@@ -713,6 +723,7 @@ acronym {
     }
     .act-subreddit-btn {
         position: revert;
+        margin-bottom: 10px;
     }
 
 }
