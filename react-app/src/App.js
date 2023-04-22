@@ -6,6 +6,10 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import AbridgedSubredditDisplay from "./components/AbridgedSubredditInfo";
+import ContentPolicy from "./components/ContentPolicy";
+import UserAgreement from "./components/UserAgreement";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import SubredditPage from "./components/SubredditPage";
 
 function App() {
     const dispatch = useDispatch();
@@ -29,6 +33,18 @@ function App() {
                     </Route>
                     <Route path="/signup">
                         <SignupFormPage />
+                    </Route>
+                    <Route path="/content-policy">
+                        <ContentPolicy />
+                    </Route>
+                    <Route path="/agreement">
+                        <UserAgreement />
+                    </Route>
+                    <Route path="/policy">
+                        <PrivacyPolicy />
+                    </Route>
+                    <Route path="/r/:subredditName">
+                        <SubredditPage />
                     </Route>
                 </Switch>
             )}

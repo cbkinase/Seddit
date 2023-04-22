@@ -77,7 +77,7 @@ function SignupFormModal() {
                     className="footer-signup-login"
                 >
                     <p className="toc-signup">
-                        By continuing, you hereby agree to our{" "}
+                        By continuing, you agree to our{" "}
                         <span
                             className="toc-links"
                             onClick={(e) => {
