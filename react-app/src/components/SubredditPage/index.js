@@ -10,6 +10,7 @@ export default function SubredditPage() {
   const history = useHistory();
   const [hasLoaded, setHasLoaded] = useState(false);
   let found = false;
+  const [numMembers, setNumMembers] = useState(null)
 
   const handleJoinCommunity = async (subredditId, userId, subredditName) => {
     const res = await fetch(`/api/s/${subredditId}/subscribers`, {
@@ -44,7 +45,7 @@ const handleLeaveCommunity = async (subredditId, userId, subredditName) => {
         );
         btn.classList =
             "button-join adjust-btn-height-subreddit";
-        btn.innerText = "Left Community";
+        btn.innerText = "Left";
         btn.onclick = (e) => alert(`Already left r/${subredditName}!`);
         // btn.onclick = (e) => handleJoinCommunity(subredditId, userId);
     } else {
@@ -75,15 +76,33 @@ const handleLeaveCommunity = async (subredditId, userId, subredditName) => {
 
   return found ?
   <div>
-    <div className='subreddit-top-banner'></div>
-    <div className='subreddit-title-banner'>
-        <div className='subreddit-title'>
-            <img className='subreddit-main-pic' src={subreddit.main_pic}></img>
-            <h1 className='subreddit-main-name'>
-                {capitalizeFirstLetter(subreddit.name)}
-            </h1>
-            {/* User is not in community already */}
-            {user &&
+  <header className="subreddit-header">
+        <div className="subreddit-logo">
+          <img style={{width: "57px", height: "57px", borderRadius: "50%"}} src={subreddit.main_pic} alt="Subreddit Logo" />
+          <h1 className="subreddit-name">r/{subreddit.name}</h1>
+        </div>
+        <nav className="subreddit-nav">
+          <ul>
+            <li><a href="#">Posts</a></li>
+            <li><button>Edit</button></li>
+            <li><button>Delete</button></li>
+          </ul>
+        </nav>
+      </header>
+<div>
+<section className="subreddit-info">
+<div className="subreddit-description">
+  <h2 className="subreddit-title">{capitalizeFirstLetter(subreddit.name)}</h2>
+  <p className="subreddit-description-text">{subreddit.about}</p>
+</div>
+<div className="subreddit-stats">
+  <div className="subreddit-stat">
+    <span className="subreddit-stat-number">{subreddit.numSubscribers}</span>
+    <span className="subreddit-stat-label">Members</span>
+  </div>
+  <div className="subreddit-stat">
+                {/* User is not in community already */}
+                {user &&
                 !Object.keys(subreddit.subscribers).includes(
                     user.id.toString()
                 ) && (
@@ -98,7 +117,7 @@ const handleLeaveCommunity = async (subredditId, userId, subredditName) => {
                         }
                         className="button-join adjust-btn-height-subreddit"
                     >
-                        Join Community
+                        Join
                     </button>
                 )}
             {/* User is in community already */}
@@ -122,18 +141,71 @@ const handleLeaveCommunity = async (subredditId, userId, subredditName) => {
                     </button>
                 )}
 
-        </div>
-        <div>
-        <p className='subreddit-name'>
-            r/{subreddit.name}
-        </p>
-        </div>
-    </div>
-
-    <div className='subreddit-remaining-info'>
-
-    </div>
-
   </div>
+</div>
+</section>
+</div>
+</div>
+//   <div>
+//     <div className='subreddit-top-banner'></div>
+//     <div className='subreddit-title-banner'>
+//         <div className='subreddit-title'>
+//             <img className='subreddit-main-pic' src={subreddit.main_pic}></img>
+//             <h1 className='subreddit-main-name'>
+//                 {capitalizeFirstLetter(subreddit.name)}
+//             </h1>
+            // {/* User is not in community already */}
+            // {user &&
+            //     !Object.keys(subreddit.subscribers).includes(
+            //         user.id.toString()
+            //     ) && (
+            //         <button
+            //             id={`subreddit-${subreddit.id}-button`}
+            //             onClick={(e) =>
+            //                 handleJoinCommunity(
+            //                     subreddit.id,
+            //                     user.id,
+            //                     subreddit.name
+            //                 )
+            //             }
+            //             className="button-join adjust-btn-height-subreddit"
+            //         >
+            //             Join Community
+            //         </button>
+            //     )}
+            // {/* User is in community already */}
+            // {user &&
+            //     Object.keys(subreddit.subscribers).includes(
+            //         user.id.toString()
+            //     ) && (
+            //         <button
+            //             onClick={(e) =>
+            //                 handleLeaveCommunity(
+            //                     subreddit.id,
+            //                     user.id,
+            //                     subreddit.name
+            //                 )
+            //             }
+            //             // style={{padding: "2px 20px 2px 20px", lineHeight: 1}}
+            //             id={`subreddit-${subreddit.id}-button`}
+            //             className="button-leave adjust-btn-height-subreddit"
+            //         >
+            //             Joined
+            //         </button>
+            //     )}
+
+//         </div>
+//         <div>
+//         <p className='subreddit-name'>
+//             r/{subreddit.name}
+//         </p>
+//         </div>
+//     </div>
+
+//     <div className='subreddit-remaining-info'>
+
+//     </div>
+
+//   </div>
   : <h1>Sorry, but this Community does not exist. Maybe you'd like to create it?</h1>
   }
