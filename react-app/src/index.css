@@ -718,12 +718,12 @@ acronym {
 
 #subreddit-search:hover {
     background-color: white;
-    outline: 1px solid blue;
+    outline: 1px solid #0a66c2;
 }
 
 #subreddit-search:focus {
     background-color: white;
-    outline: 1px solid blue;
+    outline: 1px solid #0a66c2;
 }
 
 .footer-signup-login {
