@@ -54,7 +54,6 @@ class Subreddit(db.Model):
     def to_dict(self):
         subreddit_owner = User.query.get(self.owner_id)
         category = categories.get(self.category)
-        print(self.category)
         return {
         'id': self.id,
         'owner_id': self.owner_id,

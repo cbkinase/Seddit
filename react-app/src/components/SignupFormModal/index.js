@@ -3,9 +3,13 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
 import "./SignupForm.css";
+import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
+import { useHistory } from "react-router-dom";
 
 function SignupFormModal() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -15,12 +19,7 @@ function SignupFormModal() {
     const [hasSubmitted, setHasSubmitted] = useState(false);
     const [submitDisabled, setSubmitDisabled] = useState(true);
     const [validationErrors, setValidationErrors] = useState({});
-    const signUpDependencies = [
-        email,
-        username,
-        password,
-        confirmPassword,
-    ];
+    const signUpDependencies = [email, username, password, confirmPassword];
     useEffect(() => {
         const errors = {};
         if (signUpDependencies.some((formInput) => formInput.length === 0))
@@ -55,13 +54,60 @@ function SignupFormModal() {
     };
 
     return (
-        <div className="login-container">
-            <h1 id="title">Sign Up</h1>
+        <div className="modal">
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                }}
+                className="modal-header"
+            >
+                <h1
+                    style={{
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        fontSize: "26px",
+                    }}
+                >
+                    Sign Up
+                </h1>
+                <div
+                    style={{ marginTop: "13px", marginBottom: "0px" }}
+                    className="footer-signup-login"
+                >
+                    <p className="toc-signup">
+                        By continuing, you hereby agree to our{" "}
+                        <span
+                            className="toc-links"
+                            onClick={(e) => {
+                                closeModal();
+                                history.push("/agreement");
+                            }}
+                        >
+                            User Agreement
+                        </span>{" "}
+                        and{" "}
+                        <span
+                            className="toc-links"
+                            onClick={(e) => {
+                                closeModal();
+                                history.push("/policy");
+                            }}
+                        >
+                            Privacy Policy
+                        </span>
+                        .
+                    </p>
+                </div>
+            </div>
+
             <form className="signup-form" onSubmit={handleSubmit}>
                 <div className="form-item">
                     <label>
                         <input
-                            className="input-field"
+                            style={{ width: "435px", borderRadius: "15px" }}
+                            className="create-comm-input"
                             placeholder="Email"
                             type="email"
                             value={email}
@@ -76,7 +122,8 @@ function SignupFormModal() {
                 <div className="form-item">
                     <label>
                         <input
-                            className="input-field"
+                            style={{ width: "435px", borderRadius: "15px" }}
+                            className="create-comm-input"
                             placeholder="Username - 4 characters minimum"
                             type="text"
                             value={username}
@@ -91,7 +138,8 @@ function SignupFormModal() {
                 <div className="form-item">
                     <label>
                         <input
-                            className="input-field"
+                            style={{ width: "435px", borderRadius: "15px" }}
+                            className="create-comm-input"
                             placeholder="Password - 6 characters minimum"
                             type="password"
                             value={password}
@@ -106,7 +154,8 @@ function SignupFormModal() {
                 <div className="form-item">
                     <label>
                         <input
-                            className="input-field"
+                            style={{ width: "435px", borderRadius: "15px" }}
+                            className="create-comm-input"
                             placeholder="Confirm Password"
                             type="password"
                             value={confirmPassword}
@@ -116,7 +165,15 @@ function SignupFormModal() {
                     </label>
                 </div>
                 <button
-                    className="decorated-button alt-color-button"
+                    className="button-main"
+                    style={{
+                        width: "100%",
+                        marginTop: "10px",
+                        marginLeft: "2px",
+                        borderRadius: "15px",
+                        height: "40px",
+                        marginBottom: "10px",
+                    }}
                     disabled={submitDisabled}
                     id="submit"
                     type="submit"
@@ -124,6 +181,16 @@ function SignupFormModal() {
                     Sign Up
                 </button>
             </form>
+            <div className="footer-signup-login">
+                <p>
+                    Already a redditor?
+                    <OpenModalButton
+                        buttonText="Log In"
+                        modalComponent={<LoginFormModal />}
+                        className="redirect-signup-login"
+                    />
+                </p>
+            </div>
         </div>
     );
 }

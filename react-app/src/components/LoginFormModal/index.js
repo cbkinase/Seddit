@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { login } from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { useHistory } from "react-router-dom";
 import "./LoginForm.css";
+import OpenModalButton from "../OpenModalButton";
+import SignupFormModal from "../SignupFormModal";
 
 function LoginFormModal() {
     const dispatch = useDispatch();
@@ -17,8 +18,7 @@ function LoginFormModal() {
     useEffect(() => {
         const errors = {};
         if (credential.length < 4) {
-            errors.credential =
-                "Email must be at least 4 characters";
+            errors.credential = "Email must be at least 4 characters";
         }
         if (password.length < 6) {
             errors.password = "Password must be at least 6 characters";
@@ -34,7 +34,7 @@ function LoginFormModal() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
-        const data = await dispatch(login(credential, password ))
+        const data = await dispatch(login(credential, password));
         if (data) setErrors(data);
         else closeModal();
     };
@@ -44,12 +44,26 @@ function LoginFormModal() {
         const data = await dispatch(login("demo@aa.io", "password"));
         if (data) setErrors(data);
         else closeModal();
-
     };
 
+    const handleRegistration = (e) => {};
+
     return (
-        <div className="login-container">
-            <h1 id="title">Log In</h1>
+        <div className="modal">
+            <div
+                style={{ display: "flex", justifyContent: "center" }}
+                className="modal-header"
+            >
+                <h1
+                    style={{
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        fontSize: "26px",
+                    }}
+                >
+                    Welcome back!
+                </h1>
+            </div>
             <form className="login-form" onSubmit={handleSubmit}>
                 <ul>
                     {Object.values(errors).map((error, idx) => (
@@ -61,7 +75,8 @@ function LoginFormModal() {
                 <div className="form-item">
                     <label>
                         <input
-                            className="input-field"
+                            style={{ width: "435px", borderRadius: "15px" }}
+                            className="create-comm-input"
                             type="text"
                             value={credential}
                             placeholder="Email"
@@ -76,7 +91,8 @@ function LoginFormModal() {
                 <div className="form-item">
                     <label>
                         <input
-                            className="input-field"
+                            style={{ width: "435px", borderRadius: "15px" }}
+                            className="create-comm-input"
                             placeholder="Password"
                             type="password"
                             value={password}
@@ -89,7 +105,15 @@ function LoginFormModal() {
                     )} */}
                 </div>
                 <button
-                    className="decorated-button button-needs-adjustment alt-color-button"
+                    className="button-main"
+                    style={{
+                        width: "100%",
+                        marginTop: "10px",
+                        marginRight: "6px",
+                        borderRadius: "15px",
+                        height: "40px",
+                        marginBottom: "-5px",
+                    }}
                     disabled={submitDisabled}
                     id="submit"
                     type="submit"
@@ -97,13 +121,28 @@ function LoginFormModal() {
                     Log In
                 </button>
                 <button
-                    className="decorated-button button-needs-adjustment"
+                    className="button-alt"
                     onClick={handleDemoLogin}
+                    style={{
+                        width: "100%",
+                        borderRadius: "15px",
+                        height: "40px",
+                    }}
                     id="demo"
                 >
                     Demo User
                 </button>
             </form>
+            <div className="footer-signup-login">
+                <p>
+                    New to Reddit?
+                    <OpenModalButton
+                        buttonText="Sign Up"
+                        modalComponent={<SignupFormModal />}
+                        className="redirect-signup-login"
+                    />
+                </p>
+            </div>
         </div>
     );
 }

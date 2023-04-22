@@ -1,11 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useModal } from "../../context/Modal";
+import { useDispatch } from "react-redux";
+import { editUserInfo } from "../../store/session";
+import { useHistory } from "react-router-dom";
 
 function EditModal({ user }) {
     const [name, setName] = useState(user.username);
     const [avatar, setAvatar] = useState(user.avatar);
     const [bio, setBio] = useState(user.bio || "");
+    const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    useEffect(() => {
+        let errors = [];
+        if (!name.length) errors.push("Username must be provided");
+
+        if (name.length > 20)
+            errors.push("Username must be fewer than 20 characters");
+
+        setErrors(errors);
+    }, [name, avatar, bio]);
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -19,9 +35,29 @@ function EditModal({ user }) {
         setBio(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(name, avatar, bio);
+
+        if (errors.length) return;
+
+        let editedUser;
+
+        if (!errors.length) {
+            const payload = {
+                username: name,
+                avatar: avatar,
+                bio: bio,
+            };
+            editedUser = await dispatch(editUserInfo(payload, user.id));
+        }
+
+        if (editedUser.errors) {
+            setErrors([editedUser.errors]);
+            return;
+        } else {
+            closeModal();
+            history.push(`/u/${editedUser.username}`);
+        }
     };
 
     return (
@@ -32,6 +68,11 @@ function EditModal({ user }) {
                     &#215;
                 </button>
             </div>
+            {errors.map((error, idx) => (
+                <li style={{ marginBottom: "15px", color: "red" }} key={idx}>
+                    {error}
+                </li>
+            ))}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label className="create-comm-label" htmlFor="name">

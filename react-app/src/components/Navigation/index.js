@@ -18,10 +18,10 @@ function Navigation({ isLoaded }) {
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
 
-    const openMenu = () => {
-        if (showMenu) return;
-        setShowMenu(true);
-    };
+    // const openMenu = () => {
+    //     if (showMenu) return;
+    //     setShowMenu(true);
+    // };
 
     useEffect(() => {
         if (!showMenu) return;
@@ -40,7 +40,6 @@ function Navigation({ isLoaded }) {
     const closeMenu = () => setShowMenu(false);
 
     const onUserOwnPage = (user) => {
-        const path = location.pathname;
         return location.pathname.endsWith(user.username);
     };
 
@@ -73,7 +72,7 @@ function Navigation({ isLoaded }) {
             height="35px"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
-            class="_1O4jTk-dZ-VIxsCuYB6OR8 "
+            className="_1O4jTk-dZ-VIxsCuYB6OR8 "
         >
             <g>
                 <circle fill="#FF4500" cx="10" cy="10" r="10"></circle>
@@ -102,6 +101,11 @@ function Navigation({ isLoaded }) {
                             Explore Communities
                         </button>
                     </NavLink>
+                    {isLoaded && sessionUser && (
+                        <span
+                            style={{ marginLeft: "3px", marginRight: "3px" }}
+                        ></span>
+                    )}
                     {isLoaded && sessionUser && (
                         <OpenModalButton
                             buttonText="Create a Community"

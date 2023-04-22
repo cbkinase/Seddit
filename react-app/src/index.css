@@ -722,6 +722,67 @@ acronym {
     cursor: pointer;
 }
 
+#subreddit-search {
+    display: block;
+    width: 650px;
+    padding: 16px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    border: 1px solid #e5e5e5;
+    /* border-bottom: 1px solid #e5e5e5; */
+    font-size: 16px;
+    margin: 0;
+    text-align: center;
+    /* background-color: #dae0e6; */
+    color: black;
+    border-radius: 15px;
+}
+
+#subreddit-search:hover {
+    background-color: white;
+    outline: 1px solid blue;
+}
+
+#subreddit-search:focus {
+    background-color: white;
+    outline: 1px solid blue;
+}
+
+.footer-signup-login {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    font-family: "Noto Sans", sans-serif;
+    line-height: 16px;
+    font-size: 16px;
+}
+
+.redirect-signup-login {
+    color: #0079d3;
+    background: none;
+    border: none;
+    line-height: 16px;
+    font-size: 16px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.toc-signup {
+    color: grey;
+    font-size: 13px;
+}
+
+.toc-links {
+    margin-top: 3px;
+    color: #0079d3;
+    cursor: pointer;
+}
+
+.toc-links:hover {
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 1000px) {
     .subreddit-short-main-container {
         margin-left: 10px;
@@ -733,6 +794,9 @@ acronym {
     }
 
     .card-info {
+        width: 100%;
+    }
+    #subreddit-search {
         width: 100%;
     }
 }
