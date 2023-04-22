@@ -25,7 +25,7 @@ class Subreddit(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=True)
-    name = db.Column(db.String, nullable=False, unique=True)
+    name = db.Column(db.String(40, collation="NOCASE"), nullable=False, unique=True)
     about = db.Column(db.Text)
     main_pic = db.Column(db.String)
     background_pic = db.Column(db.String)

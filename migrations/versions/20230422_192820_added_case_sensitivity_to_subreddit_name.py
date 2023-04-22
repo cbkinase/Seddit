@@ -1,16 +1,12 @@
-"""adding collation to user username
+"""added case sensitivity to subreddit name
 
-Revision ID: 5297c6d7545b
+Revision ID: 5a1a485f5d2c
 Revises:
-Create Date: 2023-04-21 19:02:20.532626
+Create Date: 2023-04-22 19:28:20.895750
 
 """
 from alembic import op
 import sqlalchemy as sa
-
-import os
-environment = os.getenv("FLASK_ENV")
-SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
@@ -18,6 +14,10 @@ revision = 'b70bb0010112'
 down_revision = None
 branch_labels = None
 depends_on = None
+
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
 
 
 def upgrade():
@@ -39,10 +39,11 @@ def upgrade():
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
 
+
     op.create_table('subreddits',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=True),
-    sa.Column('name', sa.String(), nullable=False),
+    sa.Column('name', sa.String(length=40, collation='NOCASE'), nullable=False),
     sa.Column('about', sa.Text(), nullable=True),
     sa.Column('main_pic', sa.String(), nullable=True),
     sa.Column('background_pic', sa.String(), nullable=True),
