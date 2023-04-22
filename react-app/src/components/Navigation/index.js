@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
@@ -13,6 +13,7 @@ import EditModal from "../EditUserInfoModal";
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector((state) => state.session.user);
     let location = useLocation();
+    const history = useHistory();
     const dispatch = useDispatch();
 
     const [showMenu, setShowMenu] = useState(false);
@@ -46,6 +47,7 @@ function Navigation({ isLoaded }) {
     const handleLogout = (e) => {
         e.preventDefault();
         dispatch(logout());
+        history.push("/")
     };
 
     const redditNameSvg = (
