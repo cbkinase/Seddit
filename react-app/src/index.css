@@ -281,7 +281,7 @@ acronym {
         "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Lucida Grande", Helvetica, Arial, sans-serif;
     font-size: 16px;
-    font-weight: 800;
+    font-weight: 700;
     line-height: 6px;
     /* margin: 10px; */
     padding: 15px 30px;
@@ -417,7 +417,7 @@ acronym {
 
 .button-leave:focus {
     outline: none;
-    border: 2px solid #4285f4;
+    border: 1px solid #4285f4;
 }
 
 #nav-container {
@@ -777,4 +777,18 @@ acronym {
     #subreddit-search {
         width: 100%;
     }
+}
+
+
+@media screen and (max-width: 700px) {
+    .button-join {
+        min-height: 30px !important;
+        padding-bottom: 4px !important;
+    }
+
+    .button-leave {
+        min-height: 30px !important;
+        padding-bottom: 4px !important;
+    }
+
 }

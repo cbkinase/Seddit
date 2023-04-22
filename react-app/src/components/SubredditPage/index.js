@@ -3,6 +3,7 @@ import './subredditPage.css';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSubreddits } from '../../store/subreddits';
+import OpenModalButton from '../OpenModalButton';
 
 export default function SubredditPage() {
   const { subredditName } = useParams();
@@ -10,7 +11,9 @@ export default function SubredditPage() {
   const history = useHistory();
   const [hasLoaded, setHasLoaded] = useState(false);
   let found = false;
-  const [numMembers, setNumMembers] = useState(null)
+  const [numMembers, setNumMembers] = useState(null);
+
+
 
   const handleJoinCommunity = async (subredditId, userId, subredditName) => {
     const res = await fetch(`/api/s/${subredditId}/subscribers`, {
@@ -19,6 +22,8 @@ export default function SubredditPage() {
 
     const data = await res.json();
     if (data.success) {
+        memberCount++;
+        setNumMembers(memberCount)
         let btn = document.getElementById(
             `subreddit-${subredditId}-button`
         );
@@ -40,6 +45,8 @@ const handleLeaveCommunity = async (subredditId, userId, subredditName) => {
     const data = await res.json();
 
     if (data.success) {
+        memberCount--;
+        setNumMembers(memberCount);
         let btn = document.getElementById(
             `subreddit-${subredditId}-button`
         );
@@ -60,6 +67,8 @@ const handleLeaveCommunity = async (subredditId, userId, subredditName) => {
     }
     loadAndWait()
   }, [dispatch]);
+
+
   const subreddits = useSelector(state => state.subreddits.Subreddits)
   const user = useSelector(state => state.session.user)
   let subreddit = subreddits && Object.values(subreddits).filter(subreddit => subreddit.name.toLowerCase() === subredditName.toLowerCase())[0]
@@ -72,6 +81,13 @@ const handleLeaveCommunity = async (subredditId, userId, subredditName) => {
     return word[0].toUpperCase() + word.slice(1);
 };
 
+let memberCount = subreddit && subreddit.numSubscribers;
+
+useEffect(() => {
+    setNumMembers(memberCount);
+
+}, [memberCount])
+
 
 
   return found ?
@@ -81,13 +97,23 @@ const handleLeaveCommunity = async (subredditId, userId, subredditName) => {
           <img style={{width: "57px", height: "57px", borderRadius: "50%"}} src={subreddit.main_pic} alt="Subreddit Logo" />
           <h1 className="subreddit-name">r/{subreddit.name}</h1>
         </div>
-        <nav className="subreddit-nav">
+        {user.id === subreddit.owner_id && <nav className="subreddit-nav">
           <ul>
-            <li><a href="#">Posts</a></li>
-            <li><button>Edit</button></li>
-            <li><button>Delete</button></li>
+            <li>
+                <OpenModalButton
+                buttonText="Edit"
+                className="button-alt"
+                modalComponent={<h1>EDIT!!!</h1>} />
+            </li>
+            <span style={{marginLeft: "3px", marginRight: "3px"}}></span>
+            <li>
+                <OpenModalButton
+                buttonText="Delete"
+                className="button-alt"
+                modalComponent={<h1>DELETE!!!</h1>} />
+            </li>
           </ul>
-        </nav>
+        </nav>}
       </header>
 <div>
 <section className="subreddit-info">
@@ -97,8 +123,8 @@ const handleLeaveCommunity = async (subredditId, userId, subredditName) => {
 </div>
 <div className="subreddit-stats">
   <div className="subreddit-stat">
-    <span className="subreddit-stat-number">{subreddit.numSubscribers}</span>
-    <span className="subreddit-stat-label">Members</span>
+    <span className="subreddit-stat-number">{numMembers}</span>
+    <span className="subreddit-stat-label">Member{numMembers !== 1 && "s"}</span>
   </div>
   <div className="subreddit-stat">
                 {/* User is not in community already */}

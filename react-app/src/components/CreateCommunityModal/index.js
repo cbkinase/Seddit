@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useModal } from "../../context/Modal";
 import { createSubreddit } from "../../store/subreddits";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function CreateCommunityModal() {
     const [communityName, setCommunityName] = useState("");
@@ -10,6 +11,8 @@ function CreateCommunityModal() {
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
     const dispatch = useDispatch();
+    const [hasSubmitted, setHasSubmitted] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
         let errors = [];
@@ -24,6 +27,7 @@ function CreateCommunityModal() {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        setHasSubmitted(true)
 
         // setErrors(errors)
         if (errors.length) return;
@@ -44,6 +48,7 @@ function CreateCommunityModal() {
             return;
         } else {
             closeModal();
+            history.push(`/r/${subreddit.name}`)
         }
     }
 
@@ -56,7 +61,7 @@ function CreateCommunityModal() {
                 </button>
             </div>
             {errors.map((error, idx) => (
-                <li style={{ marginBottom: "15px", color: "red" }} key={idx}>
+                error === "Name must be provided" && !hasSubmitted ? null : <li style={{ marginBottom: "15px", color: "red" }} key={idx}>
                     {error}
                 </li>
             ))}
