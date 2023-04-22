@@ -97,7 +97,7 @@ useEffect(() => {
           <img style={{width: "57px", height: "57px", borderRadius: "50%"}} src={subreddit.main_pic} alt="Subreddit Logo" />
           <h1 className="subreddit-name">r/{subreddit.name}</h1>
         </div>
-        {user.id === subreddit.owner_id && <nav className="subreddit-nav">
+        {user?.id === subreddit.owner_id && <nav className="subreddit-nav">
           <ul>
             <li>
                 <OpenModalButton
