@@ -28,25 +28,28 @@ function SignupFormModal() {
             errors.username = "Username must be at least 4 characters";
         if (password.length < 6)
             errors.password = "Password must be at least 6 characters";
-        if (password !== confirmPassword)
-            errors.confirmation = "Passwords do not match";
+        // if (password !== confirmPassword)
+        //     errors.confirmation = "Passwords do not match";
         setValidationErrors(errors);
+        // setErrors(Object.values(errors))
 
         if (Object.keys(errors).length === 0) setSubmitDisabled(false);
         else setSubmitDisabled(true);
     }, signUpDependencies);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (password === confirmPassword) {
             setErrors([]);
-            return dispatch(signUp(username, email, password))
-                .then(closeModal)
-                .catch(async (res) => {
-                    setHasSubmitted(true);
-                    const data = await res.json();
-                    if (data && data.errors) setErrors(data.errors);
-                });
+            const data = await dispatch(signUp(username, email, password))
+
+            if (data) {
+                setErrors(Object.values(data.errors));
+                return;
+            }
+
+            closeModal();
+
         }
         return setErrors([
             "Confirm Password field must be the same as the Password field",
@@ -55,6 +58,7 @@ function SignupFormModal() {
 
     return (
         <div className="modal">
+
             <div
                 style={{
                     display: "flex",
@@ -72,6 +76,14 @@ function SignupFormModal() {
                 >
                     Sign Up
                 </h1>
+                <ul>
+                    {Object.values(errors).map((error, idx) => (
+                        <li className="errors" key={idx}>
+                            {error}
+                        </li>
+                    ))}
+                </ul>
+
                 <div
                     style={{ marginTop: "13px", marginBottom: "0px" }}
                     className="footer-signup-login"

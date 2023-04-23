@@ -68,7 +68,8 @@ function ProfileButton({ user }) {
                         </li>
                     </>
                 ) : (
-                    <>
+                    <div className="login-signup-btn-container"
+                    >
                         <OpenModalButton
                             buttonText="Log In"
                             onItemClick={closeMenu}
@@ -82,7 +83,7 @@ function ProfileButton({ user }) {
                             modalComponent={<SignupFormModal />}
                             className="button-main"
                         />
-                    </>
+                    </div>
                 )}
             </ul>
         </>

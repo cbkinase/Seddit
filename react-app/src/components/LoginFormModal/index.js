@@ -13,6 +13,7 @@ function LoginFormModal() {
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
     const [validationErrors, setValidationErrors] = useState({});
+    const [hasSubmitted, setHasSubmitted] = useState(false)
     const [submitDisabled, setSubmitDisabled] = useState(true);
 
     useEffect(() => {
@@ -25,6 +26,7 @@ function LoginFormModal() {
         }
 
         setValidationErrors(errors);
+        // setErrors(Object.values(errors))
 
         if (Object.keys(errors).length === 0) {
             setSubmitDisabled(false);
@@ -33,6 +35,7 @@ function LoginFormModal() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setHasSubmitted(true)
         setErrors([]);
         const data = await dispatch(login(credential, password));
         if (data) setErrors(data);
@@ -63,8 +66,6 @@ function LoginFormModal() {
                 >
                     Welcome back!
                 </h1>
-            </div>
-            <form className="login-form" onSubmit={handleSubmit}>
                 <ul>
                     {Object.values(errors).map((error, idx) => (
                         <li className="errors" key={idx}>
@@ -72,12 +73,14 @@ function LoginFormModal() {
                         </li>
                     ))}
                 </ul>
+            </div>
+            <form className="login-form" onSubmit={handleSubmit}>
                 <div className="form-item">
                     <label>
                         <input
                             style={{ width: "435px", borderRadius: "15px" }}
                             className="create-comm-input"
-                            type="text"
+                            type="email"
                             value={credential}
                             placeholder="Email"
                             onChange={(e) => setCredential(e.target.value)}

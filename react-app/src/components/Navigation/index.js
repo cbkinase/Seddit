@@ -137,7 +137,7 @@ function Navigation({ isLoaded }) {
                     </div>
                 )}
                 {isLoaded && !sessionUser && (
-                    <div>
+                    <div className="login-signup-btn-container">
                         <OpenModalButton
                             buttonText="Log In"
                             onItemClick={closeMenu}
