@@ -1,9 +1,11 @@
 import { NavLink } from "react-router-dom";
 import moment from "moment";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
+import SubredditHover from "../SubredditHover";
+import UserHover from "../UserHover";
 
 export default function IndividualAbridgedSubreddit({ user, subreddit }) {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const shortenWord = (word, long = 20) => {
         if (!word) return null;
         if (word.length < long) return word;
@@ -89,18 +91,22 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
                         ></img>
                     </NavLink>
                     <NavLink
-                        className="subreddit-title-nav"
+                        style={{margin: "0px 0px", marginLeft: "2px"}}
+                        className="subreddit-title-nav subreddit-preview"
                         to={`/r/${subreddit.name}`}
                     >
+                        <SubredditHover subreddit={subreddit} />
                         <h1 className="card-title">r/{shortenWord(subreddit.name, 10)} </h1>
                     </NavLink>
                     <span className="subreddit-preview-creator">
                         {" "}
                         • created by{" "}
                         <NavLink
-                            className="card-username-link"
+                            style={{margin: "0px 0px"}}
+                            className="card-username-link subreddit-preview"
                             to={`/u/${subreddit.owner_info.username}`}
                         >
+                            <UserHover subreddit={subreddit} />
                             {shortenWord(subreddit.owner_info.username, 10)}
                         </NavLink>{" "}
                         {moment(Date.parse(subreddit.created_at)).fromNow()}

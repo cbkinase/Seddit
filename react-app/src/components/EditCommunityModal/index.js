@@ -13,6 +13,7 @@ function EditCommunityModal({subreddit}) {
             case "gaming": return 3;
             case "science": return 4;
             case "politics": return 5;
+            default: return 0;
         }
     }
     const [communityName, setCommunityName] = useState(subreddit.name || "");

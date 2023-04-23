@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './subredditPage.css';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSubreddits } from '../../store/subreddits';
 import OpenModalButton from '../OpenModalButton';
@@ -10,7 +10,7 @@ import DeleteSubredditModal from '../DeleteSubredditModal';
 export default function SubredditPage() {
   const { subredditName } = useParams();
   const dispatch = useDispatch();
-  const history = useHistory();
+//   const history = useHistory();
   const [hasLoaded, setHasLoaded] = useState(false);
   let found = false;
   const [numMembers, setNumMembers] = useState(null);

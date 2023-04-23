@@ -55,6 +55,7 @@ function ProfileButton({ user }) {
                     }}
                     className="topright-avatar"
                     src={user.avatar}
+                    alt={user.username}
                 ></img>
             </button>
             <ul className={ulClassName} ref={ulRef}>

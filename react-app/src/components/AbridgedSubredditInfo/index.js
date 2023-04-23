@@ -47,6 +47,7 @@ export default function AbridgedSubredditDisplay({ user }) {
             <div className="subreddit-short-main-container">
                 {filteredSubreddits.map((subreddit) => (
                     <IndividualAbridgedSubreddit
+                        key={subreddit.id}
                         user={user}
                         subreddit={subreddit}
                     />
