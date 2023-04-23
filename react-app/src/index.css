@@ -488,6 +488,9 @@ acronym {
     align-self: flex-end;
     font-size: 18px;
     color: grey;
+    /* width: 0 auto; */
+    margin-right: -25px;
+
 }
 
 .subreddit-preview-img {
@@ -513,7 +516,7 @@ acronym {
     /* align-self: flex-end; */
     /* margin: 0 auto; */
     position: relative;
-    left: 230px;
+    left: 245px;
     bottom: 40px;
 }
 
