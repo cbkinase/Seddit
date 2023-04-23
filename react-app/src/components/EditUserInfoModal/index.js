@@ -17,8 +17,8 @@ function EditModal({ user }) {
         let errors = [];
         if (!name.length) errors.push("Username must be provided");
 
-        if (name.length > 20)
-            errors.push("Username must be fewer than 20 characters");
+        // if (name.length > 20)
+        //     errors.push("Username must be fewer than 20 characters");
 
         setErrors(errors);
     }, [name, avatar, bio]);
@@ -86,6 +86,18 @@ function EditModal({ user }) {
                         value={name}
                         onChange={handleNameChange}
                     />
+                    {name.length <= 20 ? (
+                        <p style={{ fontSize: "12px", marginTop: "3px" }}>
+                            {20 - name.length} character
+                            {20 - name.length !== 1 && "s"} remaining
+                        </p>
+                    ) : (
+                        <p style={{ fontSize: "12px", color: "red", marginTop: "3px" }}>
+                            You are {name.length - 20} character
+                            {name.length - 20 !== 1 && "s"} above the allowed
+                            limit
+                        </p>
+                    )}
                 </div>
                 <div className="form-group">
                     <label className="create-comm-label" htmlFor="avatar">

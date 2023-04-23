@@ -470,17 +470,18 @@ acronym {
 
 .card-title {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
     padding: 10px 5px 10px 0px;
 }
 
 .card-info {
     padding: 0px 0px 15px;
-    font-size: 19px;
+    font-size: 16px;
     align-self: flex-start;
     font-weight: bold;
     width: 600px;
     margin-top: 20px;
+    overflow-wrap: anywhere;
 }
 
 .card-category {
@@ -674,7 +675,7 @@ acronym {
 
 .btn-secondary:hover {
     background-color: #e6e6e6;
-    border-color: #0079d3;
+    border-color: #006bb3;
 }
 
 #create-comm-btn {

@@ -23,6 +23,10 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
             newStr += "...";
             return newStr;
         }
+
+        if (wordArr.length < long && paragraph.length > 100) {
+            return paragraph.slice(0, 100) + "..."
+        }
         return paragraph;
     };
 
@@ -79,7 +83,7 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
                         to={`/r/${subreddit.name}`}
                     >
                         <img
-                            alt={subreddit.name}
+                            alt="Pic"
                             className="subreddit-preview-img"
                             src={subreddit.main_pic}
                         ></img>
@@ -88,7 +92,7 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
                         className="subreddit-title-nav"
                         to={`/r/${subreddit.name}`}
                     >
-                        <h1 className="card-title">r/{subreddit.name} </h1>
+                        <h1 className="card-title">r/{shortenWord(subreddit.name, 10)} </h1>
                     </NavLink>
                     <span className="subreddit-preview-creator">
                         {" "}

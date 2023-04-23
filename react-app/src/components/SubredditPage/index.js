@@ -4,6 +4,8 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSubreddits } from '../../store/subreddits';
 import OpenModalButton from '../OpenModalButton';
+import EditCommunityModal from '../EditCommunityModal';
+import DeleteSubredditModal from '../DeleteSubredditModal';
 
 export default function SubredditPage() {
   const { subredditName } = useParams();
@@ -94,7 +96,7 @@ useEffect(() => {
   <div>
   <header className="subreddit-header">
         <div className="subreddit-logo">
-          <img style={{width: "57px", height: "57px", borderRadius: "50%"}} src={subreddit.main_pic} alt="Subreddit Logo" />
+          <img style={{width: "57px", height: "57px", borderRadius: "50%"}} src={subreddit.main_pic} alt="Logo" />
           <h1 className="subreddit-name">r/{subreddit.name}</h1>
         </div>
         {user?.id === subreddit.owner_id && <nav className="subreddit-nav">
@@ -103,14 +105,14 @@ useEffect(() => {
                 <OpenModalButton
                 buttonText="Edit"
                 className="button-alt"
-                modalComponent={<h1>EDIT!!!</h1>} />
+                modalComponent={<EditCommunityModal subreddit={subreddit} />}></OpenModalButton>
             </li>
             <span style={{marginLeft: "3px", marginRight: "3px"}}></span>
             <li>
                 <OpenModalButton
                 buttonText="Delete"
                 className="button-alt"
-                modalComponent={<h1>DELETE!!!</h1>} />
+                modalComponent={<DeleteSubredditModal subreddit={subreddit} />} />
             </li>
           </ul>
         </nav>}

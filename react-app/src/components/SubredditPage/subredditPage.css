@@ -100,6 +100,7 @@
   line-height: 1.5;
   margin-left: 20px;
   margin-right: 20px;
+  overflow-wrap: anywhere;
 }
 
 .subreddit-stats {
@@ -147,9 +148,12 @@
 }
 
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1200px) {
   .subreddit-info {
     flex-direction: column;
+  }
+  .subreddit-stats {
+    margin-top: 20px;
   }
 
 }

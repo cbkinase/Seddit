@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useModal } from "../../context/Modal";
-import { createSubreddit } from "../../store/subreddits";
+import { editSubreddit } from "../../store/subreddits";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-function CreateCommunityModal() {
-    const [communityName, setCommunityName] = useState("");
-    const [communityCategory, setCommunityCategory] = useState("");
-    const [communityDescription, setCommunityDescription] = useState("");
+function EditCommunityModal({subreddit}) {
+
+    const categoryConverter = (str) => {
+        switch (str) {
+            case "art": return 1;
+            case "entertainment": return 2;
+            case "gaming": return 3;
+            case "science": return 4;
+            case "politics": return 5;
+        }
+    }
+    const [communityName, setCommunityName] = useState(subreddit.name || "");
+    const [communityCategory, setCommunityCategory] = useState(categoryConverter(subreddit.category) || "");
+    const [communityDescription, setCommunityDescription] = useState(subreddit.about || "");
+    const [communityPicture, setCommunityPicture] = useState(subreddit.main_pic || "")
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
     const dispatch = useDispatch();
@@ -16,11 +27,10 @@ function CreateCommunityModal() {
 
     useEffect(() => {
         let errors = [];
-        let badChars = [" ", "/", "#", "@", "!", "%", "^", "&", "*", "(", ")", "=", "+", "[", "]", "?", ".", ",", "`", "~", "-"]
         // if (communityDescription.length > 2000)
         //     errors.push("Description must be fewer than 2000 characters");
-        if (badChars.some(char => communityName.includes(char)))
-            errors.push("Name must not contain special characters");
+        // if (communityName.length > 21)
+        //     errors.push("Name must be 21 or fewer characters");
         if (!communityName.length) errors.push("Name must be provided");
 
         setErrors(errors);
@@ -33,41 +43,42 @@ function CreateCommunityModal() {
         // setErrors(errors)
         if (errors.length) return;
 
-        let subreddit;
+        let editedSubreddit;
 
         if (!errors.length) {
             const payload = {
                 name: communityName,
                 about: communityDescription,
                 category: Number(communityCategory),
+                main_pic: communityPicture
             };
-            subreddit = await dispatch(createSubreddit(payload));
+            editedSubreddit = await dispatch(editSubreddit(payload, subreddit.id));
         }
 
-        if (subreddit.errors) {
-            setErrors([subreddit.errors]);
+        if (editedSubreddit.errors) {
+            setErrors([editSubreddit.errors]);
             return;
         } else {
             closeModal();
-            history.push(`/r/${subreddit.name}`)
+            history.push(`/r/${editedSubreddit.name}`)
         }
     }
 
     return (
         <div className="modal">
             <div className="modal-header">
-                <h2>Create a Community</h2>
+                <h2>Customize your Community</h2>
                 <button onClick={closeModal} className="modal-close-btn">
                     &#215;
                 </button>
             </div>
             {errors.map((error, idx) => (
-                error === "Name must be provided" && !hasSubmitted ? null : <li style={{ marginBottom: "15px", color: "red" }} key={idx}>
+            <li style={{ marginBottom: "15px", color: "red" }} key={idx}>
                     {error}
                 </li>
             ))}
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
+                {/* <div className="form-group">
                     <label
                         className="create-comm-label"
                         htmlFor="community-name"
@@ -85,18 +96,24 @@ function CreateCommunityModal() {
                         }
                         required
                     />
-                                        {communityName.length <= 21 ? (
-                        <p style={{ fontSize: "12px", marginTop: "3px" }}>
-                            {21 - communityName.length} character
-                            {21 - communityName.length !== 1 && "s"} remaining
-                        </p>
-                    ) : (
-                        <p style={{ fontSize: "12px", color: "red", marginTop: "3px" }}>
-                            You are {communityName.length - 21} character
-                            {communityName.length - 21 !== 1 && "s"} above the allowed
-                            limit
-                        </p>
-                    )}
+                </div> */}
+                <div className="form-group">
+                    <label
+                        className="create-comm-label"
+                        htmlFor="community-picture"
+                    >
+                        Community Picture
+                    </label>
+                    <input
+                        className="create-comm-input"
+                        type="text"
+                        id="community-picture"
+                        name="community-picture"
+                        value={communityPicture}
+                        onChange={(event) =>
+                            setCommunityPicture(event.target.value)
+                        }
+                    />
                 </div>
                 <div className="form-group">
                     <label
@@ -139,7 +156,7 @@ function CreateCommunityModal() {
                         }
                         rows="8"
                     ></textarea>
-                    {communityDescription.length <= 2000 ? (
+                                        {communityDescription.length <= 2000 ? (
                         <p style={{ fontSize: "12px" }}>
                             {2000 - communityDescription.length} character
                             {2000 - communityDescription.length !== 1 && "s"} remaining
@@ -161,7 +178,7 @@ function CreateCommunityModal() {
                         Cancel
                     </button>
                     <button type="submit" className="btn-primary">
-                        Create Community
+                        Edit Community
                     </button>
                 </div>
             </form>
@@ -169,4 +186,4 @@ function CreateCommunityModal() {
     );
 }
 
-export default CreateCommunityModal;
+export default EditCommunityModal;
