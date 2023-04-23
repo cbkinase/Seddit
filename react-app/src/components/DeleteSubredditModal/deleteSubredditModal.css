@@ -65,7 +65,7 @@
   }
 
   .one-button {
-    margin: revert;
+    /* margin: revert; */
     padding: 12px 24px;
     margin-left: 10px;
     border: none;
