@@ -366,6 +366,18 @@ margin-top: 30px;
     background-color: var(--primary-color-hover);
     }
 
+    @media screen and (max-width: 800px) {
+        .user-page {
+            max-width: 100vw;
+            margin-left: 3%;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
     @media only screen and (max-width: 768px) {
     .post {
     flex-direction: column;

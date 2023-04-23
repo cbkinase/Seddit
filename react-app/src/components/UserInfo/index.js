@@ -6,8 +6,9 @@ import { useParams, NavLink, useLocation } from "react-router-dom";
 export default function UserInfo({currentUser}) {
     const dispatch = useDispatch();
     const {userName} = useParams();
-    const [user, setUser] = useState(null);
+
     const location = useLocation();
+    const [user, setUser] = useState(null);
 
     const onUserEnding = (user, ending) => {
         return location.pathname.includes(`/u/${user.username}${ending}`);
@@ -21,15 +22,15 @@ export default function UserInfo({currentUser}) {
         }
         fn();
 
-    }, [dispatch])
+    }, [dispatch, userName])
     // The whole currentUser.id === user.id business is to ensure the component gets re-rendered when a user edits their own profile
     return  user && <div className="user-page">
     <div className="header">
       <div className="avatar">
-        <img src={currentUser.id === user.id ? currentUser.avatar : user.avatar} alt="Avatar"></img>
+        <img src={currentUser?.id === user.id ? currentUser?.avatar : user.avatar} alt="Avatar"></img>
       </div>
       <div className="user-info">
-        <h1 className="username">{currentUser.id === user.id ? currentUser.username : user.username}</h1>
+        <h1 className="username">{currentUser?.id === user.id ? currentUser?.username : user.username}</h1>
         <div className="stats">
           <div className="stat-item">
             <span className="count">500</span>
@@ -45,14 +46,14 @@ export default function UserInfo({currentUser}) {
           </div>
         </div>
         <div className="bio">
-          <p>{currentUser.id === user.id ? currentUser.bio : user.bio}</p>
+          <p>{currentUser?.id === user.id ? currentUser?.bio : user.bio}</p>
         </div>
       </div>
     </div>
     <div className="content">
       <div className="tabs">
         <ul>
-          <li className={onUserEnding(user, "/posts") || location.pathname.toLowerCase() == `/u/${user.username.toLowerCase()}` ? "active" : ""} ><NavLink to={`/u/${user.username}/posts`}>Posts</NavLink></li>
+          <li className={onUserEnding(user, "/posts") || location.pathname.toLowerCase() === `/u/${user.username.toLowerCase()}` ? "active" : ""} ><NavLink to={`/u/${user.username}/posts`}>Posts</NavLink></li>
           <li className={onUserEnding(user, "/comments") ? "active" : ""}><NavLink to={`/u/${user.username}/comments`}>Comments</NavLink></li>
         </ul>
       </div>

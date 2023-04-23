@@ -97,9 +97,9 @@ function Navigation({ isLoaded }) {
                         </div>
                     </NavLink>
                 </li>
-                <div>
+                <div style={{display: "flex"}}>
                     <NavLink exact to="/explore">
-                        <button className="button-join">
+                        <button className="button-join head-nav-btn head-nav-btn-explore">
                             Explore Communities
                         </button>
                     </NavLink>
@@ -111,7 +111,7 @@ function Navigation({ isLoaded }) {
                     {isLoaded && sessionUser && (
                         <OpenModalButton
                             buttonText="Create a Community"
-                            className="button-leave"
+                            className="button-leave head-nav-btn head-nav-btn-create"
                             modalComponent={<CreateCommunityModal />}
                         />
                     )}
@@ -122,7 +122,7 @@ function Navigation({ isLoaded }) {
                     </li>
                 )}
                 {isLoaded && sessionUser && onUserOwnPage(sessionUser) && (
-                    <div>
+                    <div style={{display: "flex"}}>
                         <OpenModalButton
                             className="fa fa-cog user-profile-edit-btn"
                             modalComponent={<EditModal user={sessionUser} />}
@@ -130,7 +130,7 @@ function Navigation({ isLoaded }) {
                         <button
                             style={{ marginLeft: "10px" }}
                             onClick={handleLogout}
-                            className="button-alt"
+                            className="button-alt logout-btn"
                         >
                             Log out
                         </button>
