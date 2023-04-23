@@ -41,7 +41,7 @@ function Navigation({ isLoaded }) {
     const closeMenu = () => setShowMenu(false);
 
     const onUserOwnPage = (user) => {
-        return location.pathname.endsWith(user.username);
+        return location.pathname.toLocaleLowerCase().includes(`/u/${user.username.toLocaleLowerCase()}`);
     };
 
     const handleLogout = (e) => {

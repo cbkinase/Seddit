@@ -10,6 +10,7 @@ import ContentPolicy from "./components/ContentPolicy";
 import UserAgreement from "./components/UserAgreement";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import SubredditPage from "./components/SubredditPage";
+import UserInfo from "./components/UserInfo";
 
 function App() {
     const dispatch = useDispatch();
@@ -45,6 +46,9 @@ function App() {
                     </Route>
                     <Route path="/r/:subredditName">
                         <SubredditPage />
+                    </Route>
+                    <Route path="/u/:userName">
+                        <UserInfo currentUser={user} />
                     </Route>
                 </Switch>
             )}
