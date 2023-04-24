@@ -8,7 +8,6 @@ cat_info = [{"id":"49p","url":"https://cdn2.thecatapi.com/images/49p.gif","width
 class Post(db.Model):
     __tablename__ = "posts"
 
-
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
@@ -42,6 +41,18 @@ class Post(db.Model):
             'id': self.id,
             'author_info': self.author.to_short_dict(),
             'subreddit_info': self.subreddit.to_short_dict(),
+            'title': self.title,
+            'content': self.content,
+            'attachment': self.attachment,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
+
+    def to_short_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'subreddit_id': self.subreddit_id,
             'title': self.title,
             'content': self.content,
             'attachment': self.attachment,
