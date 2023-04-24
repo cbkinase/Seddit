@@ -427,15 +427,29 @@ acronym {
     border: 1px solid #4285f4;
 }
 
+body {
+    padding-top: 48px;
+}
+
 #nav-container {
-    margin: 0px 20px 0px 30px;
+    /* margin: 0px 20px 0px 30px; */
+    /* padding: 0px 10px 0px 10px; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    background-color: white;
 }
 #nav-subcontainer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-}
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
 
 #main-logo {
     height: 48px;
