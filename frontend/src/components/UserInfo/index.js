@@ -18,13 +18,15 @@ export default function UserInfo({currentUser}) {
         const fn = async () => {
             let data = await fetch(`/api/users/u/${userName}`);
             let user = await data.json();
-            setUser(user);
+            if (!user.errors)
+              setUser(user);
         }
         fn();
 
     }, [dispatch, userName])
+    console.log(user);
     // The whole currentUser.id === user.id business is to ensure the component gets re-rendered when a user edits their own profile
-    return  user && <div className="user-page">
+    return  user ? <div className="user-page">
     <div className="header">
       <div className="avatar">
         <img src={currentUser?.id === user.id ? currentUser?.avatar : user.avatar} alt="Avatar"></img>
@@ -92,6 +94,6 @@ export default function UserInfo({currentUser}) {
         </div>
       </div>
     </div>
-  </div>
+  </div> : <h1>User Not found...</h1>
 
 }
