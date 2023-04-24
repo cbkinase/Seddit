@@ -70,7 +70,7 @@
     /* color: #0079d3; */
   }
 
-.subreddit-preview:hover .hover-preview {
+.subreddit-preview:hover > .hover-preview {
     /* display: block; */
     opacity: 1;
     pointer-events: auto;
