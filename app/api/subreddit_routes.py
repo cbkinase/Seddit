@@ -57,13 +57,12 @@ def create_subreddit():
     Route for creating a subreddit.
     """
     owner = User.query.get(current_user.id)
-    new_subreddit = Subreddit(owner = owner, **request.get_json())
-
     possible_duplicate = Subreddit.query.filter(Subreddit.name.ilike(request.get_json()['name'])).first()
 
     if possible_duplicate:
         return {"errors": ["That subreddit name is already taken"]}, 400
 
+    new_subreddit = Subreddit(owner = owner, **request.get_json())
 
     try:
         db.session.add(new_subreddit)
