@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
 
     owns_subreddit = db.relationship("Subreddit", back_populates="owner")
     subreddits = db.relationship("Subreddit", secondary="subreddit_subscribers", back_populates="subscribers")
-
+    posts = db.relationship("Post", back_populates="author")
 
     @classmethod
     def create(cls, qty):
