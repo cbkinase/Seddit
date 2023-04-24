@@ -73,7 +73,7 @@
 .subreddit-preview:hover > .hover-preview {
     /* display: block; */
     opacity: 1;
-    pointer-events: auto;
+    /* pointer-events: auto; */
 }
 
 .hover-preview::before {
