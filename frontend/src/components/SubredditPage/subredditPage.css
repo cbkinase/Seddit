@@ -116,9 +116,10 @@
   padding-bottom: 20px;
 }
 
-/* .subreddit-stat:last-of-type {
-  margin-right: 0;
-} */
+.subreddit-stat:last-of-type {
+  /* display: flex; */
+
+}
 
 .subreddit-stat-number {
   font-size: 24px;
@@ -147,6 +148,10 @@
   /* padding: 4px 16px !important; */
 }
 
+#create-post-btn-sub-page {
+  margin-top: 15px;
+}
+
 
 @media screen and (max-width: 1200px) {
   .subreddit-info {
@@ -154,6 +159,14 @@
   }
   .subreddit-stats {
     margin-top: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
   }
+
+  #create-post-btn-sub-page {
+    margin-top: 0px;
+    /* margin-left: 15px; */
+  }
+
 
 }

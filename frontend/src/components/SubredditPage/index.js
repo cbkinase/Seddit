@@ -133,6 +133,7 @@ useEffect(() => {
                 {user &&
                 !subreddit.subscribers[user.username] && (
                     <button
+                        style={{width: "130px"}}
                         id={`subreddit-${subreddit.id}-button`}
                         onClick={(e) =>
                             handleJoinCommunity(
@@ -150,6 +151,7 @@ useEffect(() => {
             {user &&
                 subreddit.subscribers[user.username] && (
                     <button
+                    style={{width: "130px"}}
                         onClick={(e) =>
                             handleLeaveCommunity(
                                 subreddit.id,
@@ -164,6 +166,7 @@ useEffect(() => {
                         Joined
                     </button>
                 )}
+                {user && <button id='create-post-btn-sub-page' style={{width: "130px"}} className="button-join adjust-btn-height-subreddit">Create Post</button>}
 
   </div>
 </div>
