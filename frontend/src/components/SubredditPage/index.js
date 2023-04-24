@@ -131,9 +131,7 @@ useEffect(() => {
   <div className="subreddit-stat">
                 {/* User is not in community already */}
                 {user &&
-                !Object.keys(subreddit.subscribers).includes(
-                    user.id.toString()
-                ) && (
+                !subreddit.subscribers[user.username] && (
                     <button
                         id={`subreddit-${subreddit.id}-button`}
                         onClick={(e) =>
@@ -150,9 +148,7 @@ useEffect(() => {
                 )}
             {/* User is in community already */}
             {user &&
-                Object.keys(subreddit.subscribers).includes(
-                    user.id.toString()
-                ) && (
+                subreddit.subscribers[user.username] && (
                     <button
                         onClick={(e) =>
                             handleLeaveCommunity(

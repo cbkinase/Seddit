@@ -115,9 +115,7 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
             </span>
             {/* User is not in community already */}
             {user &&
-                !Object.keys(subreddit.subscribers).includes(
-                    user.id.toString()
-                ) && (
+                !subreddit.subscribers[user.username] && (
                     <button
                         id={`subreddit-${subreddit.id}-button`}
                         onClick={(e) =>
@@ -134,9 +132,7 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
                 )}
             {/* User is in community already */}
             {user &&
-                Object.keys(subreddit.subscribers).includes(
-                    user.id.toString()
-                ) && (
+                subreddit.subscribers[user.username] && (
                     <button
                         onClick={(e) =>
                             handleLeaveCommunity(
