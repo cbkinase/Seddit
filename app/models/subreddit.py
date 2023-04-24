@@ -35,7 +35,7 @@ class Subreddit(db.Model):
 
     owner = db.relationship("User", back_populates="owns_subreddit")
     subscribers = db.relationship("User", secondary="subreddit_subscribers", back_populates="subreddits")
-    posts = db.relationship("Post", back_populates="subreddit", cascade="all, delete, delete-orphan")
+    posts = db.relationship("Post", back_populates="subreddit", cascade="all, delete")
 
     @classmethod
     def create(cls, qty, users):
