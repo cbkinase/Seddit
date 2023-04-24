@@ -9,13 +9,16 @@
     top: 100%;
     left: 0;
     z-index: 1;
-    display: none;
+    display: block;
     width: 300px;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     overflow: hidden;
+    transition-duration: 0.1s;
+    transition-delay: 0.4s;
+    opacity: 0;
   }
 
   .hover-preview .hover-icon {
@@ -67,7 +70,8 @@
   }
 
 .subreddit-preview:hover .hover-preview {
-    display: block;
+    /* display: block; */
+    opacity: 1;
 }
 
 .hover-preview::before {
