@@ -8,7 +8,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    /* z-index: 1; */
+    z-index: 1;
     display: block;
     width: 300px;
     padding: 20px;
@@ -19,6 +19,7 @@
     transition-duration: 0.1s;
     transition-delay: 0.4s;
     opacity: 0;
+    pointer-events: none;
   }
 
   .hover-preview .hover-icon {
@@ -72,6 +73,7 @@
 .subreddit-preview:hover .hover-preview {
     /* display: block; */
     opacity: 1;
+    pointer-events: auto;
 }
 
 .hover-preview::before {
