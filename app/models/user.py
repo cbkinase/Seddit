@@ -52,5 +52,16 @@ class User(db.Model, UserMixin):
             'email': self.email,
             'avatar': self.avatar,
             'bio': self.bio,
+            'created_at': self.created_at,
+            'subreddits': {sub.name : sub.to_short_dict() for sub in self.subreddits}
+        }
+
+    def to_short_dict(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'avatar': self.avatar,
+            'bio': self.bio,
             'created_at': self.created_at
         }

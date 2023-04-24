@@ -64,6 +64,19 @@ class Subreddit(db.Model):
         'category': category,
         'created_at': self.created_at,
         'owner_info': subreddit_owner.to_dict(),
-        'subscribers': {sub.id : sub.to_dict() for sub in self.subscribers},
+        'subscribers': {sub.username : sub.to_short_dict() for sub in self.subscribers},
         "numSubscribers": len(self.subscribers)
+        }
+
+    def to_short_dict(self):
+        return {
+            'id': self.id,
+            'owner_id': self.owner_id,
+            'name': self.name,
+            'about': self.about,
+            'main_pic': str(self.main_pic),
+            'background_pic': str(self.background_pic),
+            'category': categories.get(self.category),
+            'created_at': self.created_at,
+            'numSubscribers': len(self.subscribers)
         }
