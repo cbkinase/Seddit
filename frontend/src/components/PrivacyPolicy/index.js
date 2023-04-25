@@ -10,7 +10,7 @@ export default function PrivacyPolicy() {
       <h3>Information We Collect</h3>
       <p>We collect information about you when you use our Services, including:</p>
       <ul>
-        <li>Information you provide to us, such as your username, email address, and password.</li>
+        <li>Information you provide to us, such as your username, biographical information, and email address.</li>
         <li>Information we collect automatically, such as your IP address, device type, and browsing activity.</li>
         <li>Information we receive from third parties, such as advertising partners and analytics providers.</li>
       </ul>
