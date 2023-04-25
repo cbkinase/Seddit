@@ -74,7 +74,7 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
                             <UserHover subreddit={subreddit} />
                             {shortenWord(post.author_info.username, 10)}
                         </NavLink>{" "}
-                        {moment(Date.parse(subreddit.created_at)).fromNow()}
+                        {moment(Date.parse(post.created_at)).fromNow()}
                     </span>
                 </span>
             </span>

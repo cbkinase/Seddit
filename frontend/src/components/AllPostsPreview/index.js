@@ -48,14 +48,19 @@ export default function AllPostsPreview({ user }) {
                 />
             </div>
             <div className="subreddit-short-main-container">
-                {filteredPosts.map((post) => (
-                    <IndividualAbridgedPost
-                        key={post.id}
-                        user={user}
-                        post={post}
-                        subreddit={subreddits[post.subreddit_info.id]}
-                    />
-                ))}
+                {filteredPosts
+                    .sort(
+                        (a, b) =>
+                            Date.parse(b.created_at) - Date.parse(a.created_at)
+                    )
+                    .map((post) => (
+                        <IndividualAbridgedPost
+                            key={post.id}
+                            user={user}
+                            post={post}
+                            subreddit={subreddits[post.subreddit_info.id]}
+                        />
+                    ))}
             </div>
         </>
     );
