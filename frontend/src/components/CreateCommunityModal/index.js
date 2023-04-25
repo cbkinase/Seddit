@@ -16,19 +16,42 @@ function CreateCommunityModal() {
 
     useEffect(() => {
         let errors = [];
-        let badChars = [" ", "/", "#", "@", "!", "%", "^", "&", "*", "(", ")", "=", "+", "[", "]", "?", ".", ",", "`", "~", "-"]
-        // if (communityDescription.length > 2000)
-        //     errors.push("Description must be fewer than 2000 characters");
-        if (badChars.some(char => communityName.includes(char)))
+        let badChars = [
+            " ",
+            "/",
+            "#",
+            "@",
+            "!",
+            "%",
+            "^",
+            "&",
+            "*",
+            "(",
+            ")",
+            "=",
+            "+",
+            "[",
+            "]",
+            "?",
+            ".",
+            ",",
+            "`",
+            "~",
+            "-",
+        ];
+        if (communityDescription.length > 2000)
+            errors.push("Description must be fewer than 2000 characters");
+        if (badChars.some((char) => communityName.includes(char)))
             errors.push("Name must not contain special characters");
         if (!communityName.length) errors.push("Name must be provided");
+        if (communityName.length > 21) errors.push("Name must be shorter");
 
         setErrors(errors);
     }, [communityName, communityDescription]);
 
     async function handleSubmit(e) {
         e.preventDefault();
-        setHasSubmitted(true)
+        setHasSubmitted(true);
 
         // setErrors(errors)
         if (errors.length) return;
@@ -49,7 +72,7 @@ function CreateCommunityModal() {
             return;
         } else {
             closeModal();
-            history.push(`/r/${subreddit.name}`)
+            history.push(`/r/${subreddit.name}`);
         }
     }
 
@@ -61,11 +84,16 @@ function CreateCommunityModal() {
                     &#215;
                 </button>
             </div>
-            {errors.map((error, idx) => (
-                error === "Name must be provided" && !hasSubmitted ? null : <li style={{ marginBottom: "15px", color: "red" }} key={idx}>
-                    {error}
-                </li>
-            ))}
+            {errors.map((error, idx) =>
+                error === "Name must be provided" && !hasSubmitted ? null : (
+                    <li
+                        style={{ marginBottom: "15px", color: "red" }}
+                        key={idx}
+                    >
+                        {error}
+                    </li>
+                )
+            )}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label
@@ -85,16 +113,22 @@ function CreateCommunityModal() {
                         }
                         required
                     />
-                                        {communityName.length <= 21 ? (
+                    {communityName.length <= 21 ? (
                         <p style={{ fontSize: "12px", marginTop: "3px" }}>
                             {21 - communityName.length} character
                             {21 - communityName.length !== 1 && "s"} remaining
                         </p>
                     ) : (
-                        <p style={{ fontSize: "12px", color: "red", marginTop: "3px" }}>
+                        <p
+                            style={{
+                                fontSize: "12px",
+                                color: "red",
+                                marginTop: "3px",
+                            }}
+                        >
                             You are {communityName.length - 21} character
-                            {communityName.length - 21 !== 1 && "s"} above the allowed
-                            limit
+                            {communityName.length - 21 !== 1 && "s"} above the
+                            allowed limit
                         </p>
                     )}
                 </div>
@@ -142,13 +176,17 @@ function CreateCommunityModal() {
                     {communityDescription.length <= 2000 ? (
                         <p style={{ fontSize: "12px" }}>
                             {2000 - communityDescription.length} character
-                            {2000 - communityDescription.length !== 1 && "s"} remaining
+                            {2000 - communityDescription.length !== 1 &&
+                                "s"}{" "}
+                            remaining
                         </p>
                     ) : (
                         <p style={{ fontSize: "12px", color: "red" }}>
-                            You are {communityDescription.length - 2000} character
-                            {communityDescription.length - 2000 !== 1 && "s"} above the allowed
-                            limit
+                            You are {communityDescription.length - 2000}{" "}
+                            character
+                            {communityDescription.length - 2000 !== 1 &&
+                                "s"}{" "}
+                            above the allowed limit
                         </p>
                     )}
                 </div>

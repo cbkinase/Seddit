@@ -4,22 +4,33 @@ import { editSubreddit } from "../../store/subreddits";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-function EditCommunityModal({subreddit}) {
-
+function EditCommunityModal({ subreddit }) {
     const categoryConverter = (str) => {
         switch (str) {
-            case "art": return 1;
-            case "entertainment": return 2;
-            case "gaming": return 3;
-            case "science": return 4;
-            case "politics": return 5;
-            default: return 0;
+            case "art":
+                return 1;
+            case "entertainment":
+                return 2;
+            case "gaming":
+                return 3;
+            case "science":
+                return 4;
+            case "politics":
+                return 5;
+            default:
+                return 0;
         }
-    }
+    };
     const [communityName, setCommunityName] = useState(subreddit.name || "");
-    const [communityCategory, setCommunityCategory] = useState(categoryConverter(subreddit.category) || "");
-    const [communityDescription, setCommunityDescription] = useState(subreddit.about || "");
-    const [communityPicture, setCommunityPicture] = useState(subreddit.main_pic || "")
+    const [communityCategory, setCommunityCategory] = useState(
+        categoryConverter(subreddit.category) || ""
+    );
+    const [communityDescription, setCommunityDescription] = useState(
+        subreddit.about || ""
+    );
+    const [communityPicture, setCommunityPicture] = useState(
+        subreddit.main_pic || ""
+    );
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
     const dispatch = useDispatch();
@@ -28,18 +39,19 @@ function EditCommunityModal({subreddit}) {
 
     useEffect(() => {
         let errors = [];
-        // if (communityDescription.length > 2000)
-        //     errors.push("Description must be fewer than 2000 characters");
+        if (communityDescription.length > 2000)
+            errors.push("Description must be fewer than 2000 characters");
         // if (communityName.length > 21)
         //     errors.push("Name must be 21 or fewer characters");
         if (!communityName.length) errors.push("Name must be provided");
+        if (communityName.length > 21) errors.push("Name must be shorter");
 
         setErrors(errors);
     }, [communityName, communityDescription]);
 
     async function handleSubmit(e) {
         e.preventDefault();
-        setHasSubmitted(true)
+        setHasSubmitted(true);
 
         // setErrors(errors)
         if (errors.length) return;
@@ -51,9 +63,11 @@ function EditCommunityModal({subreddit}) {
                 name: communityName,
                 about: communityDescription,
                 category: Number(communityCategory),
-                main_pic: communityPicture
+                main_pic: communityPicture,
             };
-            editedSubreddit = await dispatch(editSubreddit(payload, subreddit.id));
+            editedSubreddit = await dispatch(
+                editSubreddit(payload, subreddit.id)
+            );
         }
 
         if (editedSubreddit.errors) {
@@ -61,7 +75,7 @@ function EditCommunityModal({subreddit}) {
             return;
         } else {
             closeModal();
-            history.push(`/r/${editedSubreddit.name}`)
+            history.push(`/r/${editedSubreddit.name}`);
         }
     }
 
@@ -74,7 +88,7 @@ function EditCommunityModal({subreddit}) {
                 </button>
             </div>
             {errors.map((error, idx) => (
-            <li style={{ marginBottom: "15px", color: "red" }} key={idx}>
+                <li style={{ marginBottom: "15px", color: "red" }} key={idx}>
                     {error}
                 </li>
             ))}
@@ -157,16 +171,20 @@ function EditCommunityModal({subreddit}) {
                         }
                         rows="8"
                     ></textarea>
-                                        {communityDescription.length <= 2000 ? (
+                    {communityDescription.length <= 2000 ? (
                         <p style={{ fontSize: "12px" }}>
                             {2000 - communityDescription.length} character
-                            {2000 - communityDescription.length !== 1 && "s"} remaining
+                            {2000 - communityDescription.length !== 1 &&
+                                "s"}{" "}
+                            remaining
                         </p>
                     ) : (
                         <p style={{ fontSize: "12px", color: "red" }}>
-                            You are {communityDescription.length - 2000} character
-                            {communityDescription.length - 2000 !== 1 && "s"} above the allowed
-                            limit
+                            You are {communityDescription.length - 2000}{" "}
+                            character
+                            {communityDescription.length - 2000 !== 1 &&
+                                "s"}{" "}
+                            above the allowed limit
                         </p>
                     )}
                 </div>
