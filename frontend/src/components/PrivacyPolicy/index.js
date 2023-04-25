@@ -89,4 +89,3 @@ export default function PrivacyPolicy() {
             </div>
         </section>
     );
-}
