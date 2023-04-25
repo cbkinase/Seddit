@@ -1,0 +1,82 @@
+#post-comment-upvote {
+    align-self: flex-start;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    color: #808080;
+    text-decoration: none;
+    font-size: 14px;
+    /* font-family: "IBMPlexSans" Arial, Helvetica, sans-serif; */
+    padding: 4px 4px;
+}
+
+#post-comment-upvote:hover {
+    background-color: rgba(178, 178, 255, 0.1);
+}
+
+#post-comment-upvote > i {
+    margin-right: 5px;
+}
+
+.voting-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.upvote-button,
+.downvote-button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 8px 8px;
+}
+
+.upvote-button:hover {
+    background-color: rgba(178, 178, 178, 0.2);
+    color: red;
+}
+
+.downvote-button:hover {
+    background-color: rgba(178, 178, 178, 0.2);
+    color: #7193ff;
+}
+
+.post-votes {
+    font-size: 14px;
+    font-weight: bold;
+    /* margin: 0; */
+}
+
+.card-votes {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 45px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    /* background-color: rgba(178, 178, 178, 0.2); */
+    background-color: #dfdfeb60;
+    /* background-color: #f1efef60; */
+}
+
+.vote-adj-down {
+    margin-top: 15px;
+}
+
+/* .card-upvote,
+.card-downvote {
+    margin-bottom: 5px;
+} */
+
+/* .post-votes {
+    padding-top: 5px;
+    padding-bottom: 5px;
+} */
+
+/* .downvote-button {
+    margin-bottom: 10px;
+} */

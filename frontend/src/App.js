@@ -6,6 +6,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import AbridgedSubredditDisplay from "./components/AbridgedSubredditInfo";
+import AllPostsPreview from "./components/AllPostsPreview";
 import ContentPolicy from "./components/ContentPolicy";
 import UserAgreement from "./components/UserAgreement";
 import PrivacyPolicy from "./components/PrivacyPolicy";
@@ -26,6 +27,9 @@ function App() {
             <Navigation isLoaded={isLoaded} />
             {isLoaded && (
                 <Switch>
+                    <Route exact path="/">
+                        <AllPostsPreview user={user}></AllPostsPreview>
+                    </Route>
                     <Route exact path="/explore">
                         <AbridgedSubredditDisplay user={user} />
                     </Route>
