@@ -6,6 +6,7 @@ import { getSubreddits } from "../../store/subreddits";
 import OpenModalButton from "../OpenModalButton";
 import EditCommunityModal from "../EditCommunityModal";
 import DeleteSubredditModal from "../DeleteSubredditModal";
+import SubredditPostsPreview from "../SubredditPostsPreview";
 
 export default function SubredditPage() {
     const { subredditName } = useParams();
@@ -207,6 +208,7 @@ export default function SubredditPage() {
                     </div>
                 </section>
             </div>
+            <SubredditPostsPreview user={user} subreddit={subreddit} />
         </div>
     ) : (
         //   <div>

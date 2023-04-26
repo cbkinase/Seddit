@@ -38,6 +38,14 @@ function CreateCommunityModal() {
             "`",
             "~",
             "-",
+            "<",
+            ">",
+            "\\",
+            "|",
+            ";",
+            ":",
+            "{",
+            "}",
         ];
         if (communityDescription.length > 2000)
             errors.push("Description must be fewer than 2000 characters");
