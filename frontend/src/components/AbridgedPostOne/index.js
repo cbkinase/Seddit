@@ -40,10 +40,13 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
 
     function isUserAuthToEdit(user, post) {
         if (!user) return null;
-        return user.id === post.author_info.id || user.id === post.subreddit_info.owner_id
+        return (
+            user.id === post.author_info.id ||
+            user.id === post.subreddit_info.owner_id
+        );
     }
 
-    return ( post && subreddit ?
+    return post && subreddit ? (
         <div className="box-dec-1 subreddit-short-container post-short-container">
             <VotingSection />
             <span className="subreddit-abridged-top post-prev-adjust-right">
@@ -102,7 +105,13 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
                     id="post-prev-attachment-container"
                     to={`/r/${subreddit.name}/posts/${post.id}`}
                 >
-                    <p style={{ marginBottom: "18px", marginLeft: "7px" }}>
+                    <p
+                        style={{
+                            marginBottom: "18px",
+                            marginLeft: "7px",
+                            marginTop: "-5px",
+                        }}
+                    >
                         {ellipsisIfLong(post.content)}
                     </p>
                 </NavLink>
@@ -112,89 +121,96 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
                     capitalizeFirstLetter(subreddit.category)}
             </h3> */}
             <div className="post-footer-container">
-            <NavLink
-                style={{ marginLeft: "7px" }}
-                onClick={(e) => {
-                    e.preventDefault();
-                    alert("Not yet implemented");
-                }}
-                to={`/r/${subreddit.name}/posts/${post.id}`}
-                id="post-comment-upvote"
-            >
-                <i
-                    // style={{ marginRight: "5px" }}
-                    className="fa fa-comment"
-                    aria-hidden="true"
-                ></i>
-                <span>{Math.floor(2 + Math.random() * 10)} Comments</span>
-            </NavLink>
-            <NavLink
-                style={{ marginLeft: "7px" }}
-                onClick={(e) => {
-                    e.preventDefault();
-                    alert("Not yet implemented");
-                }}
-                to={`/r/${subreddit.name}/posts/${post.id}`}
-                id="post-comment-upvote"
-            >
-                <i
-                    // style={{ marginRight: "5px" }}
-                    className="fa fa-share"
-                    aria-hidden="true"
-                ></i>
-                <span>Share</span>
-            </NavLink>
-            {user && <NavLink
-                style={{ marginLeft: "7px" }}
-                onClick={(e) => {
-                    e.preventDefault();
-                    alert("Not yet implemented");
-                }}
-                to={`/r/${subreddit.name}/posts/${post.id}`}
-                id="post-comment-upvote"
-            >
-                <i
-                    // style={{ marginRight: "5px" }}
-                    className="fa fa-bookmark"
-                    aria-hidden="true"
-                ></i>
-                <span>Save</span>
-            </NavLink>}
-            {isUserAuthToEdit(user, post) && <NavLink
-                style={{ marginLeft: "7px" }}
-                onClick={(e) => {
-                    e.preventDefault();
-                    alert("Not yet implemented");
-                }}
-                to={`/r/${subreddit.name}/posts/${post.id}`}
-                id="post-comment-upvote"
-            >
-                <i
-                    // style={{ marginRight: "5px" }}
-                    className="fa fa-edit"
-                    aria-hidden="true"
-                ></i>
-                <span>Edit</span>
-            </NavLink>}
-            {isUserAuthToEdit(user, post) && <NavLink
-                style={{ marginLeft: "7px" }}
-                onClick={(e) => {
-                    e.preventDefault();
-                    alert("Not yet implemented");
-                }}
-                to={`/r/${subreddit.name}/posts/${post.id}`}
-                id="post-comment-upvote"
-            >
-                <i
-                    // style={{ marginRight: "5px" }}
-                    className="fa fa-trash"
-                    aria-hidden="true"
-                ></i>
-                <span>Delete</span>
-            </NavLink>}
+                <NavLink
+                    style={{ marginLeft: "7px" }}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        alert("Not yet implemented");
+                    }}
+                    to={`/r/${subreddit.name}/posts/${post.id}`}
+                    id="post-comment-upvote"
+                >
+                    <i
+                        // style={{ marginRight: "5px" }}
+                        className="fa fa-comment"
+                        aria-hidden="true"
+                    ></i>
+                    <span>{Math.floor(2 + Math.random() * 10)} Comments</span>
+                </NavLink>
+                <NavLink
+                    style={{ marginLeft: "7px" }}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        alert("Not yet implemented");
+                    }}
+                    to={`/r/${subreddit.name}/posts/${post.id}`}
+                    id="post-comment-upvote"
+                >
+                    <i
+                        // style={{ marginRight: "5px" }}
+                        className="fa fa-share"
+                        aria-hidden="true"
+                    ></i>
+                    <span>Share</span>
+                </NavLink>
+                {user && (
+                    <NavLink
+                        style={{ marginLeft: "7px" }}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            alert("Not yet implemented");
+                        }}
+                        to={`/r/${subreddit.name}/posts/${post.id}`}
+                        id="post-comment-upvote"
+                    >
+                        <i
+                            // style={{ marginRight: "5px" }}
+                            className="fa fa-bookmark"
+                            aria-hidden="true"
+                        ></i>
+                        <span>Save</span>
+                    </NavLink>
+                )}
+                {isUserAuthToEdit(user, post) && (
+                    <NavLink
+                        style={{ marginLeft: "7px" }}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            alert("Not yet implemented");
+                        }}
+                        to={`/r/${subreddit.name}/posts/${post.id}`}
+                        id="post-comment-upvote"
+                    >
+                        <i
+                            // style={{ marginRight: "5px" }}
+                            className="fa fa-edit"
+                            aria-hidden="true"
+                        ></i>
+                        <span>Edit</span>
+                    </NavLink>
+                )}
+                {isUserAuthToEdit(user, post) && (
+                    <NavLink
+                        style={{ marginLeft: "7px" }}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            alert("Not yet implemented");
+                        }}
+                        to={`/r/${subreddit.name}/posts/${post.id}`}
+                        id="post-comment-upvote"
+                    >
+                        <i
+                            // style={{ marginRight: "5px" }}
+                            className="fa fa-trash"
+                            aria-hidden="true"
+                        ></i>
+                        <span>Delete</span>
+                    </NavLink>
+                )}
             </div>
         </div>
-        : <h1>Loading...</h1>
+    ) : (
+        <h1>Loading...</h1>
     );
 }
 
@@ -206,7 +222,9 @@ function VotingSection() {
                 className="fa fa-arrow-up upvote-button fa-lg vote-adj-down"
                 aria-hidden="true"
             ></i>
-            <p className="post-votes vote-adj-down">{Math.floor(2 + Math.random() * 100)}</p>
+            <p className="post-votes vote-adj-down">
+                {Math.floor(2 + Math.random() * 100)}
+            </p>
             <i
                 onClick={(e) => alert("Not yet implemented")}
                 className="fa fa-arrow-down fa-lg downvote-button vote-adj-down"
