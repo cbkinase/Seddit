@@ -8,7 +8,23 @@ post_routes = Blueprint('posts', __name__)
 
 @post_routes.route("/")
 def get_all_posts():
-    all_posts = Post.query.order_by(Post.created_at.desc()).all()
+    page = request.args.get('page', type=int)
+    per_page = request.args.get('per_page', type=int)
+    limit = None
+    offset = None
+
+    if page and per_page:
+        offset = (page - 1) * per_page
+        limit = per_page
+
+
+    # all_posts = Post.query.order_by(Post.created_at.desc()).all()
+    all_posts = db.session.query(Post).order_by(Post.created_at.desc())
+    if (limit):
+        all_posts = all_posts.limit(limit)
+        print("HII")
+    if (offset):
+        all_posts = all_posts.offset(offset)
     return {"Posts": {post.id : post.to_dict() for post in all_posts}}
 
 

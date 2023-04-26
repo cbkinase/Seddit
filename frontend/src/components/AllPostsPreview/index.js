@@ -4,32 +4,61 @@ import { getSubreddits } from "../../store/subreddits";
 import IndividualAbridgedPost from "../AbridgedPostOne";
 import { getAllPosts } from "../../store/posts";
 
-export default function AllPostsPreview({ user }) {
+export default function AllPostsPreview({ user, subreddits }) {
     const dispatch = useDispatch();
     const [searchTerm, setSearchTerm] = useState("");
+    const [items, setItems] = useState([]);
+    const [page, setPage] = useState(1);
+
+    // useEffect(() => {
+    //     // dispatch(getSubreddits());
+    //     // dispatch(getAllPosts());
+    // }, [dispatch]);
 
     useEffect(() => {
-        dispatch(getSubreddits());
-        dispatch(getAllPosts());
-    }, [dispatch]);
+        const fetchData = async () => {
+            const response = await fetch(
+                `/api/posts/?page=${page}&per_page=${10}`
+            );
+            let data = await response.json();
+            data = Object.values(data.Posts);
+            setItems((prevItems) => [...prevItems, ...data]);
+        };
+
+        fetchData();
+    }, [page]);
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
     };
 
-    const subreddits = useSelector((state) => state.subreddits.Subreddits);
-    const posts = useSelector((state) => state.posts.Posts);
+    const handleScroll = () => {
+        if (
+            window.innerHeight + document.documentElement.scrollTop ===
+            document.documentElement.offsetHeight
+        ) {
+            setPage((prevPage) => prevPage + 1);
+        }
+    };
 
-    const allPostsArr = Object.values(posts);
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
-    const filteredPosts = allPostsArr.filter((post) => {
-        return post.title.toLowerCase().includes(searchTerm.toLowerCase());
-    });
+    // const subreddits = useSelector((state) => state.subreddits.Subreddits);
+    // const posts = useSelector((state) => state.posts.Posts);
+
+    // const allPostsArr = Object.values(posts);
+
+    // const filteredPosts = allPostsArr.filter((post) => {
+    //     return post.title.toLowerCase().includes(searchTerm.toLowerCase());
+    // });
 
     return (
         <>
             <div style={{ height: "30px", backgroundColor: "#dae0e6" }}></div>
-            <div
+            {/* <div
                 style={{
                     display: "flex",
                     alignItems: "center",
@@ -46,21 +75,26 @@ export default function AllPostsPreview({ user }) {
                     value={searchTerm}
                     onChange={handleSearchChange}
                 />
-            </div>
+            </div> */}
             <div className="subreddit-short-main-container">
-                {filteredPosts
-                    .sort(
-                        (a, b) =>
-                            Date.parse(b.created_at) - Date.parse(a.created_at)
-                    )
-                    .map((post) => (
-                        <IndividualAbridgedPost
-                            key={post.id}
-                            user={user}
-                            post={post}
-                            subreddit={subreddits[post.subreddit_info.id]}
-                        />
-                    ))}
+                {items.length > 0 && Object.values(subreddits).length > 0 ? (
+                    items
+                        .sort(
+                            (a, b) =>
+                                Date.parse(b.created_at) -
+                                Date.parse(a.created_at)
+                        )
+                        .map((post) => (
+                            <IndividualAbridgedPost
+                                key={post.id}
+                                user={user}
+                                post={post}
+                                subreddit={subreddits[post.subreddit_info.id]}
+                            />
+                        ))
+                ) : (
+                    <h1>Loading...</h1>
+                )}
             </div>
         </>
     );

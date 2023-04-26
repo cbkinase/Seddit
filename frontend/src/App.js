@@ -35,7 +35,10 @@ function App() {
             {isLoaded && (
                 <Switch>
                     <Route exact path="/">
-                        <AllPostsPreview user={user}></AllPostsPreview>
+                        <AllPostsPreview
+                            user={user}
+                            subreddits={subreddits}
+                        ></AllPostsPreview>
                     </Route>
                     <Route exact path="/explore">
                         <AbridgedSubredditDisplay user={user} />
