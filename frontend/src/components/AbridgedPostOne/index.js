@@ -144,6 +144,22 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
                 ></i>
                 <span>Share</span>
             </NavLink>
+            {user && <NavLink
+                style={{ marginLeft: "7px" }}
+                onClick={(e) => {
+                    e.preventDefault();
+                    alert("Not yet implemented");
+                }}
+                to={`/r/${subreddit.name}/posts/${post.id}`}
+                id="post-comment-upvote"
+            >
+                <i
+                    // style={{ marginRight: "5px" }}
+                    className="fa fa-bookmark"
+                    aria-hidden="true"
+                ></i>
+                <span>Save</span>
+            </NavLink>}
             {isUserAuthToEdit(user, post) && <NavLink
                 style={{ marginLeft: "7px" }}
                 onClick={(e) => {
