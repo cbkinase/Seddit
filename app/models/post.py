@@ -30,8 +30,8 @@ class Post(db.Model):
         filtered_cat_pics = [pic['url'] for pic in cat_info if pic['url'].endswith("jpg")]
         return [cls(subreddit = choice(subreddits),
                     author = choice(users),
-                    title = fake.sentence(nb_words = randint(3, 200)),
-                    content = fake.sentence(nb_words = randint(3, 200)),
+                    title = fake.sentence(nb_words = randint(3, 50)),
+                    content = fake.sentence(nb_words = randint(3, 300)),
                     attachment = choice(filtered_cat_pics))
                     for _ in range(qty)]
 
