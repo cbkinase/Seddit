@@ -13,6 +13,8 @@
 .subreddit-logo {
     display: flex;
     align-items: center;
+    color: white;
+    text-decoration: none;
 }
 
 .subreddit-logo img {
@@ -77,6 +79,7 @@
     margin-left: 10vw;
     margin-right: 10vw;
     margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .subreddit-description {

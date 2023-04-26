@@ -31,7 +31,7 @@ class Post(db.Model):
         return [cls(subreddit = choice(subreddits),
                     author = choice(users),
                     title = fake.sentence(nb_words = randint(3, 200)),
-                    content = fake.sentence(nb_words = randint(3, 2000)),
+                    content = fake.sentence(nb_words = randint(3, 200)),
                     attachment = choice(filtered_cat_pics))
                     for _ in range(qty)]
 

@@ -12,15 +12,22 @@ import UserAgreement from "./components/UserAgreement";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import SubredditPage from "./components/SubredditPage";
 import UserInfo from "./components/UserInfo";
+import IndividualFullPost from "./components/PostViewFull";
+import { getSubreddits } from "./store/subreddits";
+import { getAllPosts } from "./store/posts";
 
 function App() {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
     useEffect(() => {
+        dispatch(getSubreddits());
+        dispatch(getAllPosts());
         dispatch(authenticate()).then(() => setIsLoaded(true));
     }, [dispatch]);
 
     const user = useSelector((state) => state.session.user);
+    const subreddits = useSelector((state) => state.subreddits.Subreddits);
+    const posts = useSelector((state) => state.posts.Posts);
 
     return (
         <>
@@ -47,6 +54,13 @@ function App() {
                     </Route>
                     <Route path="/policy">
                         <PrivacyPolicy />
+                    </Route>
+                    <Route path="/r/:subredditName/posts/:postId">
+                        <IndividualFullPost
+                            user={user}
+                            subreddits={subreddits}
+                            posts={posts}
+                        />
                     </Route>
                     <Route path="/r/:subredditName">
                         <SubredditPage />

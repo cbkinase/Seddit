@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./subredditPage.css";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSubreddits } from "../../store/subreddits";
 import OpenModalButton from "../OpenModalButton";
@@ -93,7 +93,7 @@ export default function SubredditPage() {
     return found ? (
         <div>
             <header className="subreddit-header">
-                <div className="subreddit-logo">
+                <NavLink to={`/r/${subreddit.name}`} className="subreddit-logo">
                     <img
                         style={{
                             width: "57px",
@@ -104,7 +104,7 @@ export default function SubredditPage() {
                         alt="Logo"
                     />
                     <h1 className="subreddit-name">r/{subreddit.name}</h1>
-                </div>
+                </NavLink>
                 {user?.id === subreddit.owner_id && (
                     <nav className="subreddit-nav">
                         <ul>
