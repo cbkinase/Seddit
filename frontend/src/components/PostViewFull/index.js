@@ -149,6 +149,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                         >
                             <p
                                 style={{
+                                    overflowWrap: "anywhere",
                                     marginBottom: "13px",
                                     marginLeft: "7px",
                                     marginTop: "-5px",
