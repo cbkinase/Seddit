@@ -53,6 +53,7 @@ class User(db.Model, UserMixin):
             'avatar': self.avatar,
             'bio': self.bio,
             'created_at': self.created_at,
+            'num_posts': len(self.posts),
             'subreddits': {sub.name : sub.to_short_dict() for sub in self.subreddits}
         }
 
@@ -63,5 +64,6 @@ class User(db.Model, UserMixin):
             'email': self.email,
             'avatar': self.avatar,
             'bio': self.bio,
-            'created_at': self.created_at
+            'created_at': self.created_at,
+            'num_posts': len(self.posts)
         }

@@ -1,344 +1,347 @@
 /* Colors */
 :root {
-    --primary-color: #0079D3;
-    --secondary-color: #F0F0F0;
-    --background-color: #FFFFFF;
-    --text-color: #1A1A1B;
-    --text-secondary-color: #878A8C;
-  }
+    --primary-color: #0079d3;
+    --secondary-color: #f0f0f0;
+    --background-color: #ffffff;
+    --text-color: #1a1a1b;
+    --text-secondary-color: #878a8c;
+}
 
-  /* User page styles */
-  .user-page {
+/* User page styles */
+.user-page {
     max-width: 800px;
     margin: 0 auto;
     background-color: var(--background-color);
     padding: 20px;
-  }
+}
 
-  .header {
+.header {
     display: flex;
     align-items: center;
     margin-bottom: 30px;
     margin-top: 5vh;
-  }
+}
 
-  .avatar img {
+.avatar img {
     width: 150px;
     height: 150px;
     border-radius: 50%;
     margin-right: 30px;
-  }
+}
 
-  .username {
+.username {
     margin: 0;
     font-size: 32px;
     font-weight: bold;
     color: var(--text-color);
-  }
+}
 
-  .stats {
+.stats {
     display: flex;
     margin-top: 10px;
-  }
+}
 
-  .stat-item {
+.stat-item {
     margin-right: 30px;
     font-size: 16px;
     color: var(--text-secondary-color);
-  }
+}
 
-  .stat-item:last-child {
+.stat-item:last-child {
     margin-right: 0;
-  }
+}
 
-  .stat-item .count {
+.stat-item .count {
     font-size: 24px;
     font-weight: bold;
     color: var(--text-color);
-  }
+}
 
-  .stat-item .label {
+.stat-item .label {
     display: block;
     font-size: 14px;
     color: var(--text-secondary-color);
-  }
+}
 
-  .bio {
+.bio {
     margin-top: 30px;
     font-size: 16px;
     line-height: 1.5;
     color: var(--text-color);
-  }
+}
 
-  .content {
-    border: 1px solid var(--secondary-color);
+.content {
+    /* border: 1px solid var(--secondary-color); */
     background-color: var(--background-color);
     padding: 20px;
-  }
+}
 
-  .tabs ul {
+.tabs {
+    padding-bottom: 10px;
+}
+
+.tabs ul {
     list-style: none;
     margin: 0;
     padding: 0;
     border-bottom: 1px solid var(--secondary-color);
-  }
+}
 
-  .tabs ul li {
+.tabs ul li {
     display: inline-block;
     margin-right: 20px;
     font-size: 18px;
     font-weight: bold;
-  }
+}
 
-  .tabs ul li:last-child {
+.tabs ul li:last-child {
     margin-right: 0;
-  }
+}
 
-  .tabs ul li a {
+.tabs ul li a {
     color: var(--text-color);
     text-decoration: none;
-  }
+}
 
-  .tabs ul li.active a {
+.tabs ul li.active a {
     color: var(--primary-color);
     border-bottom: 2px solid var(--primary-color);
-  }
+}
 
-  .post-list {
+.post-list {
     margin-top: 20px;
-  }
+}
 
-  .post {
+.post {
     margin-bottom: 30px;
     border-bottom: 1px solid var(--secondary-color);
     padding-bottom: 20px;
-  }
+}
 
-  .post:last-child {
+.post:last-child {
     margin-bottom: 0;
-  }
+}
 
-  .post-info {
+.post-info {
     font-size: 14px;
     color: var(--text-secondary-color);
     margin-bottom: 10px;
-  }
+}
 
-  .post-info a {
+.post-info a {
     color: var(--primary-color);
     text-decoration: none;
-  }
+}
 
-  .post-info a:hover {
+.post-info a:hover {
     text-decoration: underline;
-  }
+}
 
-  .post-info .dot {
+.post-info .dot {
     display: inline-block;
     width: 4px;
     height: 4px;
     background-color: var(--text-secondary-color);
     margin: 0 5px;
     border-radius: 50%;
-  }
+}
 
-  .post-title {
+.post-title {
     margin-top: 0;
     margin-bottom: 5px;
     font-size: 24px;
     font-weight: bold;
     color: var(--text-color);
-  }
+}
 
-  .post-title a {
+.post-title a {
     color: var(--text-color);
     text-decoration: none;
-  }
+}
 
-  .post-title a:hover {
-    text-decoration:
-    underline;
+.post-title a:hover {
+    text-decoration: underline;
 }
 
 .post-body {
-font-size: 16px;
-color: var(--text-color);
-line-height: 1.5;
+    font-size: 16px;
+    color: var(--text-color);
+    line-height: 1.5;
 }
 
 .post-footer {
-margin-top: 20px;
-display: flex;
-justify-content: space-between;
-align-items: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .post-actions {
-display: flex;
-align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .post-actions button {
-background-color: transparent;
-border: none;
-font-size: 16px;
-color: var(--text-secondary-color);
-margin-right: 10px;
-cursor: pointer;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    color: var(--text-secondary-color);
+    margin-right: 10px;
+    cursor: pointer;
 }
 
 .post-actions button:hover {
-text-decoration: underline;
+    text-decoration: underline;
 }
 
 .post-actions button:focus {
-outline: none;
+    outline: none;
 }
 
 .post-actions button.active {
-color: var(--primary-color);
-text-decoration: underline;
+    color: var(--primary-color);
+    text-decoration: underline;
 }
 
 .post-votes {
-display: flex;
-align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .post-votes button {
-background-color: transparent;
-border: none;
-font-size: 16px;
-color: var(--text-secondary-color);
-margin-right: 10px;
-cursor: pointer;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    color: var(--text-secondary-color);
+    margin-right: 10px;
+    cursor: pointer;
 }
 
 .post-votes button:hover {
-text-decoration: underline;
+    text-decoration: underline;
 }
 
 .post-votes button:focus {
-outline: none;
+    outline: none;
 }
 
 .post-votes button.active {
-color: var(--primary-color);
+    color: var(--primary-color);
 }
 
 .post-votes .count {
-font-size: 16px;
-color: var(--text-color);
-font-weight: bold;
-margin-right: 10px;
+    font-size: 16px;
+    color: var(--text-color);
+    font-weight: bold;
+    margin-right: 10px;
 }
 
 .post-votes .icon {
-font-size: 20px;
-color: var(--text-secondary-color);
+    font-size: 20px;
+    color: var(--text-secondary-color);
 }
 
 .comment {
-margin-top: 30px;
-padding-left: 20px;
-border-left: 1px solid var(--secondary-color);
+    margin-top: 30px;
+    padding-left: 20px;
+    border-left: 1px solid var(--secondary-color);
 }
 
 .comment:last-child {
-margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .comment-header {
-display: flex;
-align-items: center;
-margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .comment-author {
-font-size: 14px;
-color: var(--text-secondary-color);
-font-weight: bold;
-margin-right: 10px;
+    font-size: 14px;
+    color: var(--text-secondary-color);
+    font-weight: bold;
+    margin-right: 10px;
 }
 
 .comment-time {
-font-size: 14px;
-color: var(--text-secondary-color);
+    font-size: 14px;
+    color: var(--text-secondary-color);
 }
 
 .comment-body {
-font-size: 16px;
-color: var(--text-color);
-line-height: 1.5;
+    font-size: 16px;
+    color: var(--text-color);
+    line-height: 1.5;
 }
 
 .comment-actions {
-display: flex;
-align-items: center;
-margin-top: 10px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
 }
 
 .comment-actions button {
-background-color: transparent;
-border: none;
-font-size: 14px;
-color: var(--text-secondary-color);
-margin-right: 10px;
-cursor: pointer;
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    color: var(--text-secondary-color);
+    margin-right: 10px;
+    cursor: pointer;
 }
 
 .comment-actions button:hover {
-text-decoration: underline;
+    text-decoration: underline;
 }
 
 .comment-actions button:focus {
-outline: none;
+    outline: none;
 }
 
 .comment-actions button.active {
-color: var(--primary-color);
+    color: var(--primary-color);
 }
 
 .comment-votes {
-display: flex;
-align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .comment-votes button {
-background-color: transparent;
-border: none;
-font-size: 14px;
-color: var(--text-secondary-color);
-margin-right: 10px;
-cursor: pointer;
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    color: var(--text-secondary-color);
+    margin-right: 10px;
+    cursor: pointer;
 }
 
 .comment-votes button:hover {
-text-decoration: underline;
+    text-decoration: underline;
 }
 
 .comment-votes button:focus {
-outline: none;
+    outline: none;
 }
 
 .comment-votes button.active {
-color: var(--primary-color);
+    color: var(--primary-color);
 }
 
 .comment-votes .count {
-font-size: 14px;
-color: var(--text-color);
-font-weight: bold;
-margin-right: 10px;
+    font-size: 14px;
+    color: var(--text-color);
+    font-weight: bold;
+    margin-right: 10px;
 }
 
 .comment-votes .icon {
-font-size: 16px;
-color: var(--text-secondary-color);
+    font-size: 16px;
+    color: var(--text-secondary-color);
 }
 
 .comment-form {
-margin-top: 30px;
+    margin-top: 30px;
 }
 
 .comment-form textarea {
@@ -350,9 +353,9 @@ margin-top: 30px;
     border: 1px solid var(--secondary-color);
     border-radius: 5px;
     resize: none;
-    }
+}
 
-    .comment-form button {
+.comment-form button {
     background-color: var(--primary-color);
     color: white;
     border: none;
@@ -360,43 +363,43 @@ margin-top: 30px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    }
+}
 
-    .comment-form button:hover {
+.comment-form button:hover {
     background-color: var(--primary-color-hover);
+}
+
+@media screen and (max-width: 800px) {
+    .user-page {
+        max-width: 100vw;
+        margin-left: 3%;
     }
 
-    @media screen and (max-width: 800px) {
-        .user-page {
-            max-width: 100vw;
-            margin-left: 3%;
-        }
-
-        .header {
-            display: flex;
-            flex-direction: column;
-        }
+    .header {
+        display: flex;
+        flex-direction: column;
     }
+}
 
-    @media only screen and (max-width: 768px) {
+@media only screen and (max-width: 768px) {
     .post {
-    flex-direction: column;
-    align-items: center;
+        flex-direction: column;
+        align-items: center;
     }
 
     .post-header {
-    text-align: center;
+        text-align: center;
     }
 
     .post-header h1 {
-    font-size: 24px;
+        font-size: 24px;
     }
 
     .post-header p {
-    font-size: 14px;
+        font-size: 14px;
     }
 
     .post-body {
-    text-align: justify;
+        text-align: justify;
     }
-    }
+}
