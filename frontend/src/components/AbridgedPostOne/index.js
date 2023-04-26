@@ -38,6 +38,11 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
         return word[0].toUpperCase() + word.slice(1);
     };
 
+    function isUserAuthToEdit(user, post) {
+        if (!user) return null;
+        return user.id === post.author_info.id || user.id === post.subreddit_info.owner_id
+    }
+
     return (
         <div className="box-dec-1 subreddit-short-container post-short-container">
             <VotingSection />
@@ -106,6 +111,7 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
                 {subreddit.category &&
                     capitalizeFirstLetter(subreddit.category)}
             </h3> */}
+            <div className="post-footer-container">
             <NavLink
                 style={{ marginLeft: "7px" }}
                 onClick={(e) => {
@@ -122,6 +128,55 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
                 ></i>
                 <span>{25} Comments</span>
             </NavLink>
+            <NavLink
+                style={{ marginLeft: "7px" }}
+                onClick={(e) => {
+                    e.preventDefault();
+                    alert("Not yet implemented");
+                }}
+                to={`/r/${subreddit.name}/posts/${post.id}`}
+                id="post-comment-upvote"
+            >
+                <i
+                    // style={{ marginRight: "5px" }}
+                    className="fa fa-share"
+                    aria-hidden="true"
+                ></i>
+                <span>Share</span>
+            </NavLink>
+            {isUserAuthToEdit(user, post) && <NavLink
+                style={{ marginLeft: "7px" }}
+                onClick={(e) => {
+                    e.preventDefault();
+                    alert("Not yet implemented");
+                }}
+                to={`/r/${subreddit.name}/posts/${post.id}`}
+                id="post-comment-upvote"
+            >
+                <i
+                    // style={{ marginRight: "5px" }}
+                    className="fa fa-edit"
+                    aria-hidden="true"
+                ></i>
+                <span>Edit</span>
+            </NavLink>}
+            {isUserAuthToEdit(user, post) && <NavLink
+                style={{ marginLeft: "7px" }}
+                onClick={(e) => {
+                    e.preventDefault();
+                    alert("Not yet implemented");
+                }}
+                to={`/r/${subreddit.name}/posts/${post.id}`}
+                id="post-comment-upvote"
+            >
+                <i
+                    // style={{ marginRight: "5px" }}
+                    className="fa fa-trash"
+                    aria-hidden="true"
+                ></i>
+                <span>Delete</span>
+            </NavLink>}
+            </div>
         </div>
     );
 }

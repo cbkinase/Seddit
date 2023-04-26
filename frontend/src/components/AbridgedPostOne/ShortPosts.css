@@ -71,6 +71,13 @@
     margin-left: 10px;
 }
 
+.post-footer-container {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* .card-upvote,
 .card-downvote {
     margin-bottom: 5px;
