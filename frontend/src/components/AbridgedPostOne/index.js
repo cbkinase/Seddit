@@ -71,7 +71,7 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
                             className="card-username-link subreddit-preview"
                             to={`/u/${post.author_info.username}`}
                         >
-                            <UserHover subreddit={subreddit} />
+                            <UserHover post={post} />
                             {shortenWord(post.author_info.username, 10)}
                         </NavLink>{" "}
                         {moment(Date.parse(post.created_at)).fromNow()}

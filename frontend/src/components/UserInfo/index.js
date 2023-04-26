@@ -24,7 +24,7 @@ export default function UserInfo({currentUser}) {
         fn();
 
     }, [dispatch, userName])
-    console.log(user);
+
     // The whole currentUser.id === user.id business is to ensure the component gets re-rendered when a user edits their own profile
     return  user ? <div className="user-page">
     <div className="header">
