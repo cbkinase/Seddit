@@ -43,7 +43,7 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
         return user.id === post.author_info.id || user.id === post.subreddit_info.owner_id
     }
 
-    return (
+    return ( post && subreddit &&
         <div className="box-dec-1 subreddit-short-container post-short-container">
             <VotingSection />
             <span className="subreddit-abridged-top post-prev-adjust-right">
@@ -126,7 +126,7 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
                     className="fa fa-comment"
                     aria-hidden="true"
                 ></i>
-                <span>{25} Comments</span>
+                <span>{Math.floor(2 + Math.random() * 10)} Comments</span>
             </NavLink>
             <NavLink
                 style={{ marginLeft: "7px" }}
@@ -189,7 +189,7 @@ function VotingSection() {
                 className="fa fa-arrow-up upvote-button fa-lg vote-adj-down"
                 aria-hidden="true"
             ></i>
-            <p className="post-votes vote-adj-down">123</p>
+            <p className="post-votes vote-adj-down">{Math.floor(2 + Math.random() * 100)}</p>
             <i
                 onClick={(e) => alert("Not yet implemented")}
                 className="fa fa-arrow-down fa-lg downvote-button vote-adj-down"
