@@ -41,7 +41,7 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
     return (
         <div className="box-dec-1 subreddit-short-container post-short-container">
             <VotingSection />
-            <span className="subreddit-abridged-top">
+            <span className="subreddit-abridged-top post-prev-adjust-right">
                 <span className="subreddit-title-preview">
                     <NavLink
                         className="subreddit-title-nav"
@@ -79,7 +79,7 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
                 </span>
             </span>
             <NavLink
-                className="subreddit-title-nav"
+                className="subreddit-title-nav post-prev-adjust-right"
                 to={`/r/${subreddit.name}/posts/${post.id}`}
             >
                 <h2 className="card-info">{ellipsisIfLong(post.title)}</h2>
@@ -97,7 +97,9 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
                     id="post-prev-attachment-container"
                     to={`/r/${subreddit.name}/posts/${post.id}`}
                 >
-                    <p>{ellipsisIfLong(post.content)}</p>
+                    <p style={{ marginBottom: "18px", marginLeft: "7px" }}>
+                        {ellipsisIfLong(post.content)}
+                    </p>
                 </NavLink>
             )}
             {/* <h3 className="card-category">
@@ -105,11 +107,12 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
                     capitalizeFirstLetter(subreddit.category)}
             </h3> */}
             <NavLink
+                style={{ marginLeft: "7px" }}
                 onClick={(e) => {
                     e.preventDefault();
                     alert("Not yet implemented");
                 }}
-                to={"/FIXME"}
+                to={`/r/${subreddit.name}/posts/${post.id}`}
                 id="post-comment-upvote"
             >
                 <i

@@ -67,6 +67,10 @@
     margin-top: 15px;
 }
 
+.post-prev-adjust-right {
+    margin-left: 10px;
+}
+
 /* .card-upvote,
 .card-downvote {
     margin-bottom: 5px;
