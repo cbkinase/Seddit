@@ -43,7 +43,7 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
         return user.id === post.author_info.id || user.id === post.subreddit_info.owner_id
     }
 
-    return ( post && subreddit &&
+    return ( post && subreddit ?
         <div className="box-dec-1 subreddit-short-container post-short-container">
             <VotingSection />
             <span className="subreddit-abridged-top post-prev-adjust-right">
@@ -178,6 +178,7 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
             </NavLink>}
             </div>
         </div>
+        : <h1>Loading...</h1>
     );
 }
 
