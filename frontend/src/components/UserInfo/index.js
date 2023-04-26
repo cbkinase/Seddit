@@ -94,7 +94,12 @@ export default function UserInfo({ currentUser }) {
                         </li>
                     </ul>
                 </div>
-                {isDisplayPosts(user) && <UserPostsPreview user={user} />}
+                {isDisplayPosts(user) && Boolean(user.num_posts) && (
+                    <UserPostsPreview user={user} />
+                )}
+                {isDisplayPosts(user) && !user.num_posts && (
+                    <p>No posts to display</p>
+                )}
                 {isDisplayComments(user) && (
                     <p>Comments feature coming soon...</p>
                 )}
