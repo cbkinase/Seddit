@@ -5,7 +5,12 @@ import SubredditHover from "../SubredditHover";
 import UserHover from "../UserHover";
 import "./ShortPosts.css";
 
-export default function IndividualAbridgedPost({ user, post, subreddit, currentUser }) {
+export default function IndividualAbridgedPost({
+    user,
+    post,
+    subreddit,
+    currentUser,
+}) {
     // const dispatch = useDispatch();
 
     const shortenWord = (word, long = 20) => {
@@ -42,7 +47,10 @@ export default function IndividualAbridgedPost({ user, post, subreddit, currentU
         if (!user) return null;
         if (currentUser === null) return null;
         if (currentUser) {
-            return currentUser.id === post.author_info.id || currentUser.id === post.subreddit_info.owner_id
+            return (
+                currentUser.id === post.author_info.id ||
+                currentUser.id === post.subreddit_info.owner_id
+            );
         }
         return (
             user.id === post.author_info.id ||
@@ -60,6 +68,11 @@ export default function IndividualAbridgedPost({ user, post, subreddit, currentU
                         to={`/r/${subreddit.name}`}
                     >
                         <img
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src =
+                                    "https://cdn-icons-png.flaticon.com/512/1384/1384051.png";
+                            }}
                             alt="Pic"
                             className="subreddit-preview-img"
                             src={subreddit.main_pic}
@@ -101,7 +114,15 @@ export default function IndividualAbridgedPost({ user, post, subreddit, currentU
                 id="post-prev-attachment-container"
                 to={`/r/${subreddit.name}/posts/${post.id}`}
             >
-                <img id="post-attachment-image" src={post.attachment}></img>
+                <img
+                    onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src =
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png";
+                    }}
+                    id="post-attachment-image"
+                    src={post.attachment}
+                ></img>
             </NavLink>
             {!post.attachment && (
                 <NavLink

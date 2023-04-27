@@ -196,7 +196,11 @@ function EditCommunityModal({ subreddit }) {
                     >
                         Cancel
                     </button>
-                    <button type="submit" className="btn-primary">
+                    <button
+                        disabled={errors.length}
+                        type="submit"
+                        className="btn-primary"
+                    >
                         Edit Community
                     </button>
                 </div>

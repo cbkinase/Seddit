@@ -47,6 +47,11 @@ function ProfileButton({ user }) {
             >
                 {/* <i className="fas fa-user-circle" /> */}
                 <img
+                    onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src =
+                            "https://cdn-icons-png.flaticon.com/512/1384/1384051.png";
+                    }}
                     style={{
                         borderRadius: "4px",
                         width: "35px",
@@ -68,8 +73,7 @@ function ProfileButton({ user }) {
                         </li>
                     </>
                 ) : (
-                    <div className="login-signup-btn-container"
-                    >
+                    <div className="login-signup-btn-container">
                         <OpenModalButton
                             buttonText="Log In"
                             onItemClick={closeMenu}

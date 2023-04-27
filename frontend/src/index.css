@@ -699,7 +699,12 @@ body {
     transition: background-color 0.15s ease-in-out;
 }
 
-.btn-primary:hover {
+.btn-primary:disabled {
+    cursor: not-allowed;
+    background-color: rgba(0, 121, 133, 0.2);
+}
+
+.btn-primary:not(:disabled):hover {
     background-color: #006bb3;
 }
 

@@ -27,7 +27,7 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
         }
 
         if (wordArr.length < long && paragraph.length > 100) {
-            return paragraph.slice(0, 100) + "..."
+            return paragraph.slice(0, 100) + "...";
         }
         return paragraph;
     };
@@ -85,24 +85,31 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
                         to={`/r/${subreddit.name}`}
                     >
                         <img
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src =
+                                    "https://cdn-icons-png.flaticon.com/512/1384/1384051.png";
+                            }}
                             alt="Pic"
                             className="subreddit-preview-img"
                             src={subreddit.main_pic}
                         ></img>
                     </NavLink>
                     <NavLink
-                        style={{margin: "0px 0px", marginLeft: "2px"}}
+                        style={{ margin: "0px 0px", marginLeft: "2px" }}
                         className="subreddit-title-nav subreddit-preview"
                         to={`/r/${subreddit.name}`}
                     >
                         <SubredditHover subreddit={subreddit} />
-                        <h1 className="card-title">r/{shortenWord(subreddit.name, 10)} </h1>
+                        <h1 className="card-title">
+                            r/{shortenWord(subreddit.name, 10)}{" "}
+                        </h1>
                     </NavLink>
                     <span className="subreddit-preview-creator">
                         {" "}
                         • created by{" "}
                         <NavLink
-                            style={{margin: "0px 0px"}}
+                            style={{ margin: "0px 0px" }}
                             className="card-username-link subreddit-preview"
                             to={`/u/${subreddit.owner_info.username}`}
                         >
@@ -114,39 +121,37 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
                 </span>
             </span>
             {/* User is not in community already */}
-            {user &&
-                !subreddit.subscribers[user.username] && (
-                    <button
-                        id={`subreddit-${subreddit.id}-button`}
-                        onClick={(e) =>
-                            handleJoinCommunity(
-                                subreddit.id,
-                                user.id,
-                                subreddit.name
-                            )
-                        }
-                        className="act-subreddit-btn button-join remove-bottom-margin"
-                    >
-                        Join Community
-                    </button>
-                )}
+            {user && !subreddit.subscribers[user.username] && (
+                <button
+                    id={`subreddit-${subreddit.id}-button`}
+                    onClick={(e) =>
+                        handleJoinCommunity(
+                            subreddit.id,
+                            user.id,
+                            subreddit.name
+                        )
+                    }
+                    className="act-subreddit-btn button-join remove-bottom-margin"
+                >
+                    Join Community
+                </button>
+            )}
             {/* User is in community already */}
-            {user &&
-                subreddit.subscribers[user.username] && (
-                    <button
-                        onClick={(e) =>
-                            handleLeaveCommunity(
-                                subreddit.id,
-                                user.id,
-                                subreddit.name
-                            )
-                        }
-                        id={`subreddit-${subreddit.id}-button`}
-                        className="act-subreddit-btn button-leave remove-bottom-margin"
-                    >
-                        Already Joined
-                    </button>
-                )}
+            {user && subreddit.subscribers[user.username] && (
+                <button
+                    onClick={(e) =>
+                        handleLeaveCommunity(
+                            subreddit.id,
+                            user.id,
+                            subreddit.name
+                        )
+                    }
+                    id={`subreddit-${subreddit.id}-button`}
+                    className="act-subreddit-btn button-leave remove-bottom-margin"
+                >
+                    Already Joined
+                </button>
+            )}
             <NavLink
                 className="subreddit-title-nav"
                 to={`/r/${subreddit.name}`}

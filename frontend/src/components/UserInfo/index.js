@@ -42,6 +42,11 @@ export default function UserInfo({ currentUser }) {
             <div className="header">
                 <div className="avatar">
                     <img
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src =
+                                "https://cdn-icons-png.flaticon.com/512/1384/1384051.png";
+                        }}
                         src={
                             currentUser?.id === user.id
                                 ? currentUser?.avatar

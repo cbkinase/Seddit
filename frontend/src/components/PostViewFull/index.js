@@ -71,6 +71,11 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
             <header className="subreddit-header">
                 <NavLink to={`/r/${subreddit.name}`} className="subreddit-logo">
                     <img
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src =
+                                "https://cdn-icons-png.flaticon.com/512/1384/1384051.png";
+                        }}
                         style={{
                             width: "57px",
                             height: "57px",
@@ -92,6 +97,11 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                                 to={`/r/${subreddit.name}`}
                             >
                                 <img
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src =
+                                            "https://cdn-icons-png.flaticon.com/512/1384/1384051.png";
+                                    }}
                                     alt="Pic"
                                     className="subreddit-preview-img"
                                     src={subreddit.main_pic}
@@ -134,6 +144,11 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                         // to={`/r/${subreddit.name}/posts/${post.id}`}
                     >
                         <img
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src =
+                                    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png";
+                            }}
                             id="post-attachment-image"
                             src={post.attachment}
                         ></img>

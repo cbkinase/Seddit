@@ -95,6 +95,11 @@ export default function SubredditPage() {
             <header className="subreddit-header">
                 <NavLink to={`/r/${subreddit.name}`} className="subreddit-logo">
                     <img
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src =
+                                "https://cdn3.iconfinder.com/data/icons/2018-social-media-logotypes/1000/2018_social_media_popular_app_logo_reddit-512.png";
+                        }}
                         style={{
                             width: "57px",
                             height: "57px",
