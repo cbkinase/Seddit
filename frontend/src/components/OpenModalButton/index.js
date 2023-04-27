@@ -8,6 +8,9 @@ function OpenModalButton({
     onModalClose, // optional: callback function that will be called once the modal is closed
     className,
     id,
+    style,
+    renderEditButton,
+    renderDeleteButton,
 }) {
     const { setModalContent, setOnModalClose } = useModal();
 
@@ -18,7 +21,13 @@ function OpenModalButton({
     };
 
     return (
-        <button id={id} className={className} onClick={onClick}>
+        <button style={style} id={id} className={className} onClick={onClick}>
+            {renderDeleteButton && (
+                <i className="fa fa-trash" aria-hidden="true"></i>
+            )}
+            {renderEditButton && (
+                <i className="fa fa-edit" aria-hidden="true"></i>
+            )}
             {buttonText}
         </button>
     );

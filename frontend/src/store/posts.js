@@ -67,6 +67,20 @@ export const editPost = (content, postId) => async (dispatch) => {
     }
 };
 
+export const destroyPost = (id) => async (dispatch) => {
+    const res = await fetch(`/api/posts/${id}`, {
+        method: "DELETE",
+    });
+
+    if (res.ok) {
+        // const data = await res.json();
+        dispatch(deletePost(id));
+        return "Success";
+    }
+
+    return "Failed";
+};
+
 const initialState = { Posts: {} };
 
 export default function reducer(state = initialState, action) {

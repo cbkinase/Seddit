@@ -7,6 +7,9 @@ import { useEffect } from "react";
 import { getSubreddits } from "../../store/subreddits";
 import { getAllPosts } from "../../store/posts";
 // import "./ShortPosts.css";
+import OpenModalButton from "../OpenModalButton";
+import DeletePostModal from "../DeletePostModal";
+import EditPostModal from "../EditPostModal";
 
 // subreddit = use;
 
@@ -232,40 +235,37 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                             </NavLink>
                         )}
                         {isUserAuthToEdit(user, post) && (
-                            <NavLink
-                                style={{ marginLeft: "7px" }}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    alert("Not yet implemented");
+                            <OpenModalButton
+                                style={{
+                                    marginLeft: "7px",
+                                    backgroundColor: "inherit",
+                                    border: "inherit",
+                                    cursor: "pointer",
                                 }}
-                                to={`/r/${subreddit.name}/posts/${post.id}`}
                                 id="post-comment-upvote"
-                            >
-                                <i
-                                    // style={{ marginRight: "5px" }}
-                                    className="fa fa-edit"
-                                    aria-hidden="true"
-                                ></i>
-                                <span>Edit</span>
-                            </NavLink>
+                                renderEditButton={true}
+                                modalComponent={
+                                    <EditPostModal
+                                        post={post}
+                                        subreddit={subreddit}
+                                    />
+                                }
+                                buttonText="Edit"
+                            ></OpenModalButton>
                         )}
                         {isUserAuthToEdit(user, post) && (
-                            <NavLink
-                                style={{ marginLeft: "7px" }}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    alert("Not yet implemented");
+                            <OpenModalButton
+                                style={{
+                                    marginLeft: "7px",
+                                    backgroundColor: "inherit",
+                                    border: "inherit",
+                                    cursor: "pointer",
                                 }}
-                                to={`/r/${subreddit.name}/posts/${post.id}`}
                                 id="post-comment-upvote"
-                            >
-                                <i
-                                    // style={{ marginRight: "5px" }}
-                                    className="fa fa-trash"
-                                    aria-hidden="true"
-                                ></i>
-                                <span>Delete</span>
-                            </NavLink>
+                                renderDeleteButton={true}
+                                modalComponent={<DeletePostModal post={post} />}
+                                buttonText="Delete"
+                            ></OpenModalButton>
                         )}
                     </div>
                 </div>
