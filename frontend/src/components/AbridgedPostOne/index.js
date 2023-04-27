@@ -40,6 +40,7 @@ export default function IndividualAbridgedPost({ user, post, subreddit, currentU
 
     function isUserAuthToEdit(user, post, currentUser) {
         if (!user) return null;
+        if (currentUser === null) return null;
         if (currentUser) {
             return currentUser.id === post.author_info.id || currentUser.id === post.subreddit_info.owner_id
         }
