@@ -48,6 +48,8 @@ export const createPost = (post) => async (dispatch) => {
         const data = await res.json();
         dispatch(addPost(data));
         return data;
+    } else {
+        return { errors: "Not cool, man..." };
     }
 };
 

@@ -7,6 +7,7 @@ import OpenModalButton from "../OpenModalButton";
 import EditCommunityModal from "../EditCommunityModal";
 import DeleteSubredditModal from "../DeleteSubredditModal";
 import SubredditPostsPreview from "../SubredditPostsPreview";
+import CreatePostModal from "../CreatePostModal";
 
 export default function SubredditPage() {
     const { subredditName } = useParams();
@@ -98,7 +99,7 @@ export default function SubredditPage() {
                         onError={(e) => {
                             e.target.onerror = null;
                             e.target.src =
-                                "https://cdn3.iconfinder.com/data/icons/2018-social-media-logotypes/1000/2018_social_media_popular_app_logo_reddit-512.png";
+                                "https://i.redd.it/72kquwbkihq91.jpg";
                         }}
                         style={{
                             width: "57px",
@@ -201,13 +202,19 @@ export default function SubredditPage() {
                                 </button>
                             )}
                             {user && (
-                                <button
+                                <OpenModalButton
                                     id="create-post-btn-sub-page"
+                                    buttonText="Create Post"
+                                    modalComponent={
+                                        <CreatePostModal
+                                            subreddit={subreddit}
+                                        />
+                                    }
                                     style={{ width: "130px" }}
                                     className="button-join adjust-btn-height-subreddit"
                                 >
                                     Create Post
-                                </button>
+                                </OpenModalButton>
                             )}
                         </div>
                     </div>

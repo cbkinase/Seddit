@@ -71,7 +71,7 @@ export default function IndividualAbridgedPost({
                             onError={(e) => {
                                 e.target.onerror = null;
                                 e.target.src =
-                                    "https://cdn-icons-png.flaticon.com/512/1384/1384051.png";
+                                    "https://i.redd.it/72kquwbkihq91.jpg";
                             }}
                             alt="Pic"
                             className="subreddit-preview-img"
