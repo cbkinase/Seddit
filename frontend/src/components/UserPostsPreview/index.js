@@ -4,7 +4,7 @@ import { getSubreddits } from "../../store/subreddits";
 import IndividualAbridgedPost from "../AbridgedPostOne";
 import { getAllPosts } from "../../store/posts";
 
-export default function UserPostsPreview({ user }) {
+export default function UserPostsPreview({ user, currentUser }) {
     const dispatch = useDispatch();
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -26,6 +26,7 @@ export default function UserPostsPreview({ user }) {
     const filteredPosts = allPostsArr.filter((post) => {
         return post.title.toLowerCase().includes(searchTerm.toLowerCase());
     });
+
 
     return (
         <>
@@ -58,6 +59,7 @@ export default function UserPostsPreview({ user }) {
                         <IndividualAbridgedPost
                             key={post.id}
                             user={user}
+                            currentUser={currentUser}
                             post={post}
                             subreddit={subreddits[post.subreddit_info.id]}
                         />

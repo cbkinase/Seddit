@@ -5,7 +5,7 @@ import SubredditHover from "../SubredditHover";
 import UserHover from "../UserHover";
 import "./ShortPosts.css";
 
-export default function IndividualAbridgedPost({ user, post, subreddit }) {
+export default function IndividualAbridgedPost({ user, post, subreddit, currentUser }) {
     // const dispatch = useDispatch();
 
     const shortenWord = (word, long = 20) => {
@@ -38,8 +38,11 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
         return word[0].toUpperCase() + word.slice(1);
     };
 
-    function isUserAuthToEdit(user, post) {
+    function isUserAuthToEdit(user, post, currentUser) {
         if (!user) return null;
+        if (currentUser) {
+            return currentUser.id === post.author_info.id || currentUser.id === post.subreddit_info.owner_id
+        }
         return (
             user.id === post.author_info.id ||
             user.id === post.subreddit_info.owner_id
@@ -171,7 +174,7 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
                         <span>Save</span>
                     </NavLink>
                 )}
-                {isUserAuthToEdit(user, post) && (
+                {isUserAuthToEdit(user, post, currentUser) && (
                     <NavLink
                         style={{ marginLeft: "7px" }}
                         onClick={(e) => {
@@ -189,7 +192,7 @@ export default function IndividualAbridgedPost({ user, post, subreddit }) {
                         <span>Edit</span>
                     </NavLink>
                 )}
-                {isUserAuthToEdit(user, post) && (
+                {isUserAuthToEdit(user, post, currentUser) && (
                     <NavLink
                         style={{ marginLeft: "7px" }}
                         onClick={(e) => {

@@ -220,6 +220,7 @@ acronym {
 
 .button-main {
     background: #ff4742;
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
     border: 1px solid #ff4742;
     border-radius: 0.5rem;
     box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
@@ -282,6 +283,7 @@ acronym {
 .button-alt {
     background-color: #ffffff;
     border: 1px solid rgb(209, 213, 219);
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
     border-radius: 0.5rem;
     box-sizing: border-box;
     color: #111827;
@@ -356,7 +358,7 @@ acronym {
     touch-action: manipulation;
     transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s,
         box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s,
-        color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+        color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
     user-select: none;
     -webkit-user-select: none;
     vertical-align: middle;
@@ -381,6 +383,7 @@ acronym {
 
 .button-leave {
     align-items: center;
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
     appearance: none;
     background-color: #fff;
     border-radius: 24px;
