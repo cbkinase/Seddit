@@ -28,9 +28,21 @@ export default function UserInfo({ currentUser }) {
                 `/u/${user.username.toLowerCase()}/`
         );
     };
-
+    // Yeah, yeah... I could probably (definitely) DRY this up. Lol.
     const isDisplayComments = (user) => {
         return onUserEnding(user, "/comments");
+    };
+
+    const isDisplaySaved = (user) => {
+        return onUserEnding(user, "/saved");
+    };
+
+    const isDisplayUpvoted = (user) => {
+        return onUserEnding(user, "/upvoted");
+    };
+
+    const isDisplayDownvoted = (user) => {
+        return onUserEnding(user, "/downvoted");
     };
 
     useEffect(() => {
@@ -88,7 +100,7 @@ export default function UserInfo({ currentUser }) {
                             <span className="label">Post{user.num_posts !== 1 && "s"}</span>
                         </div>
                         <div className="stat-item">
-                            <span className="count">50</span>
+                            <span className="count">0</span>
                             <span className="label">Comments</span>
                         </div>
                     </div>
@@ -114,17 +126,36 @@ export default function UserInfo({ currentUser }) {
                                 Comments
                             </NavLink>
                         </li>
+                        {currentUser?.id === user.id && <li className={isDisplaySaved(user) ? "active" : ""}>
+                            <NavLink to={`/u/${user.username}/saved`}>
+                                Saved
+                            </NavLink>
+                        </li>}
+                        {currentUser?.id === user.id && <li className={isDisplayUpvoted(user) ? "active" : ""}>
+                            <NavLink to={`/u/${user.username}/upvoted`}>
+                                Upvoted
+                            </NavLink>
+                        </li>}
+                        {currentUser?.id === user.id && <li className={isDisplayDownvoted(user) ? "active" : ""}>
+                            <NavLink to={`/u/${user.username}/downvoted`}>
+                                Downvoted
+                            </NavLink>
+                        </li>}
                     </ul>
                 </div>
                 {isDisplayPosts(user) && Boolean(user.num_posts) && (
                     <UserPostsPreview user={user} currentUser={currentUser} />
                 )}
                 {isDisplayPosts(user) && !user.num_posts && (
-                    <NoPostsUserProfile username={user.username} />
+                    <NoPostsUserProfile username={user.username} isOwnProfile={user.username === currentUser.username} />
                 )}
                 {isDisplayComments(user) && (
-                    <NoPostsUserProfile username={user.username} isComment={true} />
+                    <NoPostsUserProfile username={user.username} isComment={true} isOwnProfile={user.username === currentUser.username} />
                 )}
+                {isDisplaySaved(user) && <NoPostsUserProfile username={user.username} isSaved={true} />}
+
+                {isDisplayUpvoted(user) && <NoPostsUserProfile username={user.username} isUpvoted={true} />}
+                {isDisplayDownvoted(user) && <NoPostsUserProfile username={user.username} isDownvoted={true} />}
             </div>
         </div>
     ) : (
