@@ -10,7 +10,7 @@
 }
 
 #post-comment-upvote:hover {
-    background-color: rgba(178, 178, 255, 0.1);
+    background-color: rgba(178, 178, 178, 0.3) !important;
 }
 
 #post-comment-upvote > i {
