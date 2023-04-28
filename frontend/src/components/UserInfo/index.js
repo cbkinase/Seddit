@@ -71,7 +71,7 @@ export default function UserInfo({ currentUser }) {
                         </div>
                         <div className="stat-item">
                             <span className="count">{user.num_posts}</span>
-                            <span className="label">Posts</span>
+                            <span className="label">Post{user.num_posts !== 1 && "s"}</span>
                         </div>
                         <div className="stat-item">
                             <span className="count">50</span>
