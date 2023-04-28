@@ -10,6 +10,7 @@ import { getAllPosts } from "../../store/posts";
 import OpenModalButton from "../OpenModalButton";
 import DeletePostModal from "../DeletePostModal";
 import EditPostModal from "../EditPostModal";
+import LoadingSpinner from "../LoadingSpinner";
 
 // subreddit = use;
 
@@ -274,7 +275,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
             </div>
         </div>
     ) : (
-        <h1>Loading...</h1>
+        <LoadingSpinner />
     );
 }
 

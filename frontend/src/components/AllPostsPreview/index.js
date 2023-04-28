@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSubreddits } from "../../store/subreddits";
 import IndividualAbridgedPost from "../AbridgedPostOne";
 import { getAllPosts } from "../../store/posts";
+import LoadingSpinner from "../LoadingSpinner";
 
 export default function AllPostsPreview({ user, subreddits }) {
     const dispatch = useDispatch();
@@ -93,7 +94,7 @@ export default function AllPostsPreview({ user, subreddits }) {
                             />
                         ))
                 ) : (
-                    <h1>Loading...</h1>
+                    <LoadingSpinner />
                 )}
             </div>
         </>

@@ -7,6 +7,7 @@ import "./ShortPosts.css";
 import OpenModalButton from "../OpenModalButton";
 import DeletePostModal from "../DeletePostModal";
 import EditPostModal from "../EditPostModal";
+import LoadingSpinner from "../LoadingSpinner";
 
 export default function IndividualAbridgedPost({
     user,
@@ -232,7 +233,7 @@ export default function IndividualAbridgedPost({
             </div>
         </div>
     ) : (
-        <h1>Loading...</h1>
+        <LoadingSpinner />
     );
 }
 
