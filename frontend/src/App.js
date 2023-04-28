@@ -15,6 +15,7 @@ import UserInfo from "./components/UserInfo";
 import IndividualFullPost from "./components/PostViewFull";
 import { getSubreddits } from "./store/subreddits";
 import { getAllPosts } from "./store/posts";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
     const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function App() {
 
     return (
         <>
+            <ScrollToTop />
             <Navigation isLoaded={isLoaded} />
             {isLoaded && (
                 <Switch>
