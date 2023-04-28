@@ -181,6 +181,7 @@ export default function SubredditPage() {
                                 Member{numMembers !== 1 && "s"}
                             </span>
                         </div>
+                        {user && <div style={{paddingBottom: "10px"}}></div>}
                         <div className="subreddit-stat">
                             {/* User is not in community already */}
                             {user && !subreddit.subscribers[user.username] && (

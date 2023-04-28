@@ -116,7 +116,7 @@
 
 .subreddit-stat {
     margin-right: 40px;
-    padding-bottom: 20px;
+    /* padding-bottom: 20px; */
 }
 
 .subreddit-stat:last-of-type {
