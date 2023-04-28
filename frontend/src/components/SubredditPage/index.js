@@ -98,7 +98,6 @@ export default function SubredditPage() {
         setNumMembers(memberCount);
     }, [memberCount]);
 
-    console.log(subreddit);
 
     return found ? (
         <div>
