@@ -1,0 +1,26 @@
+.no-posts-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+
+  .no-posts-section img {
+    width: 250px;
+    /* height: 250px; */
+    /* object-fit: cover; */
+    border-radius: 0%;
+    margin-bottom: 10px;
+  }
+
+  .no-posts-section h2 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .no-posts-section p {
+    font-size: 16px;
+    text-align: center;
+  }

@@ -17,6 +17,12 @@ export default function SubredditPage() {
     let found = false;
     const [numMembers, setNumMembers] = useState(null);
 
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    function toggleExpanded() {
+      setIsExpanded(!isExpanded);
+    }
+
     const handleJoinCommunity = async (subredditId, userId, subredditName) => {
         const res = await fetch(`/api/s/${subredditId}/subscribers`, {
             method: "POST",
@@ -152,9 +158,18 @@ export default function SubredditPage() {
                         <h2 className="subreddit-title">
                             {capitalizeFirstLetter(subreddit.name)}
                         </h2>
-                        <p className="subreddit-description-text">
+                        { subreddit.about.length <= 50 ? <p className="subreddit-description-text">{subreddit.about}</p>
+                        : isExpanded ?
+                        <div>
+                            <p className="subreddit-description-text">
                             {subreddit.about}
                         </p>
+                        <button className="show-less-btn" onClick={toggleExpanded}>Show less</button>
+                        </div>
+                             : <div className="truncated-text-container">
+                             <p className="subreddit-description-text">{`${subreddit.about.slice(0,50)}...`}</p>
+                             <button className="read-more-btn" onClick={toggleExpanded}>Read more</button>
+                             </div> }
                     </div>
                     <div className="subreddit-stats">
                         <div className="subreddit-stat">

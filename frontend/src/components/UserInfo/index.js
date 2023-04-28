@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useParams, NavLink, useLocation } from "react-router-dom";
 import UserPostsPreview from "../UserPostsPreview";
+import NoPostsUserProfile from "../NoPostsUserProfile";
 
 export default function UserInfo({ currentUser }) {
     const dispatch = useDispatch();
@@ -19,7 +20,9 @@ export default function UserInfo({ currentUser }) {
         return (
             onUserEnding(user, "/posts") ||
             location.pathname.toLowerCase() ===
-                `/u/${user.username.toLowerCase()}`
+                `/u/${user.username.toLowerCase()}` ||
+                location.pathname.toLowerCase() ===
+                `/u/${user.username.toLowerCase()}/`
         );
     };
 
@@ -103,10 +106,10 @@ export default function UserInfo({ currentUser }) {
                     <UserPostsPreview user={user} currentUser={currentUser} />
                 )}
                 {isDisplayPosts(user) && !user.num_posts && (
-                    <p>No posts to display</p>
+                    <NoPostsUserProfile username={user.username} />
                 )}
                 {isDisplayComments(user) && (
-                    <p>Comments feature coming soon...</p>
+                    <NoPostsUserProfile username={user.username} isComment={true} />
                 )}
             </div>
         </div>

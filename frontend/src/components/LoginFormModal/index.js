@@ -66,14 +66,15 @@ function LoginFormModal() {
                 >
                     Welcome back!
                 </h1>
-                <ul>
+
+            </div>
+            <ul>
                     {Object.values(errors).map((error, idx) => (
-                        <li className="errors" key={idx}>
+                        <li style={{textAlign:"center"}} className="errors" key={idx}>
                             {error}
                         </li>
                     ))}
                 </ul>
-            </div>
             <form className="login-form" onSubmit={handleSubmit}>
                 <div className="form-item">
                     <label>
