@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSubreddits } from "../../store/subreddits";
 import IndividualAbridgedSubreddit from "../AbridgedSubredditOne";
+import LoadingSpinner from "../LoadingSpinner";
 
 export default function AbridgedSubredditDisplay({ user }) {
     const dispatch = useDispatch();
     const [searchTerm, setSearchTerm] = useState("");
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
         dispatch(getSubreddits());
+        setLoaded(true)
     }, [dispatch]);
 
     const handleSearchChange = (e) => {
@@ -23,7 +26,7 @@ export default function AbridgedSubredditDisplay({ user }) {
         return subreddit.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
-    return (
+    return ( loaded ?
         <>
             <div style={{ height: "30px", backgroundColor: "#dae0e6" }}></div>
             <div
@@ -53,6 +56,6 @@ export default function AbridgedSubredditDisplay({ user }) {
                     />
                 ))}
             </div>
-        </>
+        </> : <LoadingSpinner />
     );
 }

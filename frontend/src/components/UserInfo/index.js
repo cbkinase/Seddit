@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, NavLink, useLocation } from "react-router-dom";
 import UserPostsPreview from "../UserPostsPreview";
 import NoPostsUserProfile from "../NoPostsUserProfile";
+import LoadingSpinner from "../LoadingSpinner";
 
 export default function UserInfo({ currentUser }) {
     const dispatch = useDispatch();
@@ -11,6 +12,8 @@ export default function UserInfo({ currentUser }) {
 
     const location = useLocation();
     const [user, setUser] = useState(null);
+    const [error, setError] = useState(false);
+    const [loaded, setLoaded] = useState(false);
 
     const onUserEnding = (user, ending) => {
         return location.pathname.includes(`/u/${user.username}${ending}`);
@@ -34,13 +37,24 @@ export default function UserInfo({ currentUser }) {
         const fn = async () => {
             let data = await fetch(`/api/users/u/${userName}`);
             let user = await data.json();
-            if (!user.errors) setUser(user);
+            if (user.errors) {
+              setError(true);
+              setLoaded(true);
+            };
+            if (!user.errors) {
+              setUser(user);
+              setLoaded(true);
+            }
         };
         fn();
     }, [dispatch, userName]);
 
+    if (error) {
+      return <h1>Error Loading!!</h1>
+    }
+
     // The whole currentUser.id === user.id business is to ensure the component gets re-rendered when a user edits their own profile
-    return user ? (
+    return loaded ? (
         <div className="user-page">
             <div className="header">
                 <div className="avatar">
@@ -114,6 +128,6 @@ export default function UserInfo({ currentUser }) {
             </div>
         </div>
     ) : (
-        <h1>User Not found...</h1>
+        <LoadingSpinner />
     );
 }

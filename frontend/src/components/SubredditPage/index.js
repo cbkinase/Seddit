@@ -9,6 +9,7 @@ import DeleteSubredditModal from "../DeleteSubredditModal";
 import SubredditPostsPreview from "../SubredditPostsPreview";
 import CreatePostModal from "../CreatePostModal";
 import NoPostsSubreddit from "../NoPostsSubreddit";
+import LoadingSpinner from "../LoadingSpinner";
 
 export default function SubredditPage() {
     const { subredditName } = useParams();
@@ -97,6 +98,10 @@ export default function SubredditPage() {
     useEffect(() => {
         setNumMembers(memberCount);
     }, [memberCount]);
+
+    if (hasLoaded && !subreddit) {
+        return <h1>Not Found...</h1>
+    }
 
 
     return found ? (
@@ -302,9 +307,6 @@ export default function SubredditPage() {
         //     </div>
 
         //   </div>
-        <h1>
-            Sorry, but this Community does not exist. Maybe you'd like to create
-            it?
-        </h1>
+       <LoadingSpinner />
     );
 }
