@@ -3,7 +3,7 @@ from sqlalchemy.sql import text
 
 
 def seed_posts(users, subreddits):
-    dummy_posts = Post.create(150, users, subreddits)
+    dummy_posts = Post.create(200, users, subreddits)
 
     for post in dummy_posts:
         db.session.add(post)
