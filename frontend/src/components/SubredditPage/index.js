@@ -8,6 +8,7 @@ import EditCommunityModal from "../EditCommunityModal";
 import DeleteSubredditModal from "../DeleteSubredditModal";
 import SubredditPostsPreview from "../SubredditPostsPreview";
 import CreatePostModal from "../CreatePostModal";
+import NoPostsSubreddit from "../NoPostsSubreddit";
 
 export default function SubredditPage() {
     const { subredditName } = useParams();
@@ -167,7 +168,7 @@ export default function SubredditPage() {
                         <button className="show-less-btn" onClick={toggleExpanded}>Show less</button>
                         </div>
                              : <div className="truncated-text-container">
-                             <p className="subreddit-description-text">{`${subreddit.about.slice(0,50)}...`}</p>
+                             <p style={{marginLeft: "20px"}} className="subreddit-description-text">{`${subreddit.about.slice(0,50)}...`}</p>
                              <button className="read-more-btn" onClick={toggleExpanded}>Read more</button>
                              </div> }
                     </div>
@@ -235,7 +236,7 @@ export default function SubredditPage() {
                     </div>
                 </section>
             </div>
-            <SubredditPostsPreview user={user} subreddit={subreddit} />
+            {subreddit.num_posts > 1 ? <SubredditPostsPreview user={user} subreddit={subreddit} /> : <NoPostsSubreddit user={user} subreddit={subreddit} />}
         </div>
     ) : (
         //   <div>

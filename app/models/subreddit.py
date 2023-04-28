@@ -66,7 +66,8 @@ class Subreddit(db.Model):
         'created_at': self.created_at,
         'owner_info': subreddit_owner.to_short_dict(),
         'subscribers': {sub.username : sub.to_short_dict() for sub in self.subscribers},
-        "numSubscribers": len(self.subscribers)
+        "numSubscribers": len(self.subscribers),
+        "num_posts": len(self.posts)
         }
 
     def to_short_dict(self):
@@ -79,5 +80,6 @@ class Subreddit(db.Model):
             'background_pic': str(self.background_pic),
             'category': categories.get(self.category),
             'created_at': self.created_at,
-            'numSubscribers': len(self.subscribers)
+            'numSubscribers': len(self.subscribers),
+            "num_posts": len(self.posts)
         }

@@ -24,3 +24,16 @@
     font-size: 16px;
     text-align: center;
   }
+
+  .no-posts-subreddit {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    background-color: inherit;
+    border: 0;
+    margin-left: -5px;
+    text-decoration: underline;
+    color: #0a66c2;
+    cursor: pointer;
+  }
