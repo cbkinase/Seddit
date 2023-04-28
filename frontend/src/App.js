@@ -16,6 +16,7 @@ import IndividualFullPost from "./components/PostViewFull";
 import { getSubreddits } from "./store/subreddits";
 import { getAllPosts } from "./store/posts";
 import ScrollToTop from "./components/ScrollToTop";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 function App() {
     const dispatch = useDispatch();
@@ -34,7 +35,7 @@ function App() {
         <>
             <ScrollToTop />
             <Navigation isLoaded={isLoaded} />
-            {isLoaded && (
+            {isLoaded ? (
                 <Switch>
                     <Route exact path="/">
                         <AllPostsPreview
@@ -74,7 +75,7 @@ function App() {
                         <UserInfo currentUser={user} />
                     </Route>
                 </Switch>
-            )}
+            ): <LoadingSpinner />}
         </>
     );
 }
