@@ -164,7 +164,7 @@ export default function IndividualAbridgedPost({
                         className="fa fa-comment"
                         aria-hidden="true"
                     ></i>
-                    <span>{Math.floor(2 + Math.random() * 10)} Comments</span>
+                    <span>{post.num_comments} Comment{post.num_comments !== 1 && "s"}</span>
                 </NavLink>
                 <NavLink
                     style={{ marginLeft: "7px" }}

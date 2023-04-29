@@ -19,7 +19,7 @@ export default function NoPostsUserProfile({username, isComment, isSaved, isUpvo
       }
 
     }
-    return <div class="no-posts-section">
+    return <div className="no-posts-section">
     <img src="https://www.redditinc.com/assets/images/galleries/snoo-small.png" alt="No posts yet"></img>
     { renderContent()}
   </div>

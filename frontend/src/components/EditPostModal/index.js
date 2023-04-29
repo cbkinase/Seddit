@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useModal } from "../../context/Modal";
-import { createPost } from "../../store/posts";
+// import { createPost } from "../../store/posts";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { editPost } from "../../store/posts";
@@ -31,7 +31,7 @@ function EditPostModal({ post, subreddit }) {
             errors.push("Title must be shorter");
 
         setErrors(errors);
-    }, [communityName, communityDescription]);
+    }, [communityName, communityDescription, nameLengthMax]);
 
     async function handleSubmit(e) {
         e.preventDefault();

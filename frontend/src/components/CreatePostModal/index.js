@@ -26,7 +26,7 @@ function CreatePostModal({ subreddit }) {
             errors.push("Title must be shorter");
 
         setErrors(errors);
-    }, [communityName, communityDescription]);
+    }, [communityName, communityDescription, nameLengthMax]);
 
     async function handleSubmit(e) {
         e.preventDefault();

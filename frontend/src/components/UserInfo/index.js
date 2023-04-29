@@ -100,8 +100,8 @@ export default function UserInfo({ currentUser }) {
                             <span className="label">Post{user.num_posts !== 1 && "s"}</span>
                         </div>
                         <div className="stat-item">
-                            <span className="count">0</span>
-                            <span className="label">Comments</span>
+                            <span className="count">{user.num_comments}</span>
+                            <span className="label">Comment{user.num_comments !== 1 && "s"}</span>
                         </div>
                     </div>
                     <div className="bio">

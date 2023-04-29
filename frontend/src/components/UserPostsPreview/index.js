@@ -13,6 +13,7 @@ export default function UserPostsPreview({ user, currentUser }) {
         dispatch(getAllPosts());
     }, [dispatch]);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
     };

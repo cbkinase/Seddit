@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSubreddits } from "../../store/subreddits";
+// import { getSubreddits } from "../../store/subreddits";
 import IndividualAbridgedPost from "../AbridgedPostOne";
-import { getAllPosts } from "../../store/posts";
+// import { getAllPosts } from "../../store/posts";
 import LoadingSpinner from "../LoadingSpinner";
 
 export default function AllPostsPreview({ user, subreddits }) {
-    const dispatch = useDispatch();
-    const [searchTerm, setSearchTerm] = useState("");
+    // const dispatch = useDispatch();
+    // const [searchTerm, setSearchTerm] = useState("");
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(1);
 
@@ -29,9 +29,9 @@ export default function AllPostsPreview({ user, subreddits }) {
         fetchData();
     }, [page]);
 
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
-    };
+    // const handleSearchChange = (e) => {
+    //     setSearchTerm(e.target.value);
+    // };
 
     const handleScroll = () => {
         if (

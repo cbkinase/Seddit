@@ -1,11 +1,11 @@
 import { NavLink, useParams } from "react-router-dom";
 import moment from "moment";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import SubredditHover from "../SubredditHover";
 import UserHover from "../UserHover";
-import { useEffect } from "react";
-import { getSubreddits } from "../../store/subreddits";
-import { getAllPosts } from "../../store/posts";
+// import { useEffect } from "react";
+// import { getSubreddits } from "../../store/subreddits";
+// import { getAllPosts } from "../../store/posts";
 // import "./ShortPosts.css";
 import OpenModalButton from "../OpenModalButton";
 import DeletePostModal from "../DeletePostModal";
@@ -15,7 +15,7 @@ import LoadingSpinner from "../LoadingSpinner";
 // subreddit = use;
 
 export default function IndividualFullPost({ user, subreddits, posts }) {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const { subredditName, postId } = useParams();
 
     function getSubredditFromName(subreddits, subredditName) {
@@ -38,29 +38,29 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
         return word.slice(0, long) + "...";
     };
 
-    const ellipsisIfLong = (paragraph, long = 20) => {
-        if (!paragraph) return null;
-        let wordArr = paragraph.split(" ");
-        let newStr = "";
-        if (wordArr.length > long) {
-            for (let i = 0; i < long; i++) {
-                newStr += wordArr[i];
-                if (i !== long - 1) newStr += " ";
-            }
+    // const ellipsisIfLong = (paragraph, long = 20) => {
+    //     if (!paragraph) return null;
+    //     let wordArr = paragraph.split(" ");
+    //     let newStr = "";
+    //     if (wordArr.length > long) {
+    //         for (let i = 0; i < long; i++) {
+    //             newStr += wordArr[i];
+    //             if (i !== long - 1) newStr += " ";
+    //         }
 
-            newStr += "...";
-            return newStr;
-        }
+    //         newStr += "...";
+    //         return newStr;
+    //     }
 
-        if (wordArr.length < long && paragraph.length > 100) {
-            return paragraph.slice(0, 100) + "...";
-        }
-        return paragraph;
-    };
+    //     if (wordArr.length < long && paragraph.length > 100) {
+    //         return paragraph.slice(0, 100) + "...";
+    //     }
+    //     return paragraph;
+    // };
 
-    const capitalizeFirstLetter = (word) => {
-        return word[0].toUpperCase() + word.slice(1);
-    };
+    // const capitalizeFirstLetter = (word) => {
+    //     return word[0].toUpperCase() + word.slice(1);
+    // };
 
     function isUserAuthToEdit(user, post) {
         if (!user) return null;
@@ -92,7 +92,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                 </NavLink>
             </header>
             <div className="subreddit-short-main-container">
-                <div className="box-dec-1 subreddit-short-container post-short-container">
+                <div className="box-dec-1 subreddit-short-container post-short-container post-full-container">
                     <VotingSection />
                     <span className="subreddit-abridged-top post-prev-adjust-right">
                         <span className="subreddit-title-preview">
@@ -147,8 +147,9 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                         id="post-prev-attachment-container"
                         // to={`/r/${subreddit.name}/posts/${post.id}`}
                     >
-                        <a target="_blank" href={post.attachment}>
+                        <a target="_blank" rel="noreferrer" href={post.attachment}>
                             <img
+                            alt="post attachment"
                             onError={(e) => {
                                 e.target.onerror = null;
                                 e.target.src =
@@ -199,9 +200,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                                 className="fa fa-comment"
                                 aria-hidden="true"
                             ></i>
-                            <span>
-                                {Math.floor(2 + Math.random() * 10)} Comments
-                            </span>
+                            <span>{post.num_comments} Comment{post.num_comments !== 1 && "s"}</span>
                         </NavLink>
                         <NavLink
                             style={{ marginLeft: "7px" }}
