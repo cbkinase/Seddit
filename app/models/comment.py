@@ -28,10 +28,11 @@ class Comment(db.Model):
         fake = Faker()
         comments = []
         for i in range(qty):
+            rand_comment = choice(comments) if (len(comments) > 0 and randint(0, 1)) else None
             new_comment = cls(author=choice(users),
                     post=choice(posts),
                     content = fake.sentence(nb_words = randint(3, 70)),
-                    parent = None if (not len(comments) and randint(0, 1)) else choice(comments))
+                    parent = rand_comment)
             comments.append(new_comment)
         return comments
 
