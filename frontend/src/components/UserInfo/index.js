@@ -147,10 +147,10 @@ export default function UserInfo({ currentUser, subreddits, posts }) {
                     <UserPostsPreview posts={posts} subreddits={subreddits} user={user} currentUser={currentUser} />
                 )}
                 {isDisplayPosts(user) && !user.num_posts && (
-                    <NoPostsUserProfile username={user.username} isOwnProfile={user.username === currentUser.username} />
+                    <NoPostsUserProfile username={user.username} isOwnProfile={user.username === currentUser?.username} />
                 )}
                 {isDisplayComments(user) && (
-                    <NoPostsUserProfile username={user.username} isComment={true} isOwnProfile={user.username === currentUser.username} />
+                    <NoPostsUserProfile username={user.username} isComment={true} isOwnProfile={user.username === currentUser?.username} />
                 )}
                 {isDisplaySaved(user) && <NoPostsUserProfile username={user.username} isSaved={true} />}
 
