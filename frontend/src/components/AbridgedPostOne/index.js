@@ -43,9 +43,9 @@ export default function IndividualAbridgedPost({
         return paragraph;
     };
 
-    const capitalizeFirstLetter = (word) => {
-        return word[0].toUpperCase() + word.slice(1);
-    };
+    // const capitalizeFirstLetter = (word) => {
+    //     return word[0].toUpperCase() + word.slice(1);
+    // };
 
     function isUserAuthToEdit(user, post, currentUser) {
         if (!user) return null;
@@ -119,6 +119,7 @@ export default function IndividualAbridgedPost({
                 to={`/r/${subreddit.name}/posts/${post.id}`}
             >
                 <img
+                    alt="attachment pic"
                     onError={(e) => {
                         e.target.onerror = null;
                         e.target.src =

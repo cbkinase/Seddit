@@ -21,7 +21,7 @@ function EditCommunityModal({ subreddit }) {
                 return 0;
         }
     };
-    const [communityName, setCommunityName] = useState(subreddit.name || "");
+    // const [communityName, setCommunityName] = useState(subreddit.name || "");
     const [communityCategory, setCommunityCategory] = useState(
         categoryConverter(subreddit.category) || ""
     );
@@ -34,7 +34,7 @@ function EditCommunityModal({ subreddit }) {
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
     const dispatch = useDispatch();
-    const [hasSubmitted, setHasSubmitted] = useState(false);
+    // const [hasSubmitted, setHasSubmitted] = useState(false);
     const history = useHistory();
 
     useEffect(() => {
@@ -43,15 +43,15 @@ function EditCommunityModal({ subreddit }) {
             errors.push("Description must be fewer than 2000 characters");
         // if (communityName.length > 21)
         //     errors.push("Name must be 21 or fewer characters");
-        if (!communityName.length) errors.push("Name must be provided");
-        if (communityName.length > 21) errors.push("Name must be shorter");
+        // if (!communityName.length) errors.push("Name must be provided");
+        // if (communityName.length > 21) errors.push("Name must be shorter");
 
         setErrors(errors);
-    }, [communityName, communityDescription]);
+    }, [communityDescription]);
 
     async function handleSubmit(e) {
         e.preventDefault();
-        setHasSubmitted(true);
+        // setHasSubmitted(true);
 
         // setErrors(errors)
         if (errors.length) return;
@@ -60,7 +60,7 @@ function EditCommunityModal({ subreddit }) {
 
         if (!errors.length) {
             const payload = {
-                name: communityName,
+                // name: communityName,
                 about: communityDescription,
                 category: Number(communityCategory),
                 main_pic: communityPicture,

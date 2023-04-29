@@ -12,8 +12,8 @@ function LoginFormModal() {
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
-    const [validationErrors, setValidationErrors] = useState({});
-    const [hasSubmitted, setHasSubmitted] = useState(false)
+    // const [validationErrors, setValidationErrors] = useState({});
+    // const [hasSubmitted, setHasSubmitted] = useState(false)
     const [submitDisabled, setSubmitDisabled] = useState(true);
 
     useEffect(() => {
@@ -25,7 +25,7 @@ function LoginFormModal() {
             errors.password = "Password must be at least 6 characters";
         }
 
-        setValidationErrors(errors);
+        // setValidationErrors(errors);
         // setErrors(Object.values(errors))
 
         if (Object.keys(errors).length === 0) {
@@ -35,7 +35,7 @@ function LoginFormModal() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setHasSubmitted(true)
+        // setHasSubmitted(true)
         setErrors([]);
         const data = await dispatch(login(credential, password));
         if (data) setErrors(data);
@@ -49,7 +49,7 @@ function LoginFormModal() {
         else closeModal();
     };
 
-    const handleRegistration = (e) => {};
+    // const handleRegistration = (e) => {};
 
     return (
         <div className="modal">

@@ -16,11 +16,12 @@ function SignupFormModal() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
-    const [hasSubmitted, setHasSubmitted] = useState(false);
+    // const [hasSubmitted, setHasSubmitted] = useState(false);
     const [submitDisabled, setSubmitDisabled] = useState(true);
-    const [validationErrors, setValidationErrors] = useState({});
-    const signUpDependencies = [email, username, password, confirmPassword];
+    // const [validationErrors, setValidationErrors] = useState({});
+
     useEffect(() => {
+        const signUpDependencies = [email, username, password, confirmPassword];
         const errors = {};
         if (signUpDependencies.some((formInput) => formInput.length === 0))
             errors.empty = "Nonzero input length required";
@@ -30,12 +31,12 @@ function SignupFormModal() {
             errors.password = "Password must be at least 6 characters";
         // if (password !== confirmPassword)
         //     errors.confirmation = "Passwords do not match";
-        setValidationErrors(errors);
+        // setValidationErrors(errors);
         // setErrors(Object.values(errors))
 
         if (Object.keys(errors).length === 0) setSubmitDisabled(false);
         else setSubmitDisabled(true);
-    }, signUpDependencies);
+    }, [email, username, password, confirmPassword]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -127,9 +128,9 @@ function SignupFormModal() {
                             required
                         />
                     </label>
-                    {hasSubmitted && errors.email && (
+                    {/* {hasSubmitted && errors.email && (
                         <p className="errors">*{errors.email}</p>
-                    )}
+                    )} */}
                 </div>
                 <div className="form-item">
                     <label>
@@ -143,9 +144,9 @@ function SignupFormModal() {
                             required
                         />
                     </label>
-                    {hasSubmitted && errors.username && (
+                    {/* {hasSubmitted && errors.username && (
                         <p className="errors">*{errors.username}</p>
-                    )}
+                    )} */}
                 </div>
                 <div className="form-item">
                     <label>
@@ -159,9 +160,9 @@ function SignupFormModal() {
                             required
                         />
                     </label>
-                    {hasSubmitted && errors.password && (
+                    {/* {hasSubmitted && errors.password && (
                         <p className="errors">*{errors.password}</p>
-                    )}
+                    )} */}
                 </div>
                 <div className="form-item">
                     <label>
