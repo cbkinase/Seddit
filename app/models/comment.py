@@ -18,7 +18,7 @@ class Comment(db.Model):
     updated_at = db.Column(db.DateTime, default=db.func.now())
 
     children = db.relationship('Comment', back_populates='parent', remote_side=[id])
-    parent = db.relationship('Comment', back_populates='children', remote_side=[id])
+    parent = db.relationship('Comment', back_populates='children', uselist=False)
     post = db.relationship('Post', back_populates='comments')
     author = db.relationship('User', back_populates='comments')
 
@@ -31,7 +31,7 @@ class Comment(db.Model):
             new_comment = cls(author=choice(users),
                     post=choice(posts),
                     content = fake.sentence(nb_words = randint(3, 70)),
-                    parent = len(comments) and randint(0, 1) and choice(comments))
+                    parent = None if (not len(comments) and randint(0, 1)) else choice(comments))
             comments.append(new_comment)
         return comments
 

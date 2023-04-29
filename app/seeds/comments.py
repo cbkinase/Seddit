@@ -1,19 +1,15 @@
-from app.models import db, Post, environment, SCHEMA
+from app.models import db, Comment, environment, SCHEMA
 from sqlalchemy.sql import text
 
 
-def seed_posts(users, subreddits):
-    dummy_posts = Post.create(200, users, subreddits)
+def seed_comments(users, posts):
+    dummy_comments = Comment.create(500, users, posts)
 
-    for post in dummy_posts:
-        db.session.add(post)
+    for comment in dummy_comments:
+        db.session.add(comment)
+        db.session.commit()
 
-    db.session.commit()
-
-
-    db.session.commit()
-
-    return dummy_posts
+    return dummy_comments
 
 
 # Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't
@@ -22,10 +18,10 @@ def seed_posts(users, subreddits):
 # incrementing primary key, CASCADE deletes any dependent entities.  With
 # sqlite3 in development you need to instead use DELETE to remove all data and
 # it will reset the primary keys for you as well.
-def undo_posts():
+def undo_comments():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.posts RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.comments RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute(text("DELETE FROM posts"))
+        db.session.execute(text("DELETE FROM comments"))
 
     db.session.commit()
