@@ -72,7 +72,8 @@ function App() {
                         <SubredditPage />
                     </Route>
                     <Route path="/u/:userName">
-                        <UserInfo currentUser={user} />
+                        <UserInfo subreddits={subreddits}
+                            posts={posts} currentUser={user} />
                     </Route>
                 </Switch>
             ): <LoadingSpinner />}

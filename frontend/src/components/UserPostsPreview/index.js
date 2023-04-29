@@ -4,22 +4,21 @@ import { getSubreddits } from "../../store/subreddits";
 import IndividualAbridgedPost from "../AbridgedPostOne";
 import { getAllPosts } from "../../store/posts";
 
-export default function UserPostsPreview({ user, currentUser }) {
+export default function UserPostsPreview({ user, currentUser, posts, subreddits }) {
     const dispatch = useDispatch();
     const [searchTerm, setSearchTerm] = useState("");
 
-    useEffect(() => {
-        dispatch(getSubreddits());
-        dispatch(getAllPosts());
-    }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(getSubreddits());
+    //     dispatch(getAllPosts());
+    // }, [dispatch]);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
     };
 
-    const subreddits = useSelector((state) => state.subreddits.Subreddits);
-    const posts = useSelector((state) => state.posts.Posts);
+    // const subreddits = useSelector((state) => state.subreddits.Subreddits);
+    // const posts = useSelector((state) => state.posts.Posts);
 
     let allPostsArr = Object.values(posts);
     allPostsArr = allPostsArr.filter((post) => post.author_info.id === user.id);

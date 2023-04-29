@@ -6,7 +6,7 @@ import UserPostsPreview from "../UserPostsPreview";
 import NoPostsUserProfile from "../NoPostsUserProfile";
 import LoadingSpinner from "../LoadingSpinner";
 
-export default function UserInfo({ currentUser }) {
+export default function UserInfo({ currentUser, subreddits, posts }) {
     const dispatch = useDispatch();
     const { userName } = useParams();
 
@@ -144,7 +144,7 @@ export default function UserInfo({ currentUser }) {
                     </ul>
                 </div>
                 {isDisplayPosts(user) && Boolean(user.num_posts) && (
-                    <UserPostsPreview user={user} currentUser={currentUser} />
+                    <UserPostsPreview posts={posts} subreddits={subreddits} user={user} currentUser={currentUser} />
                 )}
                 {isDisplayPosts(user) && !user.num_posts && (
                     <NoPostsUserProfile username={user.username} isOwnProfile={user.username === currentUser.username} />

@@ -147,7 +147,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                         id="post-prev-attachment-container"
                         // to={`/r/${subreddit.name}/posts/${post.id}`}
                     >
-                        <a target="_blank" rel="noreferrer" href={post.attachment}>
+                        {post.attachment && <a target="_blank" rel="noreferrer" href={post.attachment}>
                             <img
                             alt="post attachment"
                             onError={(e) => {
@@ -158,7 +158,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                             id="post-attachment-image"
                             src={post.attachment}
                         ></img>
-                        </a>
+                        </a>}
                     </div>
                     {post.attachment && (
                         <span style={{ marginBottom: "20px" }}></span>
