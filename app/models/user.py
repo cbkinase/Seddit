@@ -23,6 +23,7 @@ class User(db.Model, UserMixin):
     owns_subreddit = db.relationship("Subreddit", back_populates="owner")
     subreddits = db.relationship("Subreddit", secondary="subreddit_subscribers", back_populates="subscribers")
     posts = db.relationship("Post", back_populates="author")
+    comments = db.relationship('Comment', back_populates='author')
 
     @classmethod
     def create(cls, qty):
@@ -54,6 +55,7 @@ class User(db.Model, UserMixin):
             'bio': self.bio,
             'created_at': self.created_at,
             'num_posts': len(self.posts),
+            'num_comments': len(self.comments),
             'subreddits': {sub.name : sub.to_short_dict() for sub in self.subreddits}
         }
 
@@ -65,5 +67,6 @@ class User(db.Model, UserMixin):
             'avatar': self.avatar,
             'bio': self.bio,
             'created_at': self.created_at,
-            'num_posts': len(self.posts)
+            'num_posts': len(self.posts),
+            'num_comments': len(self.comments)
         }

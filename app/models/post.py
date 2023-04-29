@@ -23,6 +23,8 @@ class Post(db.Model):
     author = db.relationship("User", back_populates="posts")
     subreddit = db.relationship("Subreddit", back_populates="posts")
 
+    comments = db.relationship('Comment', back_populates='post', cascade='delete')
+
 
     @classmethod
     def create(cls, qty, users, subreddits):
@@ -45,7 +47,8 @@ class Post(db.Model):
             'content': self.content,
             'attachment': self.attachment,
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
+            'num_comments': len(self.comments)
         }
 
     def to_short_dict(self):
@@ -57,5 +60,6 @@ class Post(db.Model):
             'content': self.content,
             'attachment': self.attachment,
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
+            'num_comments': len(self.comments)
         }
