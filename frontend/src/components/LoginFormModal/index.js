@@ -79,7 +79,7 @@ function LoginFormModal() {
                 <div className="form-item">
                     <label>
                         <input
-                            style={{ width: "435px", borderRadius: "15px" }}
+                            style={{ width: "435px", maxWidth: "99vw", borderRadius: "15px" }}
                             className="create-comm-input"
                             type="email"
                             value={credential}
@@ -95,7 +95,7 @@ function LoginFormModal() {
                 <div className="form-item">
                     <label>
                         <input
-                            style={{ width: "435px", borderRadius: "15px" }}
+                            style={{ width: "435px",  maxWidth: "99vw", borderRadius: "15px" }}
                             className="create-comm-input"
                             placeholder="Password"
                             type="password"

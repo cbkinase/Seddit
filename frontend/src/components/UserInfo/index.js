@@ -65,7 +65,7 @@ export default function UserInfo({ currentUser, subreddits, posts }) {
       return <h1>Error Loading!!</h1>
     }
 
-    // The whole currentUser.id === user.id business is to ensure the component gets re-rendered when a user edits their own profile
+    // The whole currentUser.id === user.id business in the header is to ensure the component gets re-rendered when a user edits their own profile
     return loaded ? (
         <div className="user-page">
             <div className="header">
