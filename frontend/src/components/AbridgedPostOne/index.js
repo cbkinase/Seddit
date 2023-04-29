@@ -118,7 +118,7 @@ export default function IndividualAbridgedPost({
                 id="post-prev-attachment-container"
                 to={`/r/${subreddit.name}/posts/${post.id}`}
             >
-                <img
+                {post.attachment && <img
                     alt="attachment pic"
                     onError={(e) => {
                         e.target.onerror = null;
@@ -127,7 +127,7 @@ export default function IndividualAbridgedPost({
                     }}
                     id="post-attachment-image"
                     src={post.attachment}
-                ></img>
+                ></img>}
             </NavLink>
             {!post.attachment && (
                 <NavLink

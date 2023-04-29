@@ -445,18 +445,21 @@ body {
     width: 100%;
     z-index: 1;
     background-color: white;
+    max-height: 48px;
 }
+
 #nav-subcontainer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 #main-logo {
     height: 48px;
+    margin-top: 3px;
 }
 
 #nav-svg-container {

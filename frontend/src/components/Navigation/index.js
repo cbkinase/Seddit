@@ -52,8 +52,8 @@ function Navigation({ isLoaded }) {
 
     const redditNameSvg = (
         <svg
-            height="25px"
-            width="100px"
+            height="24px"
+            width="57px"
             viewBox="0 0 57 18"
             xmlns="http://www.w3.org/2000/svg"
         >
@@ -71,7 +71,7 @@ function Navigation({ isLoaded }) {
 
     const redditLogoSvg = (
         <svg
-            height="35px"
+            height="32px"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             className="_1O4jTk-dZ-VIxsCuYB6OR8 "
@@ -93,7 +93,7 @@ function Navigation({ isLoaded }) {
                     <NavLink exact to="/">
                         <div id="nav-svg-container">
                             <div>{redditLogoSvg}</div>
-                            <div>{redditNameSvg}</div>
+                            <div style={{marginLeft: "8px"}}>{redditNameSvg}</div>
                         </div>
                     </NavLink>
                 </li>
