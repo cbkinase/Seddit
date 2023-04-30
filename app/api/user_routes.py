@@ -52,3 +52,13 @@ def edit_user_info(user_id):
     db.session.commit()
 
     return user.to_dict()
+
+
+@user_routes.route("/u/<int:user_id>/comments")
+def get_user_comments(user_id):
+    user = User.query.get(user_id)
+
+    if not user:
+        return {"errors": f"User #'{user_id}' not found"}, 404
+
+    return {comment.id: comment.to_short_dict() for comment in user.comments}
