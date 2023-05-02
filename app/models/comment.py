@@ -39,7 +39,6 @@ class Comment(db.Model):
 
 
     def to_dict(self):
-        print(self.children)
         # if not self.children:
         #     child_info = None
         # if self.children:
