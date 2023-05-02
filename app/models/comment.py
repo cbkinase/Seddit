@@ -17,8 +17,8 @@ class Comment(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(db.DateTime, default=db.func.now())
 
-    children = db.relationship('Comment', back_populates='parent', remote_side=[id])
-    parent = db.relationship('Comment', back_populates='children', uselist=False)
+    children = db.relationship('Comment', back_populates='parent', uselist=True)
+    parent = db.relationship('Comment', back_populates='children', remote_side=[id], uselist=False)
     post = db.relationship('Post', back_populates='comments')
     author = db.relationship('User', back_populates='comments')
 
@@ -28,9 +28,10 @@ class Comment(db.Model):
         fake = Faker()
         comments = []
         for i in range(qty):
-            rand_comment = choice(comments) if (len(comments) > 0 and randint(0, 1)) else None
+            rand_post = choice(posts)
+            rand_comment = choice(rand_post.comments) if (len(comments) > 0 and randint(0, 1) and len(rand_post.comments)) else None
             new_comment = cls(author=choice(users),
-                    post=choice(posts),
+                    post=rand_post,
                     content = fake.sentence(nb_words = randint(3, 70)),
                     parent = rand_comment)
             comments.append(new_comment)
@@ -38,12 +39,17 @@ class Comment(db.Model):
 
 
     def to_dict(self):
+        # if not self.children:
+        #     child_info = None
+        # if self.children:
+        #     child_info = self.children.to_short_dict()
         return {
             'id': self.id,
             'author_info': self.author.to_short_dict(),
             'post_info': self.post.to_short_dict(),
-            'parent_info': self.parent.to_short_dict(),
-            'children_info': {comment.id: comment.to_short_dict() for comment in self.children},
+            'parent_info': self.parent.to_short_dict() if self.parent else None,
+            # 'children_info': child_info,
+            'children_info': {comment.id: comment.to_short_dict() for comment in self.children} if self.children else None,
             'content': self.content,
             'created_at': self.created_at,
             'updated_at': self.updated_at
@@ -53,10 +59,10 @@ class Comment(db.Model):
         return {
             'id': self.id,
             'author_info': self.author.to_short_dict(),
-            'post_info': self.post.to_short_dict(),
+            'post_id': self.post.id,
             'content': self.content,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
             'parent_id': self.parent_id,
-            'num_replies': len(self.children)
+            'num_replies': len(self.children) if self.children else 0
         }

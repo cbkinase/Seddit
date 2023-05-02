@@ -1,8 +1,8 @@
-"""adding comments
+"""comments
 
-Revision ID: 3ee4889837cb
+Revision ID: a4b2ec650296
 Revises:
-Create Date: 2023-04-29 02:36:56.142952
+Create Date: 2023-04-30 15:03:18.360377
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3ee4889837cb'
+revision = 'a4b2ec650296'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -101,6 +101,7 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE comments SET SCHEMA {SCHEMA};")
+
     # ### end Alembic commands ###
 
 
