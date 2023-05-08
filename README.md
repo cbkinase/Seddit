@@ -2,7 +2,7 @@
 
 ## Intro
 
-Seddit is a reddit clone, complete with subreddits, posts, comments, voting, and customizable user profiles. <a href="https://cameron-seddit.onrender.com/">Come check it out!</a>
+Seddit is a reddit clone, complete with subreddits, posts, comments, and voting. <a href="https://cameron-seddit.onrender.com/">Come check it out!</a>
 
 ## Technologies used
 
