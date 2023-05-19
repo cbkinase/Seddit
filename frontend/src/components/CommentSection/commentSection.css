@@ -1,0 +1,59 @@
+.user-commenter-navlink {
+    text-decoration: none;
+    color: #0079D3;
+}
+
+.user-commenter-navlink:hover {
+    text-decoration: underline;
+}
+
+.button-join-mod {
+    align-items: center;
+    background-color: #0a66c2;
+    border: 0;
+    border-radius: 100px;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "Noto Sans", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    justify-content: center;
+    line-height: 16px;
+    max-width: 480px;
+    min-height: 24px;
+    min-width: 24px;
+    overflow: hidden;
+    padding: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    touch-action: manipulation;
+    transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s,
+        box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s,
+        color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+}
+
+.button-join-mod:hover
+,
+.button-join-mod:focus
+{
+    background-color: #16437e;
+    color: #ffffff;
+}
+
+.button-join-mod:active {
+    background: #09223b;
+    color: rgb(255, 255, 255, 0.7);
+}
+
+.button-join-mod:disabled {
+    cursor: not-allowed;
+    /* background: rgba(0, 0, 0, 0.08); */
+    background: #9fa1a3;
+    color: rgba(0, 0, 0, 0.3);
+}

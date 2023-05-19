@@ -3,7 +3,7 @@ import moment from "moment";
 // import { useDispatch, useSelector } from "react-redux";
 import SubredditHover from "../SubredditHover";
 import UserHover from "../UserHover";
-// import { useEffect } from "react";
+import { useEffect } from "react";
 // import { getSubreddits } from "../../store/subreddits";
 // import { getAllPosts } from "../../store/posts";
 // import "./ShortPosts.css";
@@ -11,12 +11,22 @@ import OpenModalButton from "../OpenModalButton";
 import DeletePostModal from "../DeletePostModal";
 import EditPostModal from "../EditPostModal";
 import LoadingSpinner from "../LoadingSpinner";
+import { getAllPostComments } from "../../store/comments";
+import { useDispatch, useSelector } from "react-redux";
+import CommentSection from "../CommentSection";
 
 // subreddit = use;
 
 export default function IndividualFullPost({ user, subreddits, posts }) {
     // const dispatch = useDispatch();
     const { subredditName, postId } = useParams();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getAllPostComments(postId));
+    }, [dispatch])
+
+    const comments = useSelector(state => state.comments)
 
     function getSubredditFromName(subreddits, subredditName) {
         if (!subreddits.length) return undefined;
@@ -188,10 +198,6 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                     <div className="post-footer-container">
                         <NavLink
                             style={{ marginLeft: "7px" }}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                alert("Not yet implemented");
-                            }}
                             to={`/r/${subreddit.name}/posts/${post.id}`}
                             id="post-comment-upvote"
                         >
@@ -271,6 +277,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                         )}
                     </div>
                 </div>
+                <CommentSection comments={comments} user={user} />
             </div>
         </div>
     ) : (

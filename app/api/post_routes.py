@@ -99,3 +99,13 @@ def delete_post_by_id(post_id):
         return {"success": "Successfully deleted"}
 
     return {"errors": ["Not authorized to perform this delete"]}, 403
+
+
+@post_routes.route("/<int:post_id>/comments")
+def get_all_post_comments(post_id):
+    post = Post.query.get(post_id)
+
+    if not post:
+        return {"errors": ["Post not found"]}, 404
+
+    return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments}}
