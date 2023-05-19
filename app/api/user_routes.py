@@ -62,4 +62,4 @@ def get_user_comments(user_id):
         return {"errors": f"User #'{user_id}' not found"}, 404
 
     # return {comment.id: comment.to_short_dict() for comment in user.comments}
-    return {comment.id: comment.to_short_dict() for comment in user.comments}
+    return {comment.id: comment.to_bare_dict() for comment in user.comments}

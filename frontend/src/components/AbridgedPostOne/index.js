@@ -153,10 +153,6 @@ export default function IndividualAbridgedPost({
             <div className="post-footer-container">
                 <NavLink
                     style={{ marginLeft: "7px" }}
-                    onClick={(e) => {
-                        e.preventDefault();
-                        alert("Not yet implemented");
-                    }}
                     to={`/r/${subreddit.name}/posts/${post.id}`}
                     id="post-comment-upvote"
                 >
