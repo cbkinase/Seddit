@@ -277,7 +277,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                         )}
                     </div>
                 </div>
-                <CommentSection comments={comments} user={user} />
+                <CommentSection comments={comments} user={user} post={post} />
             </div>
         </div>
     ) : (
