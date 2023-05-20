@@ -2,9 +2,16 @@ import CommentInput from "./CommentInput";
 import { useState } from "react";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
+import EllipsisDropdown from "./EllipsisDropdown";
+
+function toggleExtraCollapsed(setExtraCollapsed, extraCollapsed) {
+    setExtraCollapsed(!extraCollapsed);
+}
 
 export default function CommentFooter({ comment, user }) {
     const [isReplying, setIsReplying] = useState(false);
+    const [extraCollpased, setExtraCollapsed] = useState(true);
+
 
     return (
         <>
@@ -12,7 +19,7 @@ export default function CommentFooter({ comment, user }) {
             <VotingSection comment={comment} user={user} />
             <ReplySection comment={comment} user={user} setIsReplying={setIsReplying} />
             <p className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px"}}>Share</p>
-            <ExtraSection comment={comment} user={user} />
+            {/* {user.id === comment.author_info.id ? <ExtraSection comment={comment} user={user} extraCollapsed={extraCollpased} setExtraCollapsed={setExtraCollapsed} /> : null} */}
         </div>
         {isReplying ? <CommentInput user={user} isCommentReply={true} commentContext={comment} setIsReplying={setIsReplying} /> : null}
         </>
@@ -64,11 +71,26 @@ function ReplySection({ comment, setIsReplying, user }) {
     )
 }
 
-function ExtraSection({ comment, user }) {
+function ExtraSection({ comment, user, extraCollapsed, setExtraCollapsed }) {
+    if (extraCollapsed) {
+        return (
+            <div onClick={e => toggleExtraCollapsed(setExtraCollapsed, extraCollapsed)} className="comment-footer-part" style={{marginTop: "3px"}}>
+                <i style={{padding: "6px 6px"}} className="fas fa-ellipsis-h"></i>
+            </div>
+        )
+    }
     return (
-        <div className="comment-footer-part" style={{marginTop: "3px"}}>
-        <i style={{padding: "6px 6px"}} className="fas fa-ellipsis-h"></i>
+
+         <>
+         <div className="comment-footer-part" style={{ marginLeft: "5px", paddingLeft: "5px", paddingRight: "5px", display: "flex", alignItems: "center"}}>
+            <i style={{padding: "6px 6px"}} className="fas fa-edit"></i>
+            {/* <span style={{ color: "grey", fontSize: "14px"}}>Edit</span> */}
         </div>
+        <div className="comment-footer-part" style={{ marginLeft: "5px", paddingLeft: "5px", paddingRight: "5px", display: "flex", alignItems: "center"}}>
+            <i style={{padding: "6px 6px"}} className="fas fa-trash"></i>
+            {/* <span style={{ color: "grey", fontSize: "14px"}}>Delete</span> */}
+        </div>
+        </>
     )
 
 }

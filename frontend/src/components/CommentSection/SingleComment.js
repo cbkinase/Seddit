@@ -5,7 +5,7 @@ import { useState } from "react";
 import CommentFooter from "./CommentFooter";
 
 
-export default function SingleComment({ comment, user, soloComment }) {
+export default function SingleComment({ comment, user, soloComment, post }) {
     const [isDisplaying, setIsDisplaying] = useState(true);
 
     function toggleDisplayState() {
@@ -62,6 +62,9 @@ export default function SingleComment({ comment, user, soloComment }) {
                         <UserHover comment={comment} />
                         <span style={{fontWeight: "bold"}}>{shortenWord(comment.author_info.username, 20)}</span>
                         </NavLink>
+                        {console.log(post.author_info.id)}
+                        {comment.author_info.id === post.author_info.id && <span className="OP-indicator">OP</span> }
+
                         <span style={{color: "gray", fontSize: "12px", fontWeight: "normal"}}>{" "}· {moment(Date.parse(comment.created_at)).fromNow()}</span>
                     </span>
                 </div>
@@ -77,6 +80,7 @@ export default function SingleComment({ comment, user, soloComment }) {
                           key={reply.id}
                           comment={reply}
                           user={user}
+                          post={post}
                           />)}
                     </div>
                     : null}
