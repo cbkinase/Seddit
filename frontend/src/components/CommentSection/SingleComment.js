@@ -5,7 +5,7 @@ import { useState } from "react";
 import CommentFooter from "./CommentFooter";
 
 
-export default function SingleComment({ comment, user, soloComment, commentLevel, setCommentLevel }) {
+export default function SingleComment({ comment, user, soloComment }) {
     const [isDisplaying, setIsDisplaying] = useState(true);
 
     function toggleDisplayState() {
