@@ -33,6 +33,7 @@ export default function SingleComment({ comment, user }) {
     };
     return (
         <>
+        <div style={{height: "10px"}}></div>
         <div className="single-comment-container">
             <div>
 
@@ -57,7 +58,7 @@ export default function SingleComment({ comment, user }) {
                             to={`/u/${comment.author_info.username}`}
                         >
                         <UserHover comment={comment} />
-                        {shortenWord(comment.author_info.username, 10)}
+                        {shortenWord(comment.author_info.username, 20)}
                         </NavLink>
                         <span style={{color: "gray", fontSize: "12px", fontWeight: "normal"}}>{" "}· {moment(Date.parse(comment.created_at)).fromNow()}</span></p>
                 </div>
@@ -65,6 +66,7 @@ export default function SingleComment({ comment, user }) {
                     {isDisplaying ? null : <div>&nbsp;</div>}
                     <p className="notosans" style={{display: stateToDisplay()}}>{comment.content}</p>
                     {isDisplaying ? <CommentFooter comment={comment} user={user} /> : null}
+                    {/* Display nested comments :) */}
                     {isDisplaying && comment.num_replies ? <div> {Object.values(comment.replies).map(reply => <SingleComment key={reply.id} comment={reply} user={user} />)} </div> : null}
                 </div>
             </div>
