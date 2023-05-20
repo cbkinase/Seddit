@@ -19,7 +19,7 @@ export default function IndividualAbridgedPost({
 
     const shortenWord = (word, long = 20) => {
         if (!word) return null;
-        if (word.length < long) return word;
+        if (word.length <= long) return word;
         return word.slice(0, long) + "...";
     };
 

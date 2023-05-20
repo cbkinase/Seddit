@@ -1,3 +1,4 @@
+
 .user-commenter-navlink {
     text-decoration: none;
     color: #0079D3;
@@ -5,6 +6,111 @@
 
 .user-commenter-navlink:hover {
     text-decoration: underline;
+}
+
+.root-comment-input {
+    outline: none;
+    border: 1px solid rgba(186, 188, 190, 0.3)
+}
+
+.root-comment-input:focus {
+    outline: 1px solid black;
+}
+
+.user-avatar-preview {
+    border-radius: 50%;
+    width: 28px;
+}
+
+.single-comment-container {
+    display: flex;
+    justify-content: center;
+}
+
+.single-comment-content-main {
+    margin-top: 5px;
+    margin-left: 8px;
+}
+
+.comment-border-link {
+    display: block;
+    position: relative;
+    /* top: 50px; */
+    left: 8px;
+    width: 2px;
+    height: calc(100% - 30px);
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    background-color: rgba(0, 0, 0, 0.1);
+    background-clip: padding-box;
+}
+.comment-border-link:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.toggle-comment-svg {
+    height: 10px;
+    width: 10px;
+    /* position: relative; */
+    /* right: 20px; */
+    /* top: 23px; */
+}
+
+.notosans {
+    font-family: "Noto Sans", Arial, sans-serif;
+    line-height: 21px;
+    color: #1c1c1c;
+    letter-spacing: 0.01em;
+}
+
+.comment-author-name-link {
+    text-decoration: none;
+    color: #1A1A1B;
+}
+
+.comment-author-name-link:hover {
+    text-decoration: underline;
+}
+
+.comment-voting-section {
+    display: flex;
+    margin-left: -8px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.comment-votes {
+    font-size: 12px;
+    font-weight: bold;
+    /* margin-top: 15px; */
+}
+
+.comment-upvote-button,
+.comment-downvote-button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 8px 8px;
+    color: grey;
+}
+
+.comment-upvote-button:hover {
+    background-color: rgba(178, 178, 178, 0.2);
+    color: red;
+}
+
+.comment-downvote-button:hover {
+    background-color: rgba(178, 178, 178, 0.2);
+    color: #7193ff;
+}
+
+.comment-footer-part {
+    color: grey;
+}
+
+.comment-footer-part:hover {
+    background-color: rgba(178, 178, 178, 0.3);
+    cursor: pointer;
 }
 
 .button-join-mod {
@@ -21,7 +127,8 @@
     font-weight: 700;
     justify-content: center;
     line-height: 16px;
-    max-width: 480px;
+    /* max-width: 480px; */
+    width: 100px;
     min-height: 24px;
     min-width: 24px;
     overflow: hidden;
@@ -56,4 +163,60 @@
     /* background: rgba(0, 0, 0, 0.08); */
     background: #9fa1a3;
     color: rgba(0, 0, 0, 0.3);
+}
+
+.button-leave-mod {
+    align-items: center;
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+    appearance: none;
+    background-color: #fff;
+    border-radius: 24px;
+    border-style: none;
+    box-sizing: border-box;
+    border: 1px solid #0a66c2;
+    color: #0a66c2;
+    cursor: pointer;
+    display: inline-flex;
+    fill: currentcolor;
+    font-family: -apple-system, system-ui, system-ui, "Segoe UI", Roboto,
+        "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell,
+        "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    min-height: 33px;
+    justify-content: center;
+    letter-spacing: 0.25px;
+    line-height: normal;
+    max-width: 100%;
+    overflow: visible;
+    padding: 2px 24px;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: auto;
+    will-change: transform, opacity;
+    z-index: 0;
+    line-height: 16px;
+    width: 100px;
+    min-height: 24px;
+    min-width: 24px;
+    margin-right: 10px;
+}
+
+.button-leave-mod:hover {
+    background: #f6f9fe;
+    color: #174ea6;
+}
+
+.button-leave-mod:active {
+    outline: none;
+}
+
+.button-leave-mod:focus {
+    outline: none;
+    border: 1px solid #4285f4;
 }

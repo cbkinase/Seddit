@@ -8,7 +8,7 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
     // const dispatch = useDispatch();
     const shortenWord = (word, long = 20) => {
         if (!word) return null;
-        if (word.length < long) return word;
+        if (word.length <= long) return word;
         return word.slice(0, long) + "...";
     };
 

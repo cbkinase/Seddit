@@ -1,6 +1,6 @@
 import "../SubredditHover/subredditHover.css";
 
-export default function UserHover({ subreddit, post }) {
+export default function UserHover({ subreddit, post, comment }) {
     let avatar;
     let username;
     let bio;
@@ -18,6 +18,13 @@ export default function UserHover({ subreddit, post }) {
         username = post.author_info.username;
         bio = post.author_info.bio;
         created_at = post.author_info.created_at;
+    }
+
+    if (comment) {
+        avatar = comment.author_info.avatar;
+        username = comment.author_info.username;
+        bio = comment.author_info.bio;
+        created_at = comment.author_info.created_at;
     }
 
     const formatDate = (dateString) => {
