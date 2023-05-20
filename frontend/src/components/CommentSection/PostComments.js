@@ -4,7 +4,7 @@ export default function PostComments({ comments, user, sortingState, post }) {
     const topLevelComments = Object.values(comments).filter(comment => comment.parent_id === null);
     return (
     <>
-    <div>
+    <div style={{marginLeft: "-15px"}}>
         {topLevelComments.map(comment =>
         <SingleComment
           key={comment.id}
