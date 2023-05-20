@@ -5,7 +5,7 @@ import { useState } from "react";
 import CommentFooter from "./CommentFooter";
 
 
-export default function SingleComment({ comment, user }) {
+export default function SingleComment({ comment, user, soloComment }) {
     const [isDisplaying, setIsDisplaying] = useState(true);
 
     function toggleDisplayState() {
@@ -51,7 +51,7 @@ export default function SingleComment({ comment, user }) {
             </div>
             <div style={{width: setDivWidth()}} className="single-comment-content-main">
                 <div>
-                    <p>
+                    <p style={{marginLeft: "7px"}}>
                         <NavLink
                             style={{ margin: "0px 0px", fontWeight: "bold", fontSize: "12px" }}
                             className="subreddit-preview comment-author-name-link"
@@ -67,7 +67,7 @@ export default function SingleComment({ comment, user }) {
                     <p className="notosans" style={{display: stateToDisplay()}}>{comment.content}</p>
                     {isDisplaying ? <CommentFooter comment={comment} user={user} /> : null}
                     {/* Display nested comments :) */}
-                    {isDisplaying && comment.num_replies ? <div> {Object.values(comment.replies).map(reply => <SingleComment key={reply.id} comment={reply} user={user} />)} </div> : null}
+                    {isDisplaying && comment.num_replies && !soloComment ? <div> {Object.values(comment.replies).map(reply => <SingleComment key={reply.id} comment={reply} user={user} />)} </div> : null}
                 </div>
             </div>
         </div>

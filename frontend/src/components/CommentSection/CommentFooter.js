@@ -6,7 +6,7 @@ export default function CommentFooter({ comment, user }) {
 
     return (
         <>
-        <div style={{display: "flex", marginTop: "5px"}}>
+        <div style={{display: "flex", marginTop: "5px", marginLeft: "5px"}}>
             <VotingSection comment={comment} user={user} />
             <ReplySection comment={comment} setIsReplying={setIsReplying} />
             <p className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px"}}>Share</p>
