@@ -66,7 +66,7 @@ class Comment(db.Model):
             'post_info': self.post.to_short_dict(),
         }
 
-    def to_short_dict(self):
+    def to_short_dict(self, depth=0):
         return {
             'id': self.id,
             'author_info': self.author.to_short_dict(),
@@ -75,16 +75,19 @@ class Comment(db.Model):
             'created_at': self.created_at,
             'updated_at': self.updated_at,
             'parent_id': self.parent_id,
-            'replies': {reply.id: reply.to_mega_short_dict() for reply in self.children} if len(self.children) else None,
-            'num_replies': len(self.children) if self.children else 0
+            'replies': {reply.id: reply.to_mega_short_dict(depth+1) for reply in self.children} if len(self.children) else None,
+            'num_replies': len(self.children) if self.children else 0,
+            'depth': depth,
         }
 
-    def to_mega_short_dict(self):
+    def to_mega_short_dict(self, depth):
         return {
             'id': self.id,
             'author_info': self.author.to_short_dict(),
             'content': self.content,
             'created_at': self.created_at,
-            'replies': {reply.id: reply.to_mega_short_dict() for reply in self.children} if len(self.children) else None,
-            'num_replies': len(self.children) if self.children else 0
+            'depth': depth,
+            'replies': {reply.id: reply.to_mega_short_dict(depth + 1) for reply in self.children} if len(self.children) else None,
+            'num_replies': len(self.children) if self.children else 0,
+
         }

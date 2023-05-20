@@ -11,6 +11,7 @@ function OpenModalButton({
     style,
     renderEditButton,
     renderDeleteButton,
+    commentNotLoggedIn,
 }) {
     const { setModalContent, setOnModalClose } = useModal();
 
@@ -28,6 +29,14 @@ function OpenModalButton({
             {renderEditButton && (
                 <i className="fa fa-edit" aria-hidden="true"></i>
             )}
+            {commentNotLoggedIn ? <>
+                <i
+        // style={{ marginRight: "5px" }}
+        className="fa fa-comments"
+        aria-hidden="true"
+        ></i>
+        <span style={{marginLeft: "5px", color: "grey", fontSize: "14px"}}>Reply</span>
+            </> : null}
             {buttonText}
         </button>
     );

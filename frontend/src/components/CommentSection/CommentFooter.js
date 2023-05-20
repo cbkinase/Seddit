@@ -1,5 +1,7 @@
 import CommentInput from "./CommentInput";
 import { useState } from "react";
+import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
 
 export default function CommentFooter({ comment, user }) {
     const [isReplying, setIsReplying] = useState(false);
@@ -8,7 +10,7 @@ export default function CommentFooter({ comment, user }) {
         <>
         <div style={{display: "flex", marginTop: "5px", marginLeft: "5px"}}>
             <VotingSection comment={comment} user={user} />
-            <ReplySection comment={comment} setIsReplying={setIsReplying} />
+            <ReplySection comment={comment} user={user} setIsReplying={setIsReplying} />
             <p className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px"}}>Share</p>
             <ExtraSection comment={comment} user={user} />
         </div>
@@ -37,9 +39,20 @@ function VotingSection({ comment, user }) {
     );
 }
 
-function ReplySection({ comment, setIsReplying }) {
+function ReplySection({ comment, setIsReplying, user }) {
+    if (!user) {
+        return (
+            <>
+            <OpenModalButton modalComponent={<LoginFormModal fromComment={true} />} className="comment-footer-part" commentNotLoggedIn={true} style={{ marginLeft: "5px", paddingLeft: "5px", paddingRight: "5px", border: "none"}}>
+        </OpenModalButton>
+            </>
+        )
+    }
     return (
-        <div onClick={e => setIsReplying(true)} className="comment-footer-part" style={{paddingTop: "6px", marginLeft: "5px", paddingLeft: "5px", paddingRight: "5px"}}>
+        <>
+        <div onClick={e => {
+            setIsReplying(true);
+            }} className="comment-footer-part" style={{paddingTop: "6px", marginLeft: "5px", paddingLeft: "5px", paddingRight: "5px"}}>
         <i
         // style={{ marginRight: "5px" }}
         className="fa fa-comments"
@@ -47,6 +60,7 @@ function ReplySection({ comment, setIsReplying }) {
         ></i>
         <span style={{marginLeft: "5px", color: "grey", fontSize: "14px"}}>Reply</span>
         </div>
+        </>
     )
 }
 

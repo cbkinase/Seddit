@@ -5,7 +5,12 @@ export default function PostComments({ comments, user, sortingState }) {
     return (
     <>
     <div>
-        {topLevelComments.map(comment => <SingleComment key={comment.id} comment={comment} user={user} />)}
+        {topLevelComments.map(comment =>
+        <SingleComment
+          key={comment.id}
+          comment={comment}
+          user={user}
+          />)}
     </div>
     </>
     )
