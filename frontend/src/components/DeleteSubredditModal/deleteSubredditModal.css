@@ -18,7 +18,7 @@
     padding: 20px;
     border: none;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    width: 50%; /* Could be more or less, depending on screen size */
+    /* width: 50%; Could be more or less, depending on screen size */
     max-width: 500px;
     border-radius: 4px;
     font-family: Verdana, Arial, Helvectica, sans-serif;

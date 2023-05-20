@@ -5,7 +5,7 @@ import { useState } from "react";
 import CommentFooter from "./CommentFooter";
 
 
-export default function SingleComment({ comment, user }) {
+export default function SingleComment({ comment, user, soloComment }) {
     const [isDisplaying, setIsDisplaying] = useState(true);
 
     function toggleDisplayState() {
@@ -33,6 +33,7 @@ export default function SingleComment({ comment, user }) {
     };
     return (
         <>
+        <div style={{height: "10px"}}></div>
         <div className="single-comment-container">
             <div>
 
@@ -50,14 +51,14 @@ export default function SingleComment({ comment, user }) {
             </div>
             <div style={{width: setDivWidth()}} className="single-comment-content-main">
                 <div>
-                    <p>
+                    <p style={{marginLeft: "7px"}}>
                         <NavLink
                             style={{ margin: "0px 0px", fontWeight: "bold", fontSize: "12px" }}
                             className="subreddit-preview comment-author-name-link"
                             to={`/u/${comment.author_info.username}`}
                         >
                         <UserHover comment={comment} />
-                        {shortenWord(comment.author_info.username, 10)}
+                        {shortenWord(comment.author_info.username, 20)}
                         </NavLink>
                         <span style={{color: "gray", fontSize: "12px", fontWeight: "normal"}}>{" "}· {moment(Date.parse(comment.created_at)).fromNow()}</span></p>
                 </div>
@@ -65,7 +66,8 @@ export default function SingleComment({ comment, user }) {
                     {isDisplaying ? null : <div>&nbsp;</div>}
                     <p className="notosans" style={{display: stateToDisplay()}}>{comment.content}</p>
                     {isDisplaying ? <CommentFooter comment={comment} user={user} /> : null}
-                    {isDisplaying && comment.num_replies ? <div> {Object.values(comment.replies).map(reply => <SingleComment key={reply.id} comment={reply} user={user} />)} </div> : null}
+                    {/* Display nested comments :) */}
+                    {isDisplaying && comment.num_replies && !soloComment ? <div> {Object.values(comment.replies).map(reply => <SingleComment key={reply.id} comment={reply} user={user} />)} </div> : null}
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@ export default function CommentFooter({ comment, user }) {
 
     return (
         <>
-        <div style={{display: "flex", marginTop: "5px"}}>
+        <div style={{display: "flex", marginTop: "5px", marginLeft: "5px"}}>
             <VotingSection comment={comment} user={user} />
             <ReplySection comment={comment} setIsReplying={setIsReplying} />
             <p className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px"}}>Share</p>
@@ -39,7 +39,7 @@ function VotingSection({ comment, user }) {
 
 function ReplySection({ comment, setIsReplying }) {
     return (
-        <div onClick={e => setIsReplying(true)} className="comment-footer-part" style={{paddingTop: "6px", marginLeft: "5px"}}>
+        <div onClick={e => setIsReplying(true)} className="comment-footer-part" style={{paddingTop: "6px", marginLeft: "5px", paddingLeft: "5px", paddingRight: "5px"}}>
         <i
         // style={{ marginRight: "5px" }}
         className="fa fa-comments"
@@ -52,7 +52,9 @@ function ReplySection({ comment, setIsReplying }) {
 
 function ExtraSection({ comment, user }) {
     return (
-        <i className="fa-solid fa-ellipsis"></i>
+        <div className="comment-footer-part" style={{marginTop: "3px"}}>
+        <i style={{padding: "6px 6px"}} className="fas fa-ellipsis-h"></i>
+        </div>
     )
 
 }
