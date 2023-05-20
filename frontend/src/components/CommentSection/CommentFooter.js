@@ -1,0 +1,58 @@
+import CommentInput from "./CommentInput";
+import { useState } from "react";
+
+export default function CommentFooter({ comment, user }) {
+    const [isReplying, setIsReplying] = useState(false);
+
+    return (
+        <>
+        <div style={{display: "flex", marginTop: "5px"}}>
+            <VotingSection comment={comment} user={user} />
+            <ReplySection comment={comment} setIsReplying={setIsReplying} />
+            <p className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px"}}>Share</p>
+            <ExtraSection comment={comment} user={user} />
+        </div>
+        {isReplying ? <CommentInput user={user} isCommentReply={true} commentContext={comment} setIsReplying={setIsReplying} /> : null}
+        </>
+    )
+}
+
+function VotingSection({ comment, user }) {
+    return (
+        <div className="comment-voting-section">
+            <i
+                onClick={(e) => alert("Not yet implemented")}
+                className="fa fa-arrow-up comment-upvote-button fa-lg "
+                aria-hidden="true"
+            ></i>
+            <p className="comment-votes">
+                {Math.floor(2 + Math.random() * 100)}
+            </p>
+            <i
+                onClick={(e) => alert("Not yet implemented")}
+                className="fa fa-arrow-down fa-lg comment-downvote-button"
+                aria-hidden="true"
+            ></i>
+        </div>
+    );
+}
+
+function ReplySection({ comment, setIsReplying }) {
+    return (
+        <div onClick={e => setIsReplying(true)} className="comment-footer-part" style={{paddingTop: "6px", marginLeft: "5px"}}>
+        <i
+        // style={{ marginRight: "5px" }}
+        className="fa fa-comments"
+        aria-hidden="true"
+        ></i>
+        <span style={{marginLeft: "5px", color: "grey", fontSize: "14px"}}>Reply</span>
+        </div>
+    )
+}
+
+function ExtraSection({ comment, user }) {
+    return (
+        <i className="fa-solid fa-ellipsis"></i>
+    )
+
+}

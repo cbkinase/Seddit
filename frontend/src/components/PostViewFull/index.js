@@ -26,7 +26,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
         dispatch(getAllPostComments(postId));
     }, [dispatch])
 
-    const comments = useSelector(state => state.comments)
+    const comments = useSelector(state => state.comments.Comments)
 
     function getSubredditFromName(subreddits, subredditName) {
         if (!subreddits.length) return undefined;
@@ -44,7 +44,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
 
     const shortenWord = (word, long = 20) => {
         if (!word) return null;
-        if (word.length < long) return word;
+        if (word.length <= long) return word;
         return word.slice(0, long) + "...";
     };
 
