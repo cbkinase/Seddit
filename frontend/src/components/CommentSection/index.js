@@ -16,7 +16,7 @@ export default function CommentSection({comments, user}) {
     }
     return (
     <div>
-        <div style={{width: setDivWidth()}} className="subreddit-short-container post-short-container post-full-container box-dec-1">
+        <div style={{width: setDivWidth()}} className="subreddit-short-container post-short-container comment-short-container post-full-container box-dec-1">
         {user ? <CommentInput user={user} /> : null}
         {user ? <div style={{borderBottom: "1px solid #EDEFF1", height: "10px"}}></div> : null}
         <PostComments comments={comments} user={user} sortingState={sortingBy} />

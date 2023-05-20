@@ -1,3 +1,6 @@
+.comment-short-container {
+    padding-left: 35px !important;
+}
 
 .user-commenter-navlink {
     text-decoration: none;
@@ -44,7 +47,8 @@
     background-clip: padding-box;
 }
 .comment-border-link:hover {
-    background-color: rgba(0, 0, 0, 0.3);
+    /* background-color: rgba(0, 0, 0, 0.3); */
+    background-color: #0079D3;
 }
 
 .toggle-comment-svg {
@@ -106,6 +110,7 @@
 
 .comment-footer-part {
     color: grey;
+    background-color: inherit;
 }
 
 .comment-footer-part:hover {

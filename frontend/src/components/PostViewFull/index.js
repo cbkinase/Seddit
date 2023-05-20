@@ -24,7 +24,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
 
     useEffect(() => {
         dispatch(getAllPostComments(postId));
-    }, [dispatch])
+    }, [dispatch, postId])
 
     const comments = useSelector(state => state.comments.Comments)
 

@@ -6,7 +6,7 @@ import "./LoginForm.css";
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
 
-function LoginFormModal() {
+function LoginFormModal({ fromComment }) {
     const dispatch = useDispatch();
     const [credential, setCredential] = useState("");
     const [password, setPassword] = useState("");
@@ -64,7 +64,7 @@ function LoginFormModal() {
                         fontSize: "26px",
                     }}
                 >
-                    Welcome back!
+                    {fromComment ? "Log in to comment" : "Welcome back!"}
                 </h1>
 
             </div>

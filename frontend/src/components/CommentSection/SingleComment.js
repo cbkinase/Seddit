@@ -5,7 +5,7 @@ import { useState } from "react";
 import CommentFooter from "./CommentFooter";
 
 
-export default function SingleComment({ comment, user, soloComment }) {
+export default function SingleComment({ comment, user, soloComment, commentLevel, setCommentLevel }) {
     const [isDisplaying, setIsDisplaying] = useState(true);
 
     function toggleDisplayState() {
@@ -19,10 +19,10 @@ export default function SingleComment({ comment, user, soloComment }) {
 
     function setDivWidth() {
         if (window.visualViewport.width > 700) {
-            return "600px"
+            return `${600 - comment.depth * 23}px`
         }
         else {
-            return `80vw`
+            return `${"100%" - comment.depth * 23}px`
         }
     }
 
@@ -34,7 +34,9 @@ export default function SingleComment({ comment, user, soloComment }) {
     return (
         <>
         <div style={{height: "10px"}}></div>
-        <div className="single-comment-container">
+        <div style={{marginLeft: "-5px",
+        // marginRight: setRightMargin(comment)
+        }} className="single-comment-container">
             <div>
 
                 <NavLink
@@ -43,7 +45,7 @@ export default function SingleComment({ comment, user, soloComment }) {
                     to={`/u/${comment.author_info.username}`}
                 >
                     <UserHover comment={comment} />
-                    <img className="user-avatar-preview" src={comment.author_info.avatar}></img>
+                    <img alt="user-preview" className="user-avatar-preview" src={comment.author_info.avatar}></img>
                 </NavLink>
                 <div onClick={
                     e => toggleDisplayState()
@@ -51,23 +53,33 @@ export default function SingleComment({ comment, user, soloComment }) {
             </div>
             <div style={{width: setDivWidth()}} className="single-comment-content-main">
                 <div>
-                    <p style={{marginLeft: "7px"}}>
+                    <span style={{marginLeft: "7px"}}>
                         <NavLink
-                            style={{ margin: "0px 0px", fontWeight: "bold", fontSize: "12px" }}
+                            style={{ margin: "0px 0px", fontSize: "12px" }}
                             className="subreddit-preview comment-author-name-link"
                             to={`/u/${comment.author_info.username}`}
                         >
                         <UserHover comment={comment} />
-                        {shortenWord(comment.author_info.username, 20)}
+                        <span style={{fontWeight: "bold"}}>{shortenWord(comment.author_info.username, 20)}</span>
                         </NavLink>
-                        <span style={{color: "gray", fontSize: "12px", fontWeight: "normal"}}>{" "}· {moment(Date.parse(comment.created_at)).fromNow()}</span></p>
+                        <span style={{color: "gray", fontSize: "12px", fontWeight: "normal"}}>{" "}· {moment(Date.parse(comment.created_at)).fromNow()}</span>
+                    </span>
                 </div>
                 <div style={{marginTop: "8px"}}>
                     {isDisplaying ? null : <div>&nbsp;</div>}
-                    <p className="notosans" style={{display: stateToDisplay()}}>{comment.content}</p>
+                    <span className="notosans" style={{display: stateToDisplay()}}>{comment.content}</span>
                     {isDisplaying ? <CommentFooter comment={comment} user={user} /> : null}
                     {/* Display nested comments :) */}
-                    {isDisplaying && comment.num_replies && !soloComment ? <div> {Object.values(comment.replies).map(reply => <SingleComment key={reply.id} comment={reply} user={user} />)} </div> : null}
+                    {isDisplaying && comment.num_replies && !soloComment
+                    ? <div>
+                      {Object.values(comment.replies).map(reply =>
+                        <SingleComment
+                          key={reply.id}
+                          comment={reply}
+                          user={user}
+                          />)}
+                    </div>
+                    : null}
                 </div>
             </div>
         </div>
