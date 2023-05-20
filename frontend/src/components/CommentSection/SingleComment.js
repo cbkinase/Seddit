@@ -65,6 +65,7 @@ export default function SingleComment({ comment, user }) {
                     {isDisplaying ? null : <div>&nbsp;</div>}
                     <p className="notosans" style={{display: stateToDisplay()}}>{comment.content}</p>
                     {isDisplaying ? <CommentFooter comment={comment} user={user} /> : null}
+                    {isDisplaying && comment.num_replies ? <div> {Object.values(comment.replies).map(reply => <SingleComment key={reply.id} comment={reply} user={user} />)} </div> : null}
                 </div>
             </div>
         </div>
