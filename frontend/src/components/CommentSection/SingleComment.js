@@ -6,7 +6,6 @@ import CommentFooter from "./CommentFooter";
 
 
 export default function SingleComment({ comment, user }) {
-    console.log(comment);
     const [isDisplaying, setIsDisplaying] = useState(true);
 
     function toggleDisplayState() {
