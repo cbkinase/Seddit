@@ -3,7 +3,7 @@ import moment from "moment";
 // import { useDispatch, useSelector } from "react-redux";
 import SubredditHover from "../SubredditHover";
 import UserHover from "../UserHover";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 // import { getSubreddits } from "../../store/subreddits";
 // import { getAllPosts } from "../../store/posts";
 // import "./ShortPosts.css";
@@ -21,10 +21,12 @@ import CommentShareModal from "../CommentSection/CommentShareModal";
 export default function IndividualFullPost({ user, subreddits, posts }) {
     // const dispatch = useDispatch();
     const { subredditName, postId } = useParams();
+    const [commentsLoaded, setCommentsLoaded] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getAllPostComments(postId));
+        dispatch(getAllPostComments(postId))
+        .then(() => setCommentsLoaded(true));
     }, [dispatch, postId])
 
     const comments = useSelector(state => state.comments.Comments)
@@ -186,6 +188,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                                     marginBottom: "13px",
                                     marginLeft: "7px",
                                     marginTop: "-5px",
+                                    lineHeight: "21px"
                                 }}
                             >
                                 {post.content}
@@ -279,7 +282,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                         )}
                     </div>
                 </div>
-                <CommentSection comments={comments} user={user} post={post} />
+                {commentsLoaded ? <CommentSection comments={comments} user={user} post={post} /> : <LoadingSpinner />}
             </div>
         </div>
     ) : (

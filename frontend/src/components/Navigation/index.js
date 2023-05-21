@@ -98,7 +98,9 @@ function Navigation({ isLoaded }) {
                     </NavLink>
                 </li>
                 <div style={{display: "flex"}}>
-                    <NavLink exact to="/explore">
+                    <NavLink
+                    style={{textDecoration: "none"}}
+                    exact to="/explore">
                         <button className="button-join head-nav-btn head-nav-btn-explore">
                             Explore Communities
                         </button>
