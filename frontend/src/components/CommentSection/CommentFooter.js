@@ -3,6 +3,8 @@ import { useState } from "react";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import EllipsisDropdown from "./EllipsisDropdown";
+import CommentShareModal from "./CommentShareModal";
+
 
 function toggleExtraCollapsed(setExtraCollapsed, extraCollapsed) {
     setExtraCollapsed(!extraCollapsed);
@@ -12,13 +14,13 @@ export default function CommentFooter({ comment, user, post }) {
     const [isReplying, setIsReplying] = useState(false);
     const [extraCollpased, setExtraCollapsed] = useState(true);
 
-
     return (
         <>
         <div style={{display: "flex", marginTop: "5px", marginLeft: "5px"}}>
             <VotingSection comment={comment} user={user} />
             <ReplySection comment={comment} user={user} setIsReplying={setIsReplying} />
-            <p className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px"}}>Share</p>
+            <OpenModalButton modalComponent={<CommentShareModal />} className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px", border: "none"}} buttonText={"Share"} />
+
             {/* {user.id === comment.author_info.id ? <ExtraSection comment={comment} user={user} extraCollapsed={extraCollpased} setExtraCollapsed={setExtraCollapsed} /> : null} */}
         </div>
         {isReplying ? <CommentInput user={user} isCommentReply={true} commentContext={comment} post={post} setIsReplying={setIsReplying} /> : null}

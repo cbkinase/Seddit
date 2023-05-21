@@ -14,6 +14,7 @@ import LoadingSpinner from "../LoadingSpinner";
 import { getAllPostComments } from "../../store/comments";
 import { useDispatch, useSelector } from "react-redux";
 import CommentSection from "../CommentSection";
+import CommentShareModal from "../CommentSection/CommentShareModal";
 
 // subreddit = use;
 
@@ -208,7 +209,8 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                             ></i>
                             <span>{post.num_comments} Comment{post.num_comments !== 1 && "s"}</span>
                         </NavLink>
-                        <NavLink
+                        <OpenModalButton renderShareButton={true} modalComponent={<CommentShareModal />} id="post-comment-upvote" style={{marginLeft: "7px", border: "none"}} buttonText={"Share"} />
+                        {/* <NavLink
                             style={{ marginLeft: "7px" }}
                             onClick={(e) => {
                                 e.preventDefault();
@@ -223,7 +225,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                                 aria-hidden="true"
                             ></i>
                             <span>Share</span>
-                        </NavLink>
+                        </NavLink> */}
                         {user && (
                             <NavLink
                                 style={{ marginLeft: "7px" }}

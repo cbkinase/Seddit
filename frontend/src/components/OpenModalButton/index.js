@@ -12,6 +12,7 @@ function OpenModalButton({
     renderEditButton,
     renderDeleteButton,
     commentNotLoggedIn,
+    renderShareButton,
 }) {
     const { setModalContent, setOnModalClose } = useModal();
 
@@ -28,6 +29,13 @@ function OpenModalButton({
             )}
             {renderEditButton && (
                 <i className="fa fa-edit" aria-hidden="true"></i>
+            )}
+            {renderShareButton && (
+                <i
+                // style={{ marginRight: "5px" }}
+                className="fa fa-share"
+                aria-hidden="true"
+            ></i>
             )}
             {commentNotLoggedIn ? <>
                 <i
