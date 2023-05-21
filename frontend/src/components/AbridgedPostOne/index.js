@@ -8,6 +8,7 @@ import OpenModalButton from "../OpenModalButton";
 import DeletePostModal from "../DeletePostModal";
 import EditPostModal from "../EditPostModal";
 import LoadingSpinner from "../LoadingSpinner";
+import CommentShareModal from "../CommentSection/CommentShareModal";
 
 export default function IndividualAbridgedPost({
     user,
@@ -163,7 +164,7 @@ export default function IndividualAbridgedPost({
                     ></i>
                     <span>{post.num_comments} Comment{post.num_comments !== 1 && "s"}</span>
                 </NavLink>
-                <NavLink
+                {/* <NavLink
                     style={{ marginLeft: "7px" }}
                     onClick={(e) => {
                         e.preventDefault();
@@ -178,7 +179,8 @@ export default function IndividualAbridgedPost({
                         aria-hidden="true"
                     ></i>
                     <span>Share</span>
-                </NavLink>
+                </NavLink> */}
+                <OpenModalButton renderShareButton={true} modalComponent={<CommentShareModal />} id="post-comment-upvote" style={{ marginLeft: "7px", border: "none" }} buttonText={"Share"} />
                 {user && (
                     <NavLink
                         style={{ marginLeft: "7px" }}

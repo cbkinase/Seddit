@@ -7,6 +7,8 @@
     font-size: 14px;
     /* font-family: "IBMPlexSans" Arial, Helvetica, sans-serif; */
     padding: 4px 4px;
+    background-color: inherit;
+    cursor: pointer;
 }
 
 #post-comment-upvote:hover {
