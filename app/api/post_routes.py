@@ -108,4 +108,4 @@ def get_all_post_comments(post_id):
     if not post:
         return {"errors": ["Post not found"]}, 404
 
-    return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments}}
+    return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}

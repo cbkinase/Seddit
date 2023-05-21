@@ -5,7 +5,7 @@ import { useState } from "react";
 import CommentFooter from "./CommentFooter";
 
 
-export default function SingleComment({ comment, user, soloComment, post }) {
+export default function SingleComment({ comment, user, soloComment, post, sortingFunction }) {
     const [isDisplaying, setIsDisplaying] = useState(true);
 
     function toggleDisplayState() {
@@ -70,11 +70,11 @@ export default function SingleComment({ comment, user, soloComment, post }) {
                 <div style={{marginTop: "8px"}}>
                     {isDisplaying ? null : <div>&nbsp;</div>}
                     <span className="notosans" style={{display: stateToDisplay()}}>{comment.content}</span>
-                    {isDisplaying ? <CommentFooter comment={comment} user={user} /> : null}
+                    {isDisplaying ? <CommentFooter comment={comment} post={post} user={user} /> : null}
                     {/* Display nested comments :) */}
                     {isDisplaying && comment.num_replies && !soloComment
                     ? <div>
-                      {Object.values(comment.replies).map(reply =>
+                      {Object.values(comment.replies).sort(sortingFunction).map(reply =>
                         <SingleComment
                           key={reply.id}
                           comment={reply}

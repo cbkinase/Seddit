@@ -54,8 +54,8 @@ function EditPostModal({ post, subreddit }) {
                 title: communityName,
             };
 
-            if (communityPicture) payload.attachment = communityPicture;
-            if (communityDescription) payload.content = communityDescription;
+            payload.attachment = communityPicture;
+            payload.content = communityDescription;
             ePost = await dispatch(editPost(payload, post.id));
         }
 

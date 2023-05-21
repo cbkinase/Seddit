@@ -8,7 +8,7 @@ function toggleExtraCollapsed(setExtraCollapsed, extraCollapsed) {
     setExtraCollapsed(!extraCollapsed);
 }
 
-export default function CommentFooter({ comment, user }) {
+export default function CommentFooter({ comment, user, post }) {
     const [isReplying, setIsReplying] = useState(false);
     const [extraCollpased, setExtraCollapsed] = useState(true);
 
@@ -21,7 +21,7 @@ export default function CommentFooter({ comment, user }) {
             <p className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px"}}>Share</p>
             {/* {user.id === comment.author_info.id ? <ExtraSection comment={comment} user={user} extraCollapsed={extraCollpased} setExtraCollapsed={setExtraCollapsed} /> : null} */}
         </div>
-        {isReplying ? <CommentInput user={user} isCommentReply={true} commentContext={comment} setIsReplying={setIsReplying} /> : null}
+        {isReplying ? <CommentInput user={user} isCommentReply={true} commentContext={comment} post={post} setIsReplying={setIsReplying} /> : null}
         </>
     )
 }
