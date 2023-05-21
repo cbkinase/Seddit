@@ -1,7 +1,7 @@
-export default function LoadingSpinner() {
+export default function LoadingSpinner({ isShort }) {
     return (
-    <div className="spinner-container">
-    <div className="spinner"></div>
+    <div className={isShort ? "short-spinner-container" : "spinner-container"}>
+    <div className={isShort ? "short-spinner" : "spinner"}></div>
   </div>
     )
 }

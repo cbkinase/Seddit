@@ -282,7 +282,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                         )}
                     </div>
                 </div>
-                {commentsLoaded ? <CommentSection comments={comments} user={user} post={post} /> : <LoadingSpinner />}
+                {commentsLoaded ? <CommentSection comments={comments} user={user} post={post} /> : <LoadingSpinner isShort={true} />}
             </div>
         </div>
     ) : (
