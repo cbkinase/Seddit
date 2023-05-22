@@ -1,8 +1,8 @@
-"""comments
+"""index_on_subreddit_and_user_names
 
-Revision ID: a4b2ec650296
+Revision ID: edf93b7b0e67
 Revises:
-Create Date: 2023-04-30 15:03:18.360377
+Create Date: 2023-05-22 15:09:59.339059
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a4b2ec650296'
+revision = 'edf93b7b0e67'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,12 +32,14 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('username')
+    sa.UniqueConstraint('email')
     )
+    with op.batch_alter_table('users', schema=None) as batch_op:
+        batch_op.create_index(batch_op.f('ix_users_username'), ['username'], unique=True)
 
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+
 
     op.create_table('subreddits',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -50,9 +52,10 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('name')
+    sa.PrimaryKeyConstraint('id')
     )
+    with op.batch_alter_table('subreddits', schema=None) as batch_op:
+        batch_op.create_index(batch_op.f('ix_subreddits_name'), ['name'], unique=True)
 
     if environment == "production":
         op.execute(f"ALTER TABLE subreddits SET SCHEMA {SCHEMA};")
@@ -110,6 +113,12 @@ def downgrade():
     op.drop_table('comments')
     op.drop_table('subreddit_subscribers')
     op.drop_table('posts')
+    with op.batch_alter_table('subreddits', schema=None) as batch_op:
+        batch_op.drop_index(batch_op.f('ix_subreddits_name'))
+
     op.drop_table('subreddits')
+    with op.batch_alter_table('users', schema=None) as batch_op:
+        batch_op.drop_index(batch_op.f('ix_users_username'))
+
     op.drop_table('users')
     # ### end Alembic commands ###
