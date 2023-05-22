@@ -11,9 +11,10 @@ import {
     WhatsappShareButton,
 
 } from 'react-share';
+import { useHref } from 'react-router';
 
-export default function CommentShareModal({ isPost }) {
-    const shareUrl = window.location.href;
+export default function CommentShareModal({ isPost, post }) {
+    const shareUrl = `${window.location.protocol}//${window.location.host}/r/${post.subreddit_info.name}/posts/${post.id}`;
     const shareTitle = "Check out Cameron's Website :)";
 
     return (

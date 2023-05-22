@@ -16,10 +16,10 @@ const loadComments = (comments) => {
     };
 };
 
-const deleteComment = (id) => {
+const deleteComment = (comment) => {
     return {
         type: DELETE_COMMENT,
-        id,
+        comment,
     };
 };
 
@@ -46,6 +46,36 @@ export const createComment = (comment) => async (dispatch) => {
         return data;
     } else {
         return { errors: "Not today..." }
+    }
+};
+
+export const editComment = (comment, commentId) => async (dispatch) => {
+    const res = await fetch(`/api/comments/${commentId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(comment),
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(addComment(data));
+        return data;
+    } else {
+        return { errors: "Not today..." }
+    }
+};
+
+export const destroyComment = (commentId, postId) => async (dispatch) => {
+    const res = await fetch(`/api/posts/${postId}/comments/${commentId}`, {
+        method: "DELETE"
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(deleteComment(data));
+        return data;
+    } else {
+        return { errors: "Whoopsies..." }
     }
 }
 
@@ -79,6 +109,9 @@ export default function reducer(state = initialState, action) {
             //     ...state,
             //     Comments: { ...state.Comments, [action.comment.id]: action.comment },
             // };
+        }
+        case DELETE_COMMENT: {
+            return action.comment;
         }
         default:
             return state;

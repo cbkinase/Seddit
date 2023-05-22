@@ -80,6 +80,7 @@ export default function SingleComment({ comment, user, soloComment, post, sortin
                           comment={reply}
                           user={user}
                           post={post}
+                          sortingFunction={sortingFunction}
                           />)}
                     </div>
                     : null}

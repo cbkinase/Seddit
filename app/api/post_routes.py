@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, Subreddit, Post, db
+from app.models import User, Subreddit, Post, Comment, db
 
 
 post_routes = Blueprint('posts', __name__)
@@ -109,3 +109,16 @@ def get_all_post_comments(post_id):
         return {"errors": ["Post not found"]}, 404
 
     return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
+
+@post_routes.route("<int:post_id>/comments/<int:comment_id>", methods=["DELETE"])
+@login_required
+def delete_comment(post_id, comment_id):
+    post = Post.query.get(post_id)
+    comment = Comment.query.get(comment_id)
+
+    try:
+        comment.content = "[deleted]"
+        db.session.commit()
+        return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
+    except:
+        return {"errors": ["Something went wrong..."]}, 500
