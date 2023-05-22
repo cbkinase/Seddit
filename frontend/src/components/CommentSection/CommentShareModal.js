@@ -13,7 +13,7 @@ import {
 } from 'react-share';
 
 export default function CommentShareModal({ isPost, post }) {
-    const shareUrl = shareUrl = `${window.location.protocol}//${window.location.host}/r/${post.subreddit_info.name}/posts/${post.id}`;
+    const shareUrl = `${window.location.protocol}//${window.location.host}/r/${post.subreddit_info.name}/posts/${post.id}`;
     const shareTitle = "Check out Cameron's Website :)";
 
     return (
