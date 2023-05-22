@@ -212,7 +212,7 @@ export default function IndividualFullPost({ user, subreddits, posts }) {
                             ></i>
                             <span>{post.num_comments} Comment{post.num_comments !== 1 && "s"}</span>
                         </NavLink>
-                        <OpenModalButton renderShareButton={true} modalComponent={<CommentShareModal />} id="post-comment-upvote" style={{marginLeft: "7px", border: "none"}} buttonText={"Share"} />
+                        <OpenModalButton renderShareButton={true} modalComponent={<CommentShareModal post={post} />} id="post-comment-upvote" style={{marginLeft: "7px", border: "none"}} buttonText={"Share"} />
                         {/* <NavLink
                             style={{ marginLeft: "7px" }}
                             onClick={(e) => {

@@ -13,6 +13,7 @@ function OpenModalButton({
     renderDeleteButton,
     commentNotLoggedIn,
     renderShareButton,
+    renderDeleteButtonWithPadding,
 }) {
     const { setModalContent, setOnModalClose } = useModal();
 
@@ -27,6 +28,11 @@ function OpenModalButton({
             {renderDeleteButton && (
                 <i className="fa fa-trash" aria-hidden="true"></i>
             )}
+
+            {renderDeleteButtonWithPadding && (
+                <i style={{padding: "6px 6px"}} className="fas fa-trash"></i>
+            )}
+
             {renderEditButton && (
                 <i className="fa fa-edit" aria-hidden="true"></i>
             )}

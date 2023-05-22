@@ -4,6 +4,7 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import EllipsisDropdown from "./EllipsisDropdown";
 import CommentShareModal from "./CommentShareModal";
+import DeleteCommentModal from "../DeleteCommentModal";
 
 
 function toggleExtraCollapsed(setExtraCollapsed, extraCollapsed) {
@@ -19,9 +20,9 @@ export default function CommentFooter({ comment, user, post }) {
         <div style={{display: "flex", marginTop: "5px", marginLeft: "5px"}}>
             <VotingSection comment={comment} user={user} />
             <ReplySection comment={comment} user={user} setIsReplying={setIsReplying} />
-            <OpenModalButton modalComponent={<CommentShareModal />} className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px", border: "none"}} buttonText={"Share"} />
+            <OpenModalButton modalComponent={<CommentShareModal post={post} />} className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px", border: "none"}} buttonText={"Share"} />
 
-            {user.id === comment.author_info.id ? <ExtraSection comment={comment} user={user} extraCollapsed={extraCollpased} setExtraCollapsed={setExtraCollapsed} /> : null}
+            {user.id === comment.author_info.id ? <ExtraSection comment={comment} user={user} extraCollapsed={extraCollpased} setExtraCollapsed={setExtraCollapsed} post={post} /> : null}
         </div>
         {isReplying ? <CommentInput user={user} isCommentReply={true} commentContext={comment} post={post} setIsReplying={setIsReplying} /> : null}
         </>
@@ -73,7 +74,7 @@ function ReplySection({ comment, setIsReplying, user }) {
     )
 }
 
-function ExtraSection({ comment, user, extraCollapsed, setExtraCollapsed }) {
+function ExtraSection({ comment, user, extraCollapsed, setExtraCollapsed, post }) {
     if (extraCollapsed) {
         return (
             <div onClick={e => toggleExtraCollapsed(setExtraCollapsed, extraCollapsed)} className="comment-footer-part" style={{marginTop: "3px"}}>
@@ -86,12 +87,20 @@ function ExtraSection({ comment, user, extraCollapsed, setExtraCollapsed }) {
          <>
          <div className="comment-footer-part" style={{ marginLeft: "5px", paddingLeft: "5px", paddingRight: "5px", display: "flex", alignItems: "center"}}>
             <i style={{padding: "6px 6px"}} className="fas fa-edit"></i>
-            {/* <span style={{ color: "grey", fontSize: "14px"}}>Edit</span> */}
         </div>
-        <div className="comment-footer-part" style={{ marginLeft: "5px", paddingLeft: "5px", paddingRight: "5px", display: "flex", alignItems: "center"}}>
+        {/* <div className="comment-footer-part" style={{ marginLeft: "5px", paddingLeft: "5px", paddingRight: "5px", display: "flex", alignItems: "center"}}>
             <i style={{padding: "6px 6px"}} className="fas fa-trash"></i>
-            {/* <span style={{ color: "grey", fontSize: "14px"}}>Delete</span> */}
-        </div>
+        </div> */}
+        <OpenModalButton
+                        style={{
+                            border: "inherit",
+                            cursor: "pointer",
+                        }}
+                        className="comment-footer-part"
+                        renderDeleteButtonWithPadding={true}
+                        modalComponent={<DeleteCommentModal comment={comment} post={post} />}
+                        // buttonText="Delete"
+                    ></OpenModalButton>
         </>
     )
 

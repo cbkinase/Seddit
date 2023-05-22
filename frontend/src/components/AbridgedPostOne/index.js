@@ -180,7 +180,7 @@ export default function IndividualAbridgedPost({
                     ></i>
                     <span>Share</span>
                 </NavLink> */}
-                <OpenModalButton renderShareButton={true} modalComponent={<CommentShareModal />} id="post-comment-upvote" style={{ marginLeft: "7px", border: "none" }} buttonText={"Share"} />
+                <OpenModalButton renderShareButton={true} modalComponent={<CommentShareModal post={post} />} id="post-comment-upvote" style={{ marginLeft: "7px", border: "none" }} buttonText={"Share"} />
                 {user && (
                     <NavLink
                         style={{ marginLeft: "7px" }}
