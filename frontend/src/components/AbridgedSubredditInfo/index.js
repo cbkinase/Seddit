@@ -10,8 +10,7 @@ export default function AbridgedSubredditDisplay({ user }) {
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        dispatch(getSubreddits());
-        setLoaded(true)
+        dispatch(getSubreddits()).then(() => setLoaded(true));
     }, [dispatch]);
 
     const handleSearchChange = (e) => {
