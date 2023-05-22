@@ -1,27 +1,31 @@
-// import React, { useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 // import { getSubreddits } from "../../store/subreddits";
 import IndividualAbridgedPost from "../AbridgedPostOne";
+import { getUserPosts } from "../../store/posts";
+import LoadingSpinner from "../LoadingSpinner";
 // import { getAllPosts } from "../../store/posts";
 
-export default function UserPostsPreview({ user, currentUser, posts, subreddits }) {
+export default function UserPostsPreview({ user, currentUser }) {
+    const [isLoaded, setIsLoaded] = useState(false);
+    // console.log(username);
+    const dispatch = useDispatch();
     // const dispatch = useDispatch();
     // const [searchTerm, setSearchTerm] = useState("");
 
-    // useEffect(() => {
-    //     dispatch(getSubreddits());
-    //     dispatch(getAllPosts());
-    // }, [dispatch]);
+    useEffect(() => {
+        dispatch(getUserPosts(user.username)).then(() => setIsLoaded(true))
+    }, [dispatch]);
 
     // const handleSearchChange = (e) => {
     //     setSearchTerm(e.target.value);
     // };
 
     // const subreddits = useSelector((state) => state.subreddits.Subreddits);
-    // const posts = useSelector((state) => state.posts.Posts);
+    const posts = useSelector((state) => state.posts.Posts);
 
-    let allPostsArr = Object.values(posts);
-    allPostsArr = allPostsArr.filter((post) => post.author_info.id === user.id);
+    // let allPostsArr = Object.values(posts);
+    // allPostsArr = allPostsArr.filter((post) => post.author_info.id === user.id);
 
     // const filteredPosts = allPostsArr.filter((post) => {
     //     return post.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -29,6 +33,7 @@ export default function UserPostsPreview({ user, currentUser, posts, subreddits 
 
 
     return (
+        isLoaded ?
         <>
             <div style={{ height: "30px", backgroundColor: "#dae0e6" }}></div>
             {/* <div
@@ -49,8 +54,8 @@ export default function UserPostsPreview({ user, currentUser, posts, subreddits 
                     onChange={handleSearchChange}
                 />
             </div> */}
-            <div className="subreddit-short-main-container">
-                {allPostsArr
+            {posts && <div className="subreddit-short-main-container">
+                {Object.values(posts)
                     .sort(
                         (a, b) =>
                             Date.parse(b.created_at) - Date.parse(a.created_at)
@@ -61,10 +66,10 @@ export default function UserPostsPreview({ user, currentUser, posts, subreddits 
                             user={user}
                             currentUser={currentUser}
                             post={post}
-                            subreddit={subreddits[post.subreddit_info.id]}
+                            // subreddit={subreddits[post.subreddit_info.id]}
                         />
                     ))}
-            </div>
-        </>
+            </div>}
+        </> : <LoadingSpinner />
     );
 }

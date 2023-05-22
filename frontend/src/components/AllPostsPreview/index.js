@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { getSubreddits } from "../../store/subreddits";
+import { useDispatch, useSelector } from "react-redux";
+import { getSubreddits } from "../../store/subreddits";
 import IndividualAbridgedPost from "../AbridgedPostOne";
 // import { getAllPosts } from "../../store/posts";
 import LoadingSpinner from "../LoadingSpinner";
 
-export default function AllPostsPreview({ user, subreddits }) {
-    // const dispatch = useDispatch();
+export default function AllPostsPreview({ user }) {
+    const dispatch = useDispatch();
     // const [searchTerm, setSearchTerm] = useState("");
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(1);
 
-    // useEffect(() => {
-    //     // dispatch(getSubreddits());
-    //     // dispatch(getAllPosts());
-    // }, [dispatch]);
+    useEffect(() => {
+        // dispatch(getSubreddits());
+        // dispatch(getAllPosts());
+    }, [dispatch]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -78,7 +78,7 @@ export default function AllPostsPreview({ user, subreddits }) {
                 />
             </div> */}
             <div className="subreddit-short-main-container">
-                {items.length > 0 && Object.values(subreddits).length > 0 ? (
+                {items.length > 0  > 0 ? (
                     items
                         .sort(
                             (a, b) =>
@@ -90,7 +90,7 @@ export default function AllPostsPreview({ user, subreddits }) {
                                 key={post.id}
                                 user={user}
                                 post={post}
-                                subreddit={subreddits[post.subreddit_info.id]}
+                                // subreddit={subreddits[post.subreddit_info.id]}
                             />
                         ))
                 ) : (

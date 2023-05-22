@@ -243,7 +243,7 @@ export default function SubredditPage() {
                     </div>
                 </section>
             </div>
-            {subreddit.num_posts >= 1 ? <SubredditPostsPreview user={user} subreddit={subreddit} /> : <NoPostsSubreddit user={user} subreddit={subreddit} />}
+            {subreddit.num_posts >= 1 ? <SubredditPostsPreview user={user} subreddit={subreddit} subreddits={subreddits} /> : <NoPostsSubreddit user={user} subreddit={subreddit} />}
         </div>
     ) : (
         //   <div>

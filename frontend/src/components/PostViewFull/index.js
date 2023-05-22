@@ -12,38 +12,43 @@ import DeletePostModal from "../DeletePostModal";
 import EditPostModal from "../EditPostModal";
 import LoadingSpinner from "../LoadingSpinner";
 import { getAllPostComments } from "../../store/comments";
+import { getSinglePost } from "../../store/posts";
 import { useDispatch, useSelector } from "react-redux";
 import CommentSection from "../CommentSection";
 import CommentShareModal from "../CommentSection/CommentShareModal";
 
 // subreddit = use;
 
-export default function IndividualFullPost({ user, subreddits, posts }) {
+export default function IndividualFullPost({ user }) {
     // const dispatch = useDispatch();
     const { subredditName, postId } = useParams();
     const [commentsLoaded, setCommentsLoaded] = useState(false);
+    const [mainLoaded, setMainLoaded] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(getSinglePost(postId))
         dispatch(getAllPostComments(postId))
         .then(() => setCommentsLoaded(true));
     }, [dispatch, postId])
 
     const comments = useSelector(state => state.comments.Comments)
 
-    function getSubredditFromName(subreddits, subredditName) {
-        if (!subreddits.length) return undefined;
-        return subreddits.find(
-            (subreddit) =>
-                subreddit.name.toLowerCase() === subredditName.toLowerCase()
-        );
-    }
+    // function getSubredditFromName(subreddits, subredditName) {
+    //     if (!subreddits.length) return undefined;
+    //     return subreddits.find(
+    //         (subreddit) =>
+    //             subreddit.name.toLowerCase() === subredditName.toLowerCase()
+    //     );
+    // }
 
-    const subreddit = getSubredditFromName(
-        Object.values(subreddits),
-        subredditName
-    );
-    const post = posts[postId];
+    // const subreddit = getSubredditFromName(
+    //     Object.values(subreddits),
+    //     subredditName
+    // );
+    const post = useSelector((state) => state.posts.Posts[postId]);
+    const subreddit = post?.subreddit_info
+
 
     const shortenWord = (word, long = 20) => {
         if (!word) return null;
