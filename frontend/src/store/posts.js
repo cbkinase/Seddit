@@ -37,6 +37,36 @@ export const getAllPosts = (page, per_page) => async (dispatch) => {
     }
 };
 
+export const getSubredditPosts = (subredditName) => async (dispatch) => {
+    const res = await fetch(`/api/s/name/${subredditName}/posts`)
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(loadPosts(data));
+        return data;
+    }
+}
+
+export const getUserPosts = (username) => async (dispatch) => {
+    const res = await fetch(`/api/users/u/${username}/posts`)
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(loadPosts(data));
+        return data;
+    }
+}
+
+export const getSinglePost = (postId) => async (dispatch) => {
+    const res = await fetch(`/api/posts/${postId}`);
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(loadPosts(data));
+        return data;
+    }
+}
+
 export const createPost = (post) => async (dispatch) => {
     const res = await fetch("/api/posts/", {
         method: "POST",

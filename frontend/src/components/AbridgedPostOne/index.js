@@ -13,7 +13,6 @@ import CommentShareModal from "../CommentSection/CommentShareModal";
 export default function IndividualAbridgedPost({
     user,
     post,
-    subreddit,
     currentUser,
 }) {
     // const dispatch = useDispatch();
@@ -62,6 +61,9 @@ export default function IndividualAbridgedPost({
             user.id === post.subreddit_info.owner_id
         );
     }
+
+    let subreddit = post.subreddit_info
+    console.log(subreddit);
 
     return post && subreddit ? (
         <div className="box-dec-1 subreddit-short-container post-short-container">

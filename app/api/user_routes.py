@@ -1,7 +1,7 @@
 from crypt import methods
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, db
+from app.models import User, db, Post
 
 user_routes = Blueprint('users', __name__)
 
@@ -63,3 +63,12 @@ def get_user_comments(user_id):
 
     # return {comment.id: comment.to_short_dict() for comment in user.comments}
     return {comment.id: comment.to_bare_dict() for comment in user.comments}
+
+@user_routes.route("/u/<username>/posts")
+def get_user_posts(username):
+    user = User.query.filter(User.username.ilike(username)).first()
+
+    if not user:
+        return {"errors": "User not found"}
+
+    return {"Posts": {post.id : post.to_dict() for post in user.posts}}

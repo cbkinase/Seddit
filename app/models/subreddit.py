@@ -75,7 +75,7 @@ class Subreddit(db.Model):
             'id': self.id,
             'owner_id': self.owner_id,
             'name': self.name,
-            # 'about': self.about,
+            'about': self.about,
             'main_pic': str(self.main_pic),
             'background_pic': str(self.background_pic),
             'category': categories.get(self.category),

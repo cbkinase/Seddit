@@ -34,13 +34,13 @@ def get_post_by_id(post_id):
     if not post:
         return {"errors": ["Post not found"]}, 404
 
-    return post.to_dict()
+    return {"Posts": {post.id : post.to_dict()}}
 
 
-@post_routes.route("/user/<int:user_id>")
-def get_all_user_posts(user_id):
-    user_posts = Post.query.filter(Post.user_id == user_id)
-    return {"Posts": {post.id : post.to_dict() for post in user_posts}}
+# @post_routes.route("/user/<int:user_id>")
+# def get_all_user_posts(user_id):
+#     user_posts = Post.query.filter(Post.user_id == user_id)
+#     return {"Posts": {post.id : post.to_dict() for post in user_posts}}
 
 
 @post_routes.route("/", methods=["POST"])
