@@ -1,0 +1,32 @@
+.solo-comment-header-author {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #0079D3;
+    text-decoration: none;
+}
+
+.solo-comment-header-misc {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #878A8C;
+}
+
+.solo-comment-header-post {
+    color: #222222;
+    font-size: 12px;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.solo-comment-header-tiny {
+    font-size: 8px;
+    font-weight: 400;
+    line-height: 12px;
+    color: #878A8C;
+}
+
+.solo-comment-header-author:hover {
+    text-decoration: underline;
+}

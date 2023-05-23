@@ -46,6 +46,7 @@ class Comment(db.Model):
         return {
             'id': self.id,
             'author_id': self.author.id,
+            'author_info': self.author.to_short_dict(),
             'post_info': self.post.to_dict(),
             'parent_info': self.parent.to_micro() if self.parent else None,
             'num_replies': len(self.children) if self.children else 0,

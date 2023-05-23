@@ -5,6 +5,7 @@ import { useParams, NavLink, useLocation } from "react-router-dom";
 import UserPostsPreview from "../UserPostsPreview";
 import NoPostsUserProfile from "../NoPostsUserProfile";
 import LoadingSpinner from "../LoadingSpinner";
+import ShortComments from "../CommentsShort";
 
 export default function UserInfo({ currentUser, subreddits, posts }) {
     const dispatch = useDispatch();
@@ -149,8 +150,11 @@ export default function UserInfo({ currentUser, subreddits, posts }) {
                 {isDisplayPosts(user) && !user.num_posts && (
                     <NoPostsUserProfile username={user.username} isOwnProfile={user.username === currentUser?.username} />
                 )}
-                {isDisplayComments(user) && (
+                {isDisplayComments(user) && !user.num_comments && (
                     <NoPostsUserProfile username={user.username} isComment={true} isOwnProfile={user.username === currentUser?.username} />
+                )}
+                {isDisplayComments(user) && Boolean(user.num_comments) && (
+                    <ShortComments selectedUser={user} currUser={currentUser} />
                 )}
                 {isDisplaySaved(user) && <NoPostsUserProfile username={user.username} isSaved={true} />}
 
