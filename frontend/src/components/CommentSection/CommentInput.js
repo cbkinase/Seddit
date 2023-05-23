@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
-import { createComment } from "../../store/comments";
+import { createComment, editComment } from "../../store/comments";
 import { useDispatch } from "react-redux";
 
 export default function CommentInput({
@@ -32,7 +32,11 @@ export default function CommentInput({
         }
         // Handle edit
         if (editInProgress) {
-            setIsEditing(false);
+            const data = await dispatch(editComment(payload, commentContext.id))
+
+            if (!data.errors) {
+                setIsEditing(false);
+            }
             return;
         }
         const data = await dispatch(createComment(payload));
