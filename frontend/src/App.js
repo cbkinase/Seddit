@@ -24,8 +24,6 @@ function App() {
     }, [dispatch]);
 
     const user = useSelector((state) => state.session.user);
-    let posts;
-    let subreddits;
 
     return (
         <>
@@ -64,8 +62,7 @@ function App() {
                         <SubredditPage />
                     </Route>
                     <Route path="/u/:userName">
-                        <UserInfo subreddits={subreddits}
-                            posts={posts} currentUser={user} />
+                        <UserInfo currentUser={user} />
                     </Route>
                 </Switch>
             ): <LoadingSpinner />}
