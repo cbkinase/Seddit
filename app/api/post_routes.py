@@ -19,7 +19,10 @@ def get_all_posts():
 
 
     # all_posts = Post.query.order_by(Post.created_at.desc()).all()
-    all_posts = db.session.query(Post).order_by(Post.created_at.desc())
+    all_posts = db.session.query(Post).order_by(
+        Post.created_at.desc(),
+        Post.id.desc(),
+        )
     if (limit):
         all_posts = all_posts.limit(limit)
     if (offset):

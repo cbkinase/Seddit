@@ -30,7 +30,7 @@ function OpenModalButton({
             )}
 
             {renderDeleteButtonWithPadding && (
-                <i style={{padding: "6px 6px"}} className="fas fa-trash"></i>
+                <i style={{padding: "6px 6px", height: "17px"}} className="fas fa-trash"></i>
             )}
 
             {renderEditButton && (

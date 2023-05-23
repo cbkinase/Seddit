@@ -3,10 +3,13 @@ import moment from "moment";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import CommentFooter from "./CommentFooter";
+import CommentInput from "./CommentInput";
 
 
 export default function SingleComment({ comment, user, soloComment, post, sortingFunction }) {
     const [isDisplaying, setIsDisplaying] = useState(true);
+    const [isEditing, setIsEditing] = useState(false);
+    const [isReplying, setIsReplying] = useState(false);
 
     function toggleDisplayState() {
         setIsDisplaying(!isDisplaying);
@@ -69,8 +72,10 @@ export default function SingleComment({ comment, user, soloComment, post, sortin
                 </div>
                 <div style={{marginTop: "8px"}}>
                     {isDisplaying ? null : <div>&nbsp;</div>}
-                    <span className="notosans" style={{display: stateToDisplay()}}>{comment.content}</span>
-                    {isDisplaying ? <CommentFooter comment={comment} post={post} user={user} /> : null}
+                    {isEditing
+                    ? <CommentInput setIsReplying={setIsReplying} isCommentReply={true} user={user} commentContext={comment} post={post} editInProgress={true} setIsEditing={setIsEditing} content={comment.content} />
+                    :<span className="notosans" style={{display: stateToDisplay()}}>{comment.content}</span>}
+                    {isDisplaying ? <CommentFooter editInProgress={true} isEditing={isEditing} setIsEditing={setIsEditing} isReplying={isReplying} setIsReplying={setIsReplying} comment={comment} post={post} user={user} /> : null}
                     {/* Display nested comments :) */}
                     {isDisplaying && comment.num_replies && !soloComment
                     ? <div>
