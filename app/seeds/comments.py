@@ -2,8 +2,8 @@ from app.models import db, Comment, environment, SCHEMA
 from sqlalchemy.sql import text
 
 
-def seed_comments(users, posts):
-    dummy_comments = Comment.create(1500, users, posts)
+def seed_comments(users, posts, qty=1500):
+    dummy_comments = Comment.create(qty, users, posts)
 
     for comment in dummy_comments:
         db.session.add(comment)
