@@ -22,7 +22,7 @@ export default function CommentFooter({ comment, user, post, isReplying, setIsRe
             {soloComment ? null : <ReplySection comment={comment} user={user} setIsReplying={setIsReplying} />}
             <OpenModalButton modalComponent={<CommentShareModal post={post} />} className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px", border: "none"}} buttonText={"Share"} />
 
-            {user?.id === comment.author_info.id ? <ExtraSection setIsEditing={setIsEditing} comment={comment} user={user} extraCollapsed={extraCollpased} setExtraCollapsed={setExtraCollapsed} post={post} /> : null}
+            {user?.id === comment.author_info.id && !soloComment ? <ExtraSection setIsEditing={setIsEditing} comment={comment} user={user} extraCollapsed={extraCollpased} setExtraCollapsed={setExtraCollapsed} post={post} /> : null}
         </div>
         {isReplying ? <CommentInput user={user} isCommentReply={true} commentContext={comment} post={post} setIsReplying={setIsReplying} setIsEditing={setIsEditing} /> : null}
         </>
