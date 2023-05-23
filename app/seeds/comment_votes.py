@@ -3,7 +3,7 @@ from sqlalchemy.sql import text
 
 
 def seed_comment_votes(users, comments):
-    dummy_votes = CommentVote.create(50000, users, comments)
+    dummy_votes = CommentVote.create(10000, users, comments)
 
     for vote in dummy_votes:
         db.session.add(vote)
