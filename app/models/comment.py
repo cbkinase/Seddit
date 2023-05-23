@@ -22,6 +22,8 @@ class Comment(db.Model):
     post = db.relationship('Post', back_populates='comments')
     author = db.relationship('User', back_populates='comments')
 
+    votes = db.relationship("CommentVote", back_populates="comment", cascade="all, delete, delete-orphan")
+
 
     @classmethod
     def create(cls, qty, users, posts):

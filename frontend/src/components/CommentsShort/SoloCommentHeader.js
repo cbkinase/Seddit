@@ -24,7 +24,7 @@ export default function SoloCommentHeader({ comment }) {
             {shortenWord(comment.post_info.title)}
         </NavLink>
 
-        <span className="solo-comment-header-tiny">{" "}•{" "}</span>
+        <span className="solo-comment-header-tiny">{" "}<span style={{paddingLeft: "3px", paddingRight: "3px"}}>•</span>{" "}</span>
 
         <NavLink
             style={{ margin: "0px 0px", marginLeft: "2px" }}
@@ -32,12 +32,12 @@ export default function SoloCommentHeader({ comment }) {
             to={`/r/${subreddit.name}`}
         >
             <SubredditHover subreddit={subreddit} />
-            <h1 className="card-title" style={{fontSize: "12px"}}>
+            <h1 className="card-title" style={{fontSize: "12px", paddingRight: "2px"}}>
                 r/{shortenWord(subreddit.name, 10)}
             </h1>
         </NavLink>
 
-        <span className="solo-comment-header-tiny">{" "}•{" "}</span>
+        <span className="solo-comment-header-tiny">{" "}<span style={{paddingLeft: "3px", paddingRight: "3px"}}>•</span>{" "}</span>
 
         <span className="solo-comment-header-misc">Posted by{" "}</span>
         <NavLink

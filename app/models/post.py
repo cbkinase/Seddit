@@ -25,6 +25,8 @@ class Post(db.Model):
 
     comments = db.relationship('Comment', back_populates='post', cascade='delete')
 
+    votes = db.relationship("PostVote", back_populates="post", cascade="all, delete, delete-orphan")
+
 
     @classmethod
     def create(cls, qty, users, subreddits):
