@@ -11,7 +11,7 @@ function toggleExtraCollapsed(setExtraCollapsed, extraCollapsed) {
     setExtraCollapsed(!extraCollapsed);
 }
 
-export default function CommentFooter({ comment, user, post, isReplying, setIsReplying, isEditing, setIsEditing }) {
+export default function CommentFooter({ comment, user, post, isReplying, setIsReplying, isEditing, setIsEditing, soloComment }) {
 
     const [extraCollpased, setExtraCollapsed] = useState(true);
 
@@ -19,7 +19,7 @@ export default function CommentFooter({ comment, user, post, isReplying, setIsRe
         <>
         <div style={{display: "flex", marginTop: "5px", marginLeft: "5px"}}>
             <VotingSection comment={comment} user={user} />
-            <ReplySection comment={comment} user={user} setIsReplying={setIsReplying} />
+            {soloComment ? null : <ReplySection comment={comment} user={user} setIsReplying={setIsReplying} />}
             <OpenModalButton modalComponent={<CommentShareModal post={post} />} className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px", border: "none"}} buttonText={"Share"} />
 
             {user?.id === comment.author_info.id ? <ExtraSection setIsEditing={setIsEditing} comment={comment} user={user} extraCollapsed={extraCollpased} setExtraCollapsed={setExtraCollapsed} post={post} /> : null}

@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import CommentFooter from "./CommentFooter";
 import CommentInput from "./CommentInput";
+import SoloCommentHeader from "../CommentsShort/SoloCommentHeader";
 
 
 export default function SingleComment({ comment, user, soloComment, post, sortingFunction }) {
@@ -36,6 +37,7 @@ export default function SingleComment({ comment, user, soloComment, post, sortin
     };
     return (
         <>
+        {soloComment ? <SoloCommentHeader comment={comment} /> : null}
         <div style={{height: "10px"}}></div>
         <div style={{marginLeft: "-5px",
         // marginRight: setRightMargin(comment)
@@ -75,7 +77,7 @@ export default function SingleComment({ comment, user, soloComment, post, sortin
                     {isEditing
                     ? <CommentInput setIsReplying={setIsReplying} isCommentReply={true} user={user} commentContext={comment} post={post} editInProgress={true} setIsEditing={setIsEditing} content={comment.content} />
                     :<span className="notosans" style={{display: stateToDisplay()}}>{comment.content}</span>}
-                    {isDisplaying ? <CommentFooter editInProgress={true} isEditing={isEditing} setIsEditing={setIsEditing} isReplying={isReplying} setIsReplying={setIsReplying} comment={comment} post={post} user={user} /> : null}
+                    {isDisplaying ? <CommentFooter soloComment={soloComment} editInProgress={true} isEditing={isEditing} setIsEditing={setIsEditing} isReplying={isReplying} setIsReplying={setIsReplying} comment={comment} post={post} user={user} /> : null}
                     {/* Display nested comments :) */}
                     {isDisplaying && comment.num_replies && !soloComment
                     ? <div>
