@@ -2,8 +2,8 @@ from app.models import db, environment, SCHEMA, CommentVote
 from sqlalchemy.sql import text
 
 
-def seed_comment_votes(users, comments):
-    dummy_votes = CommentVote.create(10000, users, comments)
+def seed_comment_votes(users, comments, qty=2000):
+    dummy_votes = CommentVote.create(qty, users, comments)
 
     for vote in dummy_votes:
         db.session.add(vote)

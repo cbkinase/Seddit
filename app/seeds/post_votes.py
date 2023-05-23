@@ -2,8 +2,8 @@ from app.models import db, environment, SCHEMA, PostVote
 from sqlalchemy.sql import text
 
 
-def seed_post_votes(users, posts):
-    dummy_votes = PostVote.create(5000, users, posts)
+def seed_post_votes(users, posts, qty=5000):
+    dummy_votes = PostVote.create(qty, users, posts)
 
     for vote in dummy_votes:
         db.session.add(vote)

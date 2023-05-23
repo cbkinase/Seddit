@@ -3,7 +3,7 @@ from sqlalchemy.sql import text
 
 
 # Adds a demo user, you can add other users here if you want
-def seed_users():
+def seed_users(qty=30):
     demo = User(
         username='Demo', email='demo@aa.io', password='password')
     marnie = User(
@@ -11,7 +11,7 @@ def seed_users():
     bobbie = User(
         username='bobbie', email='bobbie@aa.io', password='password')
 
-    dummy_users = User.create(30)
+    dummy_users = User.create(qty)
 
     db.session.add(demo)
     db.session.add(marnie)

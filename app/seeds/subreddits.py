@@ -4,8 +4,8 @@ from random import sample, randint
 
 
 # Adds a demo user, you can add other users here if you want
-def seed_subreddits(users):
-    dummy_subreddits = Subreddit.create(15, users)
+def seed_subreddits(users, qty=15):
+    dummy_subreddits = Subreddit.create(qty, users)
 
     for subreddit in dummy_subreddits:
         db.session.add(subreddit)

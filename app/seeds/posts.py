@@ -2,8 +2,8 @@ from app.models import db, Post, environment, SCHEMA
 from sqlalchemy.sql import text
 
 
-def seed_posts(users, subreddits):
-    dummy_posts = Post.create(200, users, subreddits)
+def seed_posts(users, subreddits, qty=200):
+    dummy_posts = Post.create(qty, users, subreddits)
 
     for post in dummy_posts:
         db.session.add(post)
