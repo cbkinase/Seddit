@@ -11,8 +11,8 @@ function toggleExtraCollapsed(setExtraCollapsed, extraCollapsed) {
     setExtraCollapsed(!extraCollapsed);
 }
 
-export default function CommentFooter({ comment, user, post }) {
-    const [isReplying, setIsReplying] = useState(false);
+export default function CommentFooter({ comment, user, post, isReplying, setIsReplying, isEditing, setIsEditing }) {
+
     const [extraCollpased, setExtraCollapsed] = useState(true);
 
     return (
@@ -22,9 +22,9 @@ export default function CommentFooter({ comment, user, post }) {
             <ReplySection comment={comment} user={user} setIsReplying={setIsReplying} />
             <OpenModalButton modalComponent={<CommentShareModal post={post} />} className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px", border: "none"}} buttonText={"Share"} />
 
-            {user?.id === comment.author_info.id ? <ExtraSection comment={comment} user={user} extraCollapsed={extraCollpased} setExtraCollapsed={setExtraCollapsed} post={post} /> : null}
+            {user?.id === comment.author_info.id ? <ExtraSection setIsEditing={setIsEditing} comment={comment} user={user} extraCollapsed={extraCollpased} setExtraCollapsed={setExtraCollapsed} post={post} /> : null}
         </div>
-        {isReplying ? <CommentInput user={user} isCommentReply={true} commentContext={comment} post={post} setIsReplying={setIsReplying} /> : null}
+        {isReplying ? <CommentInput user={user} isCommentReply={true} commentContext={comment} post={post} setIsReplying={setIsReplying} setIsEditing={setIsEditing} /> : null}
         </>
     )
 }
@@ -74,19 +74,19 @@ function ReplySection({ comment, setIsReplying, user }) {
     )
 }
 
-function ExtraSection({ comment, user, extraCollapsed, setExtraCollapsed, post }) {
+function ExtraSection({ comment, user, extraCollapsed, setExtraCollapsed, post, setIsEditing }) {
     if (extraCollapsed) {
         return (
-            <div onClick={e => toggleExtraCollapsed(setExtraCollapsed, extraCollapsed)} className="comment-footer-part" style={{marginTop: "3px"}}>
-                <i style={{padding: "6px 6px"}} className="fas fa-ellipsis-h"></i>
+            <div onClick={e => toggleExtraCollapsed(setExtraCollapsed, extraCollapsed)} className="comment-footer-part" style={{marginTop: "0px"}}>
+                <i style={{padding: "8px 8px", height: "17px"}} className="fas fa-ellipsis-h"></i>
             </div>
         )
     }
     return (
 
          <>
-         <div className="comment-footer-part" style={{ marginLeft: "5px", paddingLeft: "5px", paddingRight: "5px", display: "flex", alignItems: "center"}}>
-            <i style={{padding: "6px 6px"}} className="fas fa-edit"></i>
+         <div onClick={e => setIsEditing(true)} className="comment-footer-part" style={{ paddingLeft: "5px", paddingRight: "5px", display: "flex", alignItems: "center"}}>
+            <i style={{padding: "6px 6px", height: "17px"}} className="fas fa-edit"></i>
         </div>
         {/* <div className="comment-footer-part" style={{ marginLeft: "5px", paddingLeft: "5px", paddingRight: "5px", display: "flex", alignItems: "center"}}>
             <i style={{padding: "6px 6px"}} className="fas fa-trash"></i>

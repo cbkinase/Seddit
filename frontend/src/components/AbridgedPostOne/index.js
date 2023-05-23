@@ -63,7 +63,6 @@ export default function IndividualAbridgedPost({
     }
 
     let subreddit = post.subreddit_info
-    console.log(subreddit);
 
     return post && subreddit ? (
         <div className="box-dec-1 subreddit-short-container post-short-container">
