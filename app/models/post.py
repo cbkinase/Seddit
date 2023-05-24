@@ -77,3 +77,20 @@ class Post(db.Model):
             'upvotes': determine_votes(self.votes),
             'reaction_info': {vote.user_id: vote.to_dict() for vote in self.votes},
         }
+
+    def to_shortest_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'subreddit_id': self.subreddit_id,
+            'title': self.title,
+            'content': self.content,
+            'attachment': self.attachment,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+            'author_info': self.author.to_short_dict(),
+            'subreddit_info': self.subreddit.to_short_dict(),
+            # 'num_comments': len(self.comments),
+            # 'upvotes': determine_votes(self.votes),
+            # 'reaction_info': {vote.user_id: vote.to_dict() for vote in self.votes},
+        }
