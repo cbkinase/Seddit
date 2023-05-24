@@ -33,7 +33,7 @@ def seed():
     posts = seed_posts(users, subreddits, 200)
     comments = seed_comments(users, posts, 1500)
     post_votes = seed_post_votes(users, posts, 1000)
-    comment_votes = seed_comment_votes(users, comments, 0)
+    comment_votes = seed_comment_votes(users, comments, 2000)
 
     # Add other seed functions here
 
