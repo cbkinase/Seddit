@@ -89,6 +89,32 @@ export const destroyComment = (commentId, postId) => async (dispatch) => {
     }
 }
 
+export const voteOnComment = (commentId, vote) => async (dispatch) => {
+    const res = await fetch(`/api/comments/${commentId}/votes`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(vote),
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(addComment(data));
+        return data;
+    }
+}
+
+export const deleteCommentVote = (postId, commentId, voteId) => async (dispatch) => {
+    const res = await fetch(`/api/posts/${postId}/comments/${commentId}/votes/${voteId}`, {
+        method: "DELETE",
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(addComment(data));
+        return data;
+    }
+}
+
 // const bfs = (tree, comment) => {
 //     let queue = tree;
 //     while (queue.length > 0) {

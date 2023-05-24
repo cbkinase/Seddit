@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import moment from "moment";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import SubredditHover from "../SubredditHover";
 import UserHover from "../UserHover";
 import "./ShortPosts.css";
@@ -10,6 +10,7 @@ import EditPostModal from "../EditPostModal";
 import LoadingSpinner from "../LoadingSpinner";
 import CommentShareModal from "../CommentSection/CommentShareModal";
 import userReactedCheck from "../../utils/hasUserUpvoted";
+import { deletePostVote, voteOnPost } from "../../store/posts";
 
 export default function IndividualAbridgedPost({
     user,
@@ -240,29 +241,56 @@ export default function IndividualAbridgedPost({
 }
 
 function VotingSection({ post, user }) {
-    const votingState = userReactedCheck(user, post)
+    const votingState = userReactedCheck(user, post);
+    const dispatch = useDispatch();
 
     let upvoteClassnames = "fa fa-arrow-up upvote-button fa-lg vote-adj-down";
     let downvoteClassnames = "fa fa-arrow-down fa-lg downvote-button vote-adj-down";
-    if (votingState === "upvote") {
-        upvoteClassnames += ` has-${votingState}`;
+    if (votingState?.vote === "upvote") {
+        upvoteClassnames += ` has-${votingState?.vote}`;
     }
-    if (votingState === "downvote") {
-        downvoteClassnames += ` has-${votingState}`;
+    if (votingState?.vote === "downvote") {
+        downvoteClassnames += ` has-${votingState?.vote}`;
+    }
+
+    async function handleUpvote(post) {
+        await dispatch(voteOnPost(post.id, {"vote": "upvote"}));
+    }
+
+    async function handleDownvote(post) {
+        await dispatch(voteOnPost(post.id, {"vote": "downvote"}));
+    }
+
+    async function handleDeleteVote(votingState, post) {
+        await dispatch(deletePostVote(post.id, votingState?.id))
     }
 
     return (
         <div className="voting-section card-votes">
             <i
-                onClick={(e) => alert("Not yet implemented")}
+                onClick={(e) => {
+                    if (!user) return null;
+                    else {
+                        votingState?.vote === "upvote"
+                        ? handleDeleteVote(votingState, post)
+                        : handleUpvote(post)
+                    }
+                }}
                 className={upvoteClassnames}
                 aria-hidden="true"
             ></i>
-            <p className={`post-votes vote-adj-down has-${votingState}`}>
+            <p className={`post-votes vote-adj-down has-${votingState?.vote}`}>
                 {post.upvotes}
             </p>
             <i
-                onClick={(e) => alert("Not yet implemented")}
+                onClick={(e) => {
+                    if (!user) return null;
+                    else {
+                        votingState?.vote === "downvote"
+                        ? handleDeleteVote(votingState, post)
+                        : handleDownvote(post)
+                    }
+                }}
                 className={downvoteClassnames}
                 aria-hidden="true"
             ></i>

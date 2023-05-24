@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, Subreddit, Post, Comment, db
+from app.models import User, Subreddit, Post, Comment, db, CommentVote, PostVote
 
 
 post_routes = Blueprint('posts', __name__)
@@ -123,5 +123,68 @@ def delete_comment(post_id, comment_id):
         comment.content = "[deleted]"
         db.session.commit()
         return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
+    except:
+        return {"errors": ["Something went wrong..."]}, 500
+
+@post_routes.route("<int:post_id>/comments/<int:comment_id>/votes/<int:vote_id>", methods=["DELETE"])
+@login_required
+def delete_comment_vote(post_id, comment_id, vote_id):
+    post = Post.query.get(post_id)
+    vote = CommentVote.query.get(vote_id)
+
+    try:
+        db.session.delete(vote)
+        db.session.commit()
+        return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
+    except:
+        return {"errors": ["Something went wrong..."]}, 500
+
+
+@post_routes.route("/<int:post_id>/votes", methods=["POST"])
+@login_required
+def vote_on_post(post_id):
+    body = request.get_json()
+    user = User.query.get(current_user.id)
+    post = Post.query.get(post_id)
+
+    if not user or not post:
+        return {"errors": ["Resource not found"]}, 404
+
+    vote = db.session.query(PostVote)\
+        .filter(PostVote.post_id == post_id,
+                PostVote.user_id == current_user.id).first()
+
+    new_vote = PostVote(user=user, post=post, vote=body["vote"])
+    if not vote:
+        try:
+            db.session.add(new_vote)
+            db.session.commit()
+            return {"Posts": {post.id : post.to_dict()}}
+        except:
+            return {"errors": ["Something went wrong..."]}, 500
+
+    if vote.vote == body["vote"]:
+        return {"errors": ["Already voted "]}
+
+    if vote.vote != body["vote"]:
+        try:
+            db.session.delete(vote)
+            db.session.add(new_vote)
+            db.session.commit()
+            return {"Posts": {post.id : post.to_dict()}}
+        except:
+            return {"errors": ["Something went wrong..."]}, 500
+
+
+@post_routes.route("<int:post_id>/votes/<int:vote_id>", methods=["DELETE"])
+@login_required
+def delete_post_vote(post_id, vote_id):
+    post = Post.query.get(post_id)
+    vote = PostVote.query.get(vote_id)
+
+    try:
+        db.session.delete(vote)
+        db.session.commit()
+        return {"Posts": {post.id : post.to_dict()}}
     except:
         return {"errors": ["Something went wrong..."]}, 500

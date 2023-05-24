@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, Subreddit, Post, Comment, db
+from app.models import User, Subreddit, Post, Comment, db, CommentVote
 
 
 comment_routes = Blueprint('comments', __name__)
@@ -45,3 +45,40 @@ def edit_comment(comment_id):
         return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
     except:
         return {"errors": ["Something went wrong..."]}, 500
+
+
+@comment_routes.route("/<int:comment_id>/votes", methods=["POST"])
+@login_required
+def vote_on_comment(comment_id):
+    body = request.get_json()
+    comment = Comment.query.get(comment_id)
+    user = User.query.get(current_user.id)
+    post = Post.query.get(body.get("post_id"))
+
+    if not user or not comment:
+        return {"errors": ["Resource not found"]}, 404
+
+    vote = db.session.query(CommentVote)\
+        .filter(CommentVote.comment_id == comment_id,
+                CommentVote.user_id == current_user.id).first()
+
+    new_vote = CommentVote(user=user, comment=comment, vote=body["vote"])
+    if not vote:
+        try:
+            db.session.add(new_vote)
+            db.session.commit()
+            return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
+        except:
+            return {"errors": ["Something went wrong..."]}, 500
+
+    if vote.vote == body["vote"]:
+        return {"errors": ["Already voted "]}
+
+    if vote.vote != body["vote"]:
+        try:
+            db.session.delete(vote)
+            db.session.add(new_vote)
+            db.session.commit()
+            return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
+        except:
+            return {"errors": ["Something went wrong..."]}, 500

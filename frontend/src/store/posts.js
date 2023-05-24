@@ -1,6 +1,15 @@
 const LOAD_POSTS = "posts/LOAD_POSTS";
 const ADD_POST = "posts/ADD_POST";
 const DELETE_POST = "posts/DELETE_POST";
+const HANDLE_VOTE = "posts/HANDLE_VOTE";
+
+
+const handleVote = (post) => {
+    return {
+        type: HANDLE_VOTE,
+        post
+    }
+}
 
 const addPost = (post) => {
     return {
@@ -111,6 +120,32 @@ export const destroyPost = (id) => async (dispatch) => {
     return "Failed";
 };
 
+export const voteOnPost = (postId, vote) => async (dispatch) => {
+    const res = await fetch(`/api/posts/${postId}/votes`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(vote),
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(handleVote(data));
+        return data;
+    }
+}
+
+export const deletePostVote = (postId, voteId) => async (dispatch) => {
+    const res = await fetch(`/api/posts/${postId}/votes/${voteId}`, {
+        method: "DELETE",
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(handleVote(data));
+        return data;
+    }
+}
+
 const initialState = { Posts: {} };
 
 export default function reducer(state = initialState, action) {
@@ -130,6 +165,16 @@ export default function reducer(state = initialState, action) {
             const newState = { ...state, Posts: { ...state.Posts } };
             delete newState.Posts[action.id];
             return newState;
+        }
+
+        case HANDLE_VOTE: {
+            console.log();
+            console.log(state.Posts);
+            const target = Object.values(action.post.Posts)[0]
+            return {
+                ...state,
+                Posts: {...state.Posts, [target.id]: target}
+            }
         }
         default:
             return state;
