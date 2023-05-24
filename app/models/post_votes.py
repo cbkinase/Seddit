@@ -13,7 +13,7 @@ class PostVote(db.Model):
     vote = db.Column(db.String, nullable=False)
 
     user = db.relationship("User", back_populates="post_votes")
-    post = db.relationship("Post", back_populates="votes")
+    post = db.relationship("Post", back_populates="votes", lazy="select")
 
     @classmethod
     def create(cls, qty, users, posts):

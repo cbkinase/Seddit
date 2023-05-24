@@ -24,10 +24,10 @@ class Comment(db.Model):
 
     children = db.relationship('Comment', back_populates='parent', uselist=True)
     parent = db.relationship('Comment', back_populates='children', remote_side=[id], uselist=False)
-    post = db.relationship('Post', back_populates='comments')
+    post = db.relationship('Post', back_populates='comments', lazy="select")
     author = db.relationship('User', back_populates='comments')
 
-    votes = db.relationship("CommentVote", back_populates="comment", cascade="all, delete, delete-orphan")
+    votes = db.relationship("CommentVote", back_populates="comment", cascade="all, delete, delete-orphan", lazy="select")
 
 
     @classmethod

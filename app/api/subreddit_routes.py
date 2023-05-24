@@ -11,7 +11,7 @@ def get_all_subreddits():
     Returns all subreddits, regardless of user login status.
     """
     all_subreddits = Subreddit.query.all()
-    return {"Subreddits": {subreddit.name : subreddit.to_dict() for subreddit in all_subreddits}}
+    return {"Subreddits": {subreddit.name : subreddit.to_med_dict() for subreddit in all_subreddits}}
 
 
 @subreddit_routes.route("/user")
