@@ -35,7 +35,9 @@ export default function UserPostsPreview({ user, currentUser }) {
     return (
         isLoaded ?
         <>
-            <div style={{ height: "30px", backgroundColor: "#dae0e6" }}></div>
+            <div style={{ height: "10px",
+            //  backgroundColor: "#dae0e6"
+             }}></div>
             {/* <div
                 style={{
                     display: "flex",

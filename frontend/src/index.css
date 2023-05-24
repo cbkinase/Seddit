@@ -919,6 +919,10 @@ body {
     }
   }
 
+  .diff-text {
+    font-family: -apple-system, system-ui, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
 
 @media screen and (max-width: 800px) {
     .subreddit-short-container {
@@ -930,7 +934,7 @@ body {
     }
 
     .subreddit-title-preview {
-        flex-direction: column;
+        /* flex-direction: column; */
         /* justify-content: center;
         align-items: center;
         text-align: center; */
@@ -964,9 +968,22 @@ body {
 }
 
 @media screen and (max-width: 700px) {
+    .post-info-small {
+        /* text-align: left; */
+    }
+    .subreddit-short-main-container {
+        background-color: inherit;
+    }
+    .subreddit-abridged-top-short {
+        justify-content: center;
+    }
     .button-join {
         min-height: 30px !important;
         padding-bottom: 4px !important;
+    }
+
+    .hide-if-small {
+        display: none;
     }
 
     .button-leave {
@@ -974,7 +991,7 @@ body {
         padding-bottom: 4px !important;
     }
     .subreddit-title-preview {
-        flex-direction: column;
+        /* flex-direction: column; */
     }
 
     .subreddit-preview-creator {

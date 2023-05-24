@@ -24,6 +24,7 @@ export default function ShortComments({ selectedUser, currUser }) {
         <div>
             {Object.values(comments).sort(sortingFunction).map((comment) =>
             <>
+
             <SingleComment key={comment.id} comment={comment} user={currUser} soloComment={true} sortingFunction={sortingFunction} post={comment.post_info} />
             <div style={{height: "5px", backgroundColor: "rgb(218, 224, 230)"}}></div>
             </> )}

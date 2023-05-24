@@ -97,10 +97,10 @@ export default function IndividualAbridgedPost({
                     </NavLink>
                     <span className="subreddit-preview-creator">
                         {" "}
-                        • posted by{" "}
+                        <span className="hide-if-small">• posted by{" "}</span>
                         <NavLink
                             style={{ margin: "0px 0px" }}
-                            className="card-username-link subreddit-preview"
+                            className="card-username-link subreddit-preview hide-if-small"
                             to={`/u/${post.author_info.username}`}
                         >
                             <UserHover post={post} />
@@ -114,7 +114,7 @@ export default function IndividualAbridgedPost({
                 className="subreddit-title-nav post-prev-adjust-right"
                 to={`/r/${subreddit.name}/posts/${post.id}`}
             >
-                <h2 className="card-info">{ellipsisIfLong(post.title)}</h2>
+                <h2 className="card-info post-info-small">{ellipsisIfLong(post.title)}</h2>
             </NavLink>
             <NavLink
                 className="subreddit-title-nav"
@@ -164,7 +164,8 @@ export default function IndividualAbridgedPost({
                         className="fa fa-comment"
                         aria-hidden="true"
                     ></i>
-                    <span>{post.num_comments} Comment{post.num_comments !== 1 && "s"}</span>
+                    {post.num_comments}
+                    <span className="hide-if-small"> Comment{post.num_comments !== 1 && "s"}</span>
                 </NavLink>
                 {/* <NavLink
                     style={{ marginLeft: "7px" }}
@@ -182,8 +183,8 @@ export default function IndividualAbridgedPost({
                     ></i>
                     <span>Share</span>
                 </NavLink> */}
-                <OpenModalButton renderShareButton={true} modalComponent={<CommentShareModal post={post} />} id="post-comment-upvote" style={{ marginLeft: "7px", border: "none" }} buttonText={"Share"} />
-                {user && (
+                <OpenModalButton hideTextIfSmallScreen={true} renderShareButton={true} modalComponent={<CommentShareModal post={post} />} id="post-comment-upvote" style={{ marginLeft: "7px", border: "none" }} buttonText={"Share"} />
+                {/* {user && (
                     <NavLink
                         style={{ marginLeft: "7px" }}
                         onClick={(e) => {
@@ -200,7 +201,7 @@ export default function IndividualAbridgedPost({
                         ></i>
                         <span>Save</span>
                     </NavLink>
-                )}
+                )} */}
                 {isUserAuthToEdit(user, post, currentUser) && (
                     <OpenModalButton
                         style={{
