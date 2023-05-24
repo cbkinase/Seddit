@@ -50,6 +50,7 @@ class Comment(db.Model):
         #     child_info = None
         # if self.children:
         #     child_info = self.children.to_short_dict()
+        votes = self.votes
         return {
             'id': self.id,
             'author_id': self.author.id,
@@ -62,11 +63,12 @@ class Comment(db.Model):
             'content': self.content,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
-            'upvotes': determine_votes(self.votes),
-            'reaction_info': {vote.user_id: vote.to_dict() for vote in self.votes}
+            'upvotes': determine_votes(votes),
+            'reaction_info': {vote.user_id: vote.to_dict() for vote in votes}
         }
 
     def to_micro(self):
+        votes = self.votes
         return {
             'id': self.id,
             'author_info': self.author.to_short_dict(),
@@ -74,11 +76,12 @@ class Comment(db.Model):
             'created_at': self.created_at,
             'updated_at': self.updated_at,
             'post_info': self.post.to_short_dict(),
-            'upvotes': determine_votes(self.votes),
-            'reaction_info': {vote.user_id: vote.to_dict() for vote in self.votes}
+            'upvotes': determine_votes(votes),
+            'reaction_info': {vote.user_id: vote.to_dict() for vote in votes}
         }
 
     def to_short_dict(self, depth=0):
+        votes = self.votes
         return {
             'id': self.id,
             'author_info': self.author.to_short_dict(),
@@ -90,11 +93,12 @@ class Comment(db.Model):
             'replies': {reply.id: reply.to_mega_short_dict(depth+1) for reply in self.children} if len(self.children) else None,
             'num_replies': len(self.children) if self.children else 0,
             'depth': depth,
-            'upvotes': determine_votes(self.votes),
-            'reaction_info': {vote.user_id: vote.to_dict() for vote in self.votes}
+            'upvotes': determine_votes(votes),
+            'reaction_info': {vote.user_id: vote.to_dict() for vote in votes}
         }
 
     def to_mega_short_dict(self, depth):
+        votes = self.votes
         return {
             'id': self.id,
             'author_info': self.author.to_short_dict(),
@@ -103,6 +107,6 @@ class Comment(db.Model):
             'depth': depth,
             'replies': {reply.id: reply.to_mega_short_dict(depth + 1) for reply in self.children} if len(self.children) else None,
             'num_replies': len(self.children) if self.children else 0,
-            'upvotes': determine_votes(self.votes),
-            'reaction_info': {vote.user_id: vote.to_dict() for vote in self.votes}
+            'upvotes': determine_votes(votes),
+            'reaction_info': {vote.user_id: vote.to_dict() for vote in votes}
         }
