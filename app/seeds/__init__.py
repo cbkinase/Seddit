@@ -28,12 +28,12 @@ def seed():
         undo_subreddits()
         undo_users()
 
-    users = seed_users()
-    subreddits = seed_subreddits(users)
-    posts = seed_posts(users, subreddits)
-    comments = seed_comments(users, posts)
-    post_votes = seed_post_votes(users, posts)
-    comment_votes = seed_comment_votes(users, comments)
+    users = seed_users(30)
+    subreddits = seed_subreddits(users, 5)
+    posts = seed_posts(users, subreddits, 50)
+    comments = seed_comments(users, posts, 500)
+    post_votes = seed_post_votes(users, posts, 1000)
+    comment_votes = seed_comment_votes(users, comments, 2000)
 
     # Add other seed functions here
 
