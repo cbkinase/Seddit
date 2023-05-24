@@ -81,5 +81,5 @@ class Subreddit(db.Model):
             'category': categories.get(self.category),
             'created_at': self.created_at,
             'numSubscribers': len(self.subscribers),
-            "num_posts": len(self.posts)
+            # "num_posts": len(self.posts)
         }
