@@ -93,7 +93,7 @@ export default function UserInfo({ currentUser, subreddits, posts }) {
                     </h1>
                     <div className="stats">
                         <div className="stat-item">
-                            <span className="count">500</span>
+                            <span className="count">{user.karma}</span>
                             <span className="label">Karma</span>
                         </div>
                         <div className="stat-item">
@@ -132,7 +132,7 @@ export default function UserInfo({ currentUser, subreddits, posts }) {
                                 Saved
                             </NavLink>
                         </li>}
-                        {currentUser?.id === user.id && <li className={isDisplayUpvoted(user) ? "active" : ""}>
+                        {/* {currentUser?.id === user.id && <li className={isDisplayUpvoted(user) ? "active" : ""}>
                             <NavLink to={`/u/${user.username}/upvoted`}>
                                 Upvoted
                             </NavLink>
@@ -141,7 +141,7 @@ export default function UserInfo({ currentUser, subreddits, posts }) {
                             <NavLink to={`/u/${user.username}/downvoted`}>
                                 Downvoted
                             </NavLink>
-                        </li>}
+                        </li>} */}
                     </ul>
                 </div>
                 {isDisplayPosts(user) && Boolean(user.num_posts) && (

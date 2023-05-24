@@ -17,7 +17,7 @@ class PostVote(db.Model):
 
     @classmethod
     def create(cls, qty, users, posts):
-        vote_options = ["upvote", "downvote", "upvote", "upvote"] # seed more upvotes than downvotes
+        vote_options = ["upvote", "downvote", "upvote", "upvote", "upvote", "upvote", "upvote", "upvote", "upvote"] # seed more upvotes than downvotes
         return [cls(
             user=choice(users),
             post=choice(posts),

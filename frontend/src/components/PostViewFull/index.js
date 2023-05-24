@@ -16,6 +16,7 @@ import { getSinglePost } from "../../store/posts";
 import { useDispatch, useSelector } from "react-redux";
 import CommentSection from "../CommentSection";
 import CommentShareModal from "../CommentSection/CommentShareModal";
+import userReactedCheck from "../../utils/hasUserUpvoted";
 
 // subreddit = use;
 
@@ -111,7 +112,7 @@ export default function IndividualFullPost({ user }) {
             </header>
             <div className="subreddit-short-main-container">
                 <div className="box-dec-1 subreddit-short-container post-short-container post-full-container">
-                    <VotingSection />
+                    <VotingSection post={post} user={user} />
                     <span className="subreddit-abridged-top post-prev-adjust-right">
                         <span className="subreddit-title-preview">
                             <NavLink
@@ -295,20 +296,31 @@ export default function IndividualFullPost({ user }) {
     );
 }
 
-function VotingSection() {
+function VotingSection({ post, user }) {
+    const votingState = userReactedCheck(user, post)
+
+    let upvoteClassnames = "fa fa-arrow-up upvote-button fa-lg vote-adj-down";
+    let downvoteClassnames = "fa fa-arrow-down fa-lg downvote-button vote-adj-down";
+    if (votingState === "upvote") {
+        upvoteClassnames += ` has-${votingState}`;
+    }
+    if (votingState === "downvote") {
+        downvoteClassnames += ` has-${votingState}`;
+    }
+
     return (
         <div className="voting-section card-votes">
             <i
                 onClick={(e) => alert("Not yet implemented")}
-                className="fa fa-arrow-up upvote-button fa-lg vote-adj-down"
+                className={upvoteClassnames}
                 aria-hidden="true"
             ></i>
-            <p className="post-votes vote-adj-down">
-                {Math.floor(2 + Math.random() * 100)}
+            <p className={`post-votes vote-adj-down has-${votingState}`}>
+                {post.upvotes}
             </p>
             <i
                 onClick={(e) => alert("Not yet implemented")}
-                className="fa fa-arrow-down fa-lg downvote-button vote-adj-down"
+                className={downvoteClassnames}
                 aria-hidden="true"
             ></i>
         </div>

@@ -4,6 +4,17 @@ from flask_login import UserMixin
 from faker import Faker
 
 
+def determine_votes(votes):
+    num_upvotes = len(list(filter(lambda vote: vote.vote == "upvote", votes)))
+    num_downvotes = len(list(filter(lambda vote: vote.vote == "downvote", votes)))
+    return num_upvotes - num_downvotes
+
+
+def determineKarma(posts, comments):
+    return sum([determine_votes(comment.votes) for comment in comments]) + sum([determine_votes(post.votes) for post in posts])
+
+
+
 class User(db.Model, UserMixin):
 
     __tablename__ = 'users'
@@ -60,7 +71,8 @@ class User(db.Model, UserMixin):
             'created_at': self.created_at,
             'num_posts': len(self.posts),
             'num_comments': len(self.comments),
-            'subreddits': {sub.name : sub.to_short_dict() for sub in self.subreddits}
+            'subreddits': {sub.name : sub.to_short_dict() for sub in self.subreddits},
+            'karma': determineKarma(self.posts, self.comments),
         }
 
     def to_short_dict(self):
@@ -72,5 +84,6 @@ class User(db.Model, UserMixin):
             'bio': self.bio,
             'created_at': self.created_at,
             'num_posts': len(self.posts),
-            'num_comments': len(self.comments)
+            'num_comments': len(self.comments),
+            'karma': determineKarma(self.posts, self.comments),
         }

@@ -45,7 +45,7 @@
 
 .upvote-button:hover {
     background-color: rgba(178, 178, 178, 0.2);
-    color: red;
+    color: #FF4500;
 }
 
 .downvote-button:hover {
@@ -57,6 +57,14 @@
     font-size: 14px;
     font-weight: bold;
     /* margin: 0; */
+}
+
+.has-upvote {
+    color: #FF4500;
+}
+
+.has-downvote {
+    color: #7193ff;
 }
 
 .card-votes {

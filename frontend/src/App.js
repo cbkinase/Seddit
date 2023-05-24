@@ -32,7 +32,7 @@ function App() {
             {isLoaded ? (
                 <Switch>
                     <Route exact path="/">
-                        <AllPostsPreview
+                        <AllPostsPreview user={user}
                         ></AllPostsPreview>
                     </Route>
                     <Route exact path="/explore">
@@ -59,7 +59,7 @@ function App() {
                         />
                     </Route>
                     <Route path="/r/:subredditName">
-                        <SubredditPage />
+                        <SubredditPage user={user} />
                     </Route>
                     <Route path="/u/:userName">
                         <UserInfo currentUser={user} />
