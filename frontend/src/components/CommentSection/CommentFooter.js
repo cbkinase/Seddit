@@ -5,6 +5,7 @@ import LoginFormModal from "../LoginFormModal";
 import EllipsisDropdown from "./EllipsisDropdown";
 import CommentShareModal from "./CommentShareModal";
 import DeleteCommentModal from "../DeleteCommentModal";
+import userReactedCheck from "../../utils/hasUserUpvoted";
 
 
 function toggleExtraCollapsed(setExtraCollapsed, extraCollapsed) {
@@ -30,19 +31,31 @@ export default function CommentFooter({ comment, user, post, isReplying, setIsRe
 }
 
 function VotingSection({ comment, user }) {
+    const votingState = userReactedCheck(user, comment);
+
+    let upvoteClassnames = "fa fa-arrow-up comment-upvote-button fa-lg";
+    let downvoteClassnames = "fa fa-arrow-down fa-lg comment-downvote-button";
+
+    if (votingState === "upvote") {
+        upvoteClassnames += ` has-${votingState}`;
+    }
+    if (votingState === "downvote") {
+        downvoteClassnames += ` has-${votingState}`;
+    }
+
     return (
         <div className="comment-voting-section">
             <i
                 onClick={(e) => alert("Not yet implemented")}
-                className="fa fa-arrow-up comment-upvote-button fa-lg "
+                className={upvoteClassnames}
                 aria-hidden="true"
             ></i>
-            <p className="comment-votes">
+            <p className={`comment-votes has-${votingState}`}>
                 {comment.upvotes}
             </p>
             <i
                 onClick={(e) => alert("Not yet implemented")}
-                className="fa fa-arrow-down fa-lg comment-downvote-button"
+                className={downvoteClassnames}
                 aria-hidden="true"
             ></i>
         </div>

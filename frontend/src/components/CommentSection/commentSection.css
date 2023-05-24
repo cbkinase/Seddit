@@ -2,6 +2,14 @@
     /* padding-left: 35px !important; */
 }
 
+.has-upvote {
+    color: #FF4500 !important;
+}
+
+.has-downvote {
+    color: #7193ff !important;
+}
+
 .user-commenter-navlink {
     text-decoration: none;
     color: #0079D3;
