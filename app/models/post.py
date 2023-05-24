@@ -51,7 +51,7 @@ class Post(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'author_info': self.author.to_short_dict(),
+            'author_info': self.author.to_really_short_dict(),
             'subreddit_info': self.subreddit.to_short_dict(),
             'title': self.title,
             'content': self.content,
@@ -88,7 +88,7 @@ class Post(db.Model):
             'attachment': self.attachment,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
-            'author_info': self.author.to_short_dict(),
+            'author_info': self.author.to_really_short_dict(),
             'subreddit_info': self.subreddit.to_short_dict(),
             # 'num_comments': len(self.comments),
             # 'upvotes': determine_votes(self.votes),

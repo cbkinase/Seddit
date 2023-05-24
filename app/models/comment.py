@@ -54,7 +54,7 @@ class Comment(db.Model):
         return {
             'id': self.id,
             'author_id': self.author.id,
-            'author_info': self.author.to_short_dict(),
+            'author_info': self.author.to_really_short_dict(),
             'post_info': self.post.to_dict(),
             'parent_info': self.parent.to_micro() if self.parent else None,
             'num_replies': len(self.children) if self.children else 0,
@@ -71,7 +71,7 @@ class Comment(db.Model):
         votes = self.votes
         return {
             'id': self.id,
-            'author_info': self.author.to_short_dict(),
+            'author_info': self.author.to_really_short_dict(),
             'content': self.content,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
@@ -84,7 +84,7 @@ class Comment(db.Model):
         votes = self.votes
         return {
             'id': self.id,
-            'author_info': self.author.to_short_dict(),
+            'author_info': self.author.to_really_short_dict(),
             'post_id': self.post.id,
             'content': self.content,
             'created_at': self.created_at,
@@ -101,7 +101,7 @@ class Comment(db.Model):
         votes = self.votes
         return {
             'id': self.id,
-            'author_info': self.author.to_short_dict(),
+            'author_info': self.author.to_really_short_dict(),
             'content': self.content,
             'created_at': self.created_at,
             'depth': depth,
@@ -116,7 +116,7 @@ class Comment(db.Model):
         return {
             'id': self.id,
             'author_id': self.author.id,
-            'author_info': self.author.to_short_dict(),
+            'author_info': self.author.to_really_short_dict(),
             'post_info': self.post.to_shortest_dict(),
             # 'parent_info': self.parent.to_micro() if self.parent else None,
             # 'num_replies': len(self.children) if self.children else 0,
