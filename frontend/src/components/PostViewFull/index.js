@@ -27,6 +27,49 @@ export default function IndividualFullPost({ user }) {
     const [mainLoaded, setMainLoaded] = useState(false);
     const dispatch = useDispatch();
 
+    let timeSince = function(date) {
+        if (typeof date !== 'object') {
+          date = new Date(date);
+        }
+
+        let seconds = Math.floor((new Date() - date) / 1000);
+        let intervalType;
+
+        let interval = Math.floor(seconds / 31536000);
+        if (interval >= 1) {
+          intervalType = 'y';
+        } else {
+          interval = Math.floor(seconds / 2592000);
+          if (interval >= 1) {
+            intervalType = 'm';
+          } else {
+            interval = Math.floor(seconds / 86400);
+            if (interval >= 1) {
+              intervalType = 'd';
+            } else {
+              interval = Math.floor(seconds / 3600);
+              if (interval >= 1) {
+                intervalType = "h";
+              } else {
+                interval = Math.floor(seconds / 60);
+                if (interval >= 1) {
+                  intervalType = "m";
+                } else {
+                  interval = seconds;
+                  intervalType = "now";
+                }
+              }
+            }
+          }
+        }
+
+        if (interval > 1 || interval === 0) {
+        //   intervalType += 's';
+        }
+
+        return interval + '' + intervalType;
+      };
+
     useEffect(() => {
         dispatch(getSinglePost(postId))
         dispatch(getAllPostComments(postId))
@@ -142,7 +185,7 @@ export default function IndividualFullPost({ user }) {
                             </NavLink>
                             <span className="subreddit-preview-creator">
                                 {" "}
-                                • posted by{" "}
+                                <span className="hide-if-small">• posted by{" "}</span>
                                 <NavLink
                                     style={{ margin: "0px 0px" }}
                                     className="card-username-link subreddit-preview"
@@ -151,7 +194,9 @@ export default function IndividualFullPost({ user }) {
                                     <UserHover post={post} />
                                     {shortenWord(post.author_info.username, 10)}
                                 </NavLink>{" "}
-                                {moment(Date.parse(post.created_at)).fromNow()}
+                                {window.visualViewport.width > 700
+                                ? moment(Date.parse(post.created_at)).fromNow()
+                                : timeSince(post.created_at)}
                             </span>
                         </span>
                     </span>
@@ -159,7 +204,7 @@ export default function IndividualFullPost({ user }) {
                         className="subreddit-title-nav post-prev-adjust-right"
                         // to={`/r/${subreddit.name}/posts/${post.id}`}
                     >
-                        <h2 className="card-info">{post.title}</h2>
+                        <h2 className="card-info post-info-small">{post.title}</h2>
                     </div>
                     <div
                         className="subreddit-title-nav"
@@ -216,9 +261,10 @@ export default function IndividualFullPost({ user }) {
                                 className="fa fa-comment"
                                 aria-hidden="true"
                             ></i>
-                            <span>{post.num_comments} Comment{post.num_comments !== 1 && "s"}</span>
+                            {post.num_comments}
+                            <span className="hide-if-small"> Comment{post.num_comments !== 1 && "s"}</span>
                         </NavLink>
-                        <OpenModalButton renderShareButton={true} modalComponent={<CommentShareModal post={post} />} id="post-comment-upvote" style={{marginLeft: "7px", border: "none"}} buttonText={"Share"} />
+                        <OpenModalButton hideTextIfSmallScreen={true} renderShareButton={true} modalComponent={<CommentShareModal post={post} />} id="post-comment-upvote" style={{marginLeft: "7px", border: "none"}} buttonText={"Share"} />
                         {/* <NavLink
                             style={{ marginLeft: "7px" }}
                             onClick={(e) => {
@@ -235,7 +281,7 @@ export default function IndividualFullPost({ user }) {
                             ></i>
                             <span>Share</span>
                         </NavLink> */}
-                        {user && (
+                        {/* {user && (
                             <NavLink
                                 style={{ marginLeft: "7px" }}
                                 onClick={(e) => {
@@ -252,7 +298,7 @@ export default function IndividualFullPost({ user }) {
                                 ></i>
                                 <span>Save</span>
                             </NavLink>
-                        )}
+                        )} */}
                         {isUserAuthToEdit(user, post) && (
                             <OpenModalButton
                                 style={{

@@ -21,7 +21,7 @@ export default function CommentFooter({ comment, user, post, isReplying, setIsRe
         <div style={{display: "flex", marginTop: "5px", marginLeft: "5px"}}>
             <VotingSection comment={comment} user={user} />
             {soloComment ? null : <ReplySection comment={comment} user={user} setIsReplying={setIsReplying} />}
-            <OpenModalButton modalComponent={<CommentShareModal post={post} />} className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px", border: "none"}} buttonText={"Share"} />
+            {/* <OpenModalButton modalComponent={<CommentShareModal post={post} />} className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px", border: "none"}} buttonText={"Share"} /> */}
 
             {user?.id === comment.author_info.id && !soloComment ? <ExtraSection setIsEditing={setIsEditing} comment={comment} user={user} extraCollapsed={extraCollpased} setExtraCollapsed={setExtraCollapsed} post={post} /> : null}
         </div>
@@ -50,7 +50,7 @@ function VotingSection({ comment, user }) {
                 className={upvoteClassnames}
                 aria-hidden="true"
             ></i>
-            <p className={`comment-votes has-${votingState}`}>
+            <p style={{paddingLeft: "3px", paddingRight: "3px"}} className={`comment-votes has-${votingState}`}>
                 {comment.upvotes}
             </p>
             <i

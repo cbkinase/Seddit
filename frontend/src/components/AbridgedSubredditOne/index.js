@@ -78,7 +78,7 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
     };
     return (
         <div className="box-dec-1 subreddit-short-container">
-            <span className="subreddit-abridged-top">
+            <span className="subreddit-abridged-top subreddit-abridged-top-short">
                 <span className="subreddit-title-preview">
                     <NavLink
                         className="subreddit-title-nav"
@@ -105,9 +105,9 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
                             r/{shortenWord(subreddit.name, 10)}{" "}
                         </h1>
                     </NavLink>
-                    <span className="subreddit-preview-creator">
+                    <span className="subreddit-preview-creator hide-if-small">
                         {" "}
-                        • created by{" "}
+                        <span className="hide-if-small">•</span> created by{" "}
                         <NavLink
                             style={{ margin: "0px 0px" }}
                             className="card-username-link subreddit-preview"
@@ -116,7 +116,7 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
                             <UserHover subreddit={subreddit} />
                             {shortenWord(subreddit.owner_info.username, 10)}
                         </NavLink>{" "}
-                        {moment(Date.parse(subreddit.created_at)).fromNow()}
+                        <span className="hide-if-small">{moment(Date.parse(subreddit.created_at)).fromNow()}</span>
                     </span>
                 </span>
             </span>

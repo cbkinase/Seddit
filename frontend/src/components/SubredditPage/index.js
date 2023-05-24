@@ -129,7 +129,7 @@ export default function SubredditPage() {
                         <ul>
                             <li>
                                 <OpenModalButton
-                                    buttonText="Edit"
+                                    buttonText="Edit Community"
                                     className="button-alt"
                                     modalComponent={
                                         <EditCommunityModal
@@ -146,7 +146,7 @@ export default function SubredditPage() {
                             ></span>
                             <li>
                                 <OpenModalButton
-                                    buttonText="Delete"
+                                    buttonText="Delete Community"
                                     className="button-alt"
                                     modalComponent={
                                         <DeleteSubredditModal
