@@ -47,7 +47,7 @@ def get_subreddit_by_name(subreddit_name):
     if not subreddit:
         return {"errors": ["Subreddit not found"]}, 404
 
-    return subreddit.to_dict()
+    return {"Subreddits": {subreddit.name : subreddit.to_dict()}}
 
 
 @subreddit_routes.route("/", methods=["POST"])

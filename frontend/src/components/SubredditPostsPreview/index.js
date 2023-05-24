@@ -66,7 +66,7 @@ export default function SubredditPostsPreview({ user, subreddit, subreddits }) {
                             key={post.id}
                             user={user}
                             post={post}
-                            subreddit={subreddits[post.subreddit_info.id]}
+                            subreddit={subreddit}
                         />
                     ))}
             </div>

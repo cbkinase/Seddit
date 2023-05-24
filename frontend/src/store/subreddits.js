@@ -33,6 +33,16 @@ export const getSubreddits = () => async (dispatch) => {
     }
 };
 
+export const getSubredditByName = (name) => async (dispatch) => {
+    const res = await fetch(`/api/s/name/${name}`);
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(loadSubreddits(data));
+        return data;
+    }
+}
+
 export const createSubreddit = (content) => async (dispatch) => {
     const res = await fetch("/api/s/", {
         method: "POST",
