@@ -110,3 +110,21 @@ class Comment(db.Model):
             'upvotes': determine_votes(votes),
             'reaction_info': {vote.user_id: vote.to_dict() for vote in votes}
         }
+
+    def to_shortest_dict(self):
+        votes = self.votes
+        return {
+            'id': self.id,
+            'author_id': self.author.id,
+            'author_info': self.author.to_short_dict(),
+            'post_info': self.post.to_shortest_dict(),
+            # 'parent_info': self.parent.to_micro() if self.parent else None,
+            # 'num_replies': len(self.children) if self.children else 0,
+            # 'children_info': child_info,
+            # 'children_info': {comment.id: comment.to_short_dict() for comment in self.children} if self.children else None,
+            'content': self.content,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+            'upvotes': determine_votes(votes),
+            'reaction_info': {vote.user_id: vote.to_dict() for vote in votes}
+            }
