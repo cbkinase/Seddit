@@ -64,8 +64,8 @@ class Subreddit(db.Model):
         'background_pic': str(self.background_pic),
         'category': category,
         'created_at': self.created_at,
-        'owner_info': subreddit_owner.to_short_dict(),
-        'subscribers': {sub.username : sub.to_short_dict() for sub in self.subscribers},
+        'owner_info': subreddit_owner.to_really_short_dict(),
+        'subscribers': {sub.username : sub.to_really_short_dict() for sub in self.subscribers},
         "numSubscribers": len(self.subscribers),
         "num_posts": len(self.posts),
         }
