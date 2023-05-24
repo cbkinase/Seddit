@@ -15,7 +15,7 @@ export default function SubredditPostsPreview({ user, subreddit, subreddits }) {
     useEffect(() => {
         // dispatch(getSubreddits());
         dispatch(getSubredditPosts(subredditName)).then(() => setIsLoaded(true));
-    }, [dispatch]);
+    }, [dispatch, subredditName]);
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);

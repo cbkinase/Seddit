@@ -10,7 +10,7 @@ export default function ShortComments({ selectedUser, currUser }) {
 
     useEffect(() => {
         dispatch(getAllUserComments(selectedUser.id)).then(() => setIsLoaded(true));
-    }, [dispatch])
+    }, [dispatch, selectedUser])
 
     const comments = useSelector((state) => state.comments.Comments);
 

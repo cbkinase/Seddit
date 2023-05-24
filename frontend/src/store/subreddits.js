@@ -16,10 +16,10 @@ const loadSubreddits = (subreddits) => {
     };
 };
 
-const deleteSubreddit = (id) => {
+const deleteSubreddit = (name) => {
     return {
         type: DELETE_SUBREDDIT,
-        id,
+        name,
     };
 };
 
@@ -75,14 +75,14 @@ export const editSubreddit = (content, subredditId) => async (dispatch) => {
     }
 };
 
-export const destroySubreddit = (id) => async (dispatch) => {
-    const res = await fetch(`/api/s/${id}`, {
+export const destroySubreddit = (subreddit) => async (dispatch) => {
+    const res = await fetch(`/api/s/${subreddit.id}`, {
         method: "DELETE",
     });
 
     if (res.ok) {
         const data = await res.json();
-        dispatch(deleteSubreddit(id));
+        dispatch(deleteSubreddit(subreddit.name));
         return data;
     } else {
         return { errors: "Something went wrong" };
@@ -101,13 +101,13 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 Subreddits: {
                     ...state.Subreddits,
-                    [action.subreddit.id]: action.subreddit,
+                    [action.subreddit.name]: action.subreddit,
                 },
             };
         }
         case DELETE_SUBREDDIT: {
             const newState = { ...state, Subreddits: { ...state.Subreddits } };
-            delete newState.Subreddits[action.id];
+            delete newState.Subreddits[action.name];
             return newState;
         }
         default:

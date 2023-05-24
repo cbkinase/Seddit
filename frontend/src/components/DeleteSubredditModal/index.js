@@ -16,7 +16,7 @@ export default function DeleteSubredditModal({subreddit}) {
       <div className="buttons">
         <button onClick={e => closeModal()} className="one-button" id="cancelBtn">Cancel</button>
         <button onClick={e => {
-            dispatch(destroySubreddit(subreddit.id));
+            dispatch(destroySubreddit(subreddit));
             closeModal();
             history.push("/");
         }}  className="one-button" id="confirmBtn">Delete</button>

@@ -15,7 +15,7 @@ export default function UserPostsPreview({ user, currentUser }) {
 
     useEffect(() => {
         dispatch(getUserPosts(user.username)).then(() => setIsLoaded(true))
-    }, [dispatch]);
+    }, [dispatch, user]);
 
     // const handleSearchChange = (e) => {
     //     setSearchTerm(e.target.value);
