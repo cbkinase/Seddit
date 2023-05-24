@@ -2,8 +2,8 @@ import "./privacypolicy.css";
 
 export default function PrivacyPolicy() {
     return (
-        <section class="privacy-policy">
-            <div class="privacy-policy-header">
+        <section className="privacy-policy">
+            <div className="privacy-policy-header">
                 <h2>Privacy Policy</h2>
                 <p>
                     At Reddit, we care about your privacy. This Privacy Policy
@@ -13,7 +13,7 @@ export default function PrivacyPolicy() {
                     regarding your information and how we will treat it.
                 </p>
             </div>
-            <div class="privacy-policy-section">
+            <div className="privacy-policy-section">
                 <h3>Information We Collect</h3>
                 <p>
                     We collect information about you when you use our Services,
@@ -34,7 +34,7 @@ export default function PrivacyPolicy() {
                     </li>
                 </ul>
             </div>
-            <div class="privacy-policy-section">
+            <div className="privacy-policy-section">
                 <h3>How We Use Your Information</h3>
                 <p>We use your information to:</p>
                 <ul>
@@ -52,7 +52,7 @@ export default function PrivacyPolicy() {
                     </li>
                 </ul>
             </div>
-            <div class="privacy-policy-section">
+            <div className="privacy-policy-section">
                 <h3>How We Share Your Information</h3>
                 <p>We may share your information with:</p>
                 <ul>
@@ -71,7 +71,7 @@ export default function PrivacyPolicy() {
                     </li>
                 </ul>
             </div>
-            <div class="privacy-policy-footer">
+            <div className="privacy-policy-footer">
                 <h3>Changes to This Privacy Policy</h3>
                 <p>
                     We may update this Privacy Policy from time to time. If we

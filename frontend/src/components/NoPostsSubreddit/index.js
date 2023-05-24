@@ -23,7 +23,7 @@ export default function NoPostsSubreddit({subreddit, user}) {
         }
     }
 
-    return <div class="no-posts-section">
+    return <div className="no-posts-section">
     <img src="https://www.redditinc.com/assets/images/galleries/snoo-small.png" alt="No posts yet"></img>
     <h2>Looks like r/{subreddit.name} doesn't have any posts yet!</h2>
     <h2>Maybe you'd like to {renderProperModalButton()}</h2>

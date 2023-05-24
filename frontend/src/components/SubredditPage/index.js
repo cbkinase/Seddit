@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./subredditPage.css";
 import { useParams, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getSubreddits } from "../../store/subreddits";
+import { getSubredditByName } from "../../store/subreddits";
 import OpenModalButton from "../OpenModalButton";
 import EditCommunityModal from "../EditCommunityModal";
 import DeleteSubredditModal from "../DeleteSubredditModal";
@@ -70,20 +70,20 @@ export default function SubredditPage() {
 
     useEffect(() => {
         const loadAndWait = async () => {
-            await dispatch(getSubreddits());
+            await dispatch(getSubredditByName(subredditName));
             setHasLoaded(true);
         };
         loadAndWait();
-    }, [dispatch]);
+    }, [dispatch, subredditName]);
 
-    const subreddits = useSelector((state) => state.subreddits.Subreddits);
+    const subreddit = useSelector((state) => state.subreddits.Subreddits[subredditName]);
     const user = useSelector((state) => state.session.user);
-    let subreddit =
-        subreddits &&
-        Object.values(subreddits).filter(
-            (subreddit) =>
-                subreddit.name.toLowerCase() === subredditName.toLowerCase()
-        )[0];
+    // let subreddit =
+    //     subreddits &&
+    //     Object.values(subreddits).filter(
+    //         (subreddit) =>
+    //             subreddit.name.toLowerCase() === subredditName.toLowerCase()
+    //     )[0];
 
     if (hasLoaded && subreddit) {
         found = true;
@@ -243,7 +243,7 @@ export default function SubredditPage() {
                     </div>
                 </section>
             </div>
-            {subreddit.num_posts >= 1 ? <SubredditPostsPreview user={user} subreddit={subreddit} subreddits={subreddits} /> : <NoPostsSubreddit user={user} subreddit={subreddit} />}
+            {subreddit.num_posts >= 1 ? <SubredditPostsPreview user={user} subreddit={subreddit} /> : <NoPostsSubreddit user={user} subreddit={subreddit} />}
         </div>
     ) : (
         //   <div>
