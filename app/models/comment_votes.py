@@ -17,7 +17,7 @@ class CommentVote(db.Model):
 
     @classmethod
     def create(cls, qty, users, comments):
-        vote_options = ["upvote", "downvote", "upvote", "upvote"] # seed more upvotes than downvotes
+        vote_options = ["upvote", "downvote", "upvote", "upvote", "upvote", "upvote", "upvote", "upvote", "upvote"] # seed more upvotes than downvotes
         return [cls(
             user=choice(users),
             comment=choice(comments),

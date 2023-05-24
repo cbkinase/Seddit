@@ -38,7 +38,7 @@ function VotingSection({ comment, user }) {
                 aria-hidden="true"
             ></i>
             <p className="comment-votes">
-                {Math.floor(2 + Math.random() * 100)}
+                {comment.upvotes}
             </p>
             <i
                 onClick={(e) => alert("Not yet implemented")}

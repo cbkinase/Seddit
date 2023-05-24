@@ -2,6 +2,11 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from random import choice, randint
 from faker import Faker
 
+def determine_votes(votes):
+    num_upvotes = len(list(filter(lambda vote: vote.vote == "upvote", votes)))
+    num_downvotes = len(list(filter(lambda vote: vote.vote == "downvote", votes)))
+    return num_upvotes - num_downvotes
+
 
 class Comment(db.Model):
     __tablename__ = 'comments'
@@ -56,7 +61,9 @@ class Comment(db.Model):
             # 'children_info': {comment.id: comment.to_short_dict() for comment in self.children} if self.children else None,
             'content': self.content,
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
+            'upvotes': determine_votes(self.votes),
+            'reaction_info': {vote.user_id: vote.to_dict() for vote in self.votes}
         }
 
     def to_micro(self):
@@ -67,6 +74,8 @@ class Comment(db.Model):
             'created_at': self.created_at,
             'updated_at': self.updated_at,
             'post_info': self.post.to_short_dict(),
+            'upvotes': determine_votes(self.votes),
+            'reaction_info': {vote.user_id: vote.to_dict() for vote in self.votes}
         }
 
     def to_short_dict(self, depth=0):
@@ -81,6 +90,8 @@ class Comment(db.Model):
             'replies': {reply.id: reply.to_mega_short_dict(depth+1) for reply in self.children} if len(self.children) else None,
             'num_replies': len(self.children) if self.children else 0,
             'depth': depth,
+            'upvotes': determine_votes(self.votes),
+            'reaction_info': {vote.user_id: vote.to_dict() for vote in self.votes}
         }
 
     def to_mega_short_dict(self, depth):
@@ -92,5 +103,6 @@ class Comment(db.Model):
             'depth': depth,
             'replies': {reply.id: reply.to_mega_short_dict(depth + 1) for reply in self.children} if len(self.children) else None,
             'num_replies': len(self.children) if self.children else 0,
-
+            'upvotes': determine_votes(self.votes),
+            'reaction_info': {vote.user_id: vote.to_dict() for vote in self.votes}
         }
