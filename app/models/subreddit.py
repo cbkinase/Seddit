@@ -35,7 +35,7 @@ class Subreddit(db.Model):
 
     owner = db.relationship("User", back_populates="owns_subreddit")
     subscribers = db.relationship("User", secondary="subreddit_subscribers", back_populates="subreddits")
-    posts = db.relationship("Post", back_populates="subreddit", cascade="all, delete")
+    posts = db.relationship("Post", back_populates="subreddit", cascade="all, delete", lazy="select")
 
     @classmethod
     def create(cls, qty, users):
@@ -67,7 +67,7 @@ class Subreddit(db.Model):
         'owner_info': subreddit_owner.to_short_dict(),
         'subscribers': {sub.username : sub.to_short_dict() for sub in self.subscribers},
         "numSubscribers": len(self.subscribers),
-        "num_posts": len(self.posts)
+        "num_posts": len(self.posts),
         }
 
     def to_short_dict(self):
@@ -82,4 +82,22 @@ class Subreddit(db.Model):
             'created_at': self.created_at,
             'numSubscribers': len(self.subscribers),
             # "num_posts": len(self.posts)
+        }
+
+    def to_med_dict(self):
+        subreddit_owner = self.owner
+        category = categories.get(self.category)
+        return {
+        'id': self.id,
+        'owner_id': self.owner_id,
+        'name': self.name,
+        'about': self.about,
+        'main_pic': str(self.main_pic),
+        'background_pic': str(self.background_pic),
+        'category': category,
+        'created_at': self.created_at,
+        'owner_info': subreddit_owner.to_really_short_dict(),
+        'subscribers': {sub.username : sub.to_really_short_dict() for sub in self.subscribers},
+        "numSubscribers": len(self.subscribers),
+        # "num_posts": len(self.posts),
         }

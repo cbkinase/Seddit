@@ -87,3 +87,13 @@ class User(db.Model, UserMixin):
             'num_comments': len(self.comments),
             'karma': determineKarma(self.posts, self.comments),
         }
+
+    def to_really_short_dict(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'avatar': self.avatar,
+            'bio': self.bio,
+            'created_at': self.created_at,
+        }

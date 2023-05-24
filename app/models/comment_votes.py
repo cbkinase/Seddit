@@ -13,7 +13,7 @@ class CommentVote(db.Model):
     vote = db.Column(db.String, nullable=False)
 
     user = db.relationship("User", back_populates="comment_votes")
-    comment = db.relationship("Comment", back_populates="votes")
+    comment = db.relationship("Comment", back_populates="votes", lazy="select")
 
     @classmethod
     def create(cls, qty, users, comments):

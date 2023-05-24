@@ -31,9 +31,9 @@ class Post(db.Model):
     author = db.relationship("User", back_populates="posts")
     subreddit = db.relationship("Subreddit", back_populates="posts")
 
-    comments = db.relationship('Comment', back_populates='post', cascade='delete')
+    comments = db.relationship('Comment', back_populates='post', cascade='delete', lazy="select")
 
-    votes = db.relationship("PostVote", back_populates="post", cascade="all, delete, delete-orphan")
+    votes = db.relationship("PostVote", back_populates="post", cascade="all, delete, delete-orphan", lazy="select")
 
 
     @classmethod
