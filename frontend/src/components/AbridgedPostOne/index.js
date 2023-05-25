@@ -145,6 +145,7 @@ export default function IndividualAbridgedPost({
                             marginBottom: "18px",
                             marginLeft: "7px",
                             marginTop: "-5px",
+                            overflowWrap: "anywhere"
                         }}
                     >
                         {ellipsisIfLong(post.content)}
