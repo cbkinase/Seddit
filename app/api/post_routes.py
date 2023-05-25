@@ -170,7 +170,7 @@ def vote_on_post(post_id):
             return {"errors": ["Something went wrong..."]}, 500
 
     if vote.vote == body["vote"]:
-        return {"errors": ["Already voted "]}
+        return {"Posts": {post.id : post.to_dict()}}
 
     if vote.vote != body["vote"]:
         try:

@@ -81,7 +81,10 @@ def vote_on_comment(comment_id):
                 return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
 
     if vote.vote == body["vote"]:
-        return {"errors": ["Already voted "]}
+        if body.get("IsUserComments"):
+            return {"Comments": {comment.id: comment.to_shortest_dict() for comment in ref_user.comments}}
+        else:
+            return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
 
     if vote.vote != body["vote"]:
         try:
