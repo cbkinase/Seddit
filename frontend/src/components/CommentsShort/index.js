@@ -4,7 +4,7 @@ import { getAllUserComments } from "../../store/comments";
 import LoadingSpinner from "../LoadingSpinner";
 import SingleComment from "../CommentSection/SingleComment";
 
-export default function ShortComments({ selectedUser, currUser }) {
+export default function ShortComments({ selectedUser, currUser, IsUserComments }) {
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -25,7 +25,7 @@ export default function ShortComments({ selectedUser, currUser }) {
             {Object.values(comments).sort(sortingFunction).map((comment) =>
             <>
 
-            <SingleComment key={comment.id} comment={comment} user={currUser} soloComment={true} sortingFunction={sortingFunction} post={comment.post_info} />
+            <SingleComment IsUserComments={IsUserComments} key={comment.id} comment={comment} user={currUser} soloComment={true} sortingFunction={sortingFunction} post={comment.post_info} />
             <div style={{height: "5px", backgroundColor: "rgb(218, 224, 230)"}}></div>
             </> )}
         </div>

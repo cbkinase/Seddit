@@ -25,6 +25,7 @@ export default function SubredditPostsPreview({ user, subreddit, subreddits }) {
     const posts = useSelector((state) => state.posts.Posts);
 
     let allPostsArr = Object.values(posts);
+
     // allPostsArr = allPostsArr.filter(
     //     (post) => post.subreddit_info.id === subreddit.id
     // );

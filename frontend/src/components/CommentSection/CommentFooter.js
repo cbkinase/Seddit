@@ -6,20 +6,21 @@ import EllipsisDropdown from "./EllipsisDropdown";
 import CommentShareModal from "./CommentShareModal";
 import DeleteCommentModal from "../DeleteCommentModal";
 import userReactedCheck from "../../utils/hasUserUpvoted";
+import VotingSection from "./VotingSection";
 
 
 function toggleExtraCollapsed(setExtraCollapsed, extraCollapsed) {
     setExtraCollapsed(!extraCollapsed);
 }
 
-export default function CommentFooter({ comment, user, post, isReplying, setIsReplying, isEditing, setIsEditing, soloComment }) {
+export default function CommentFooter({ comment, user, post, isReplying, setIsReplying, isEditing, setIsEditing, soloComment, IsUserComments }) {
 
     const [extraCollpased, setExtraCollapsed] = useState(true);
 
     return (
         <>
         <div style={{display: "flex", marginTop: "5px", marginLeft: "5px"}}>
-            <VotingSection comment={comment} user={user} />
+            <VotingSection IsUserComments={IsUserComments} comment={comment} user={user} post={post} />
             {soloComment ? null : <ReplySection comment={comment} user={user} setIsReplying={setIsReplying} />}
             {/* <OpenModalButton modalComponent={<CommentShareModal post={post} />} className="comment-footer-part" style={{padding: "8px 8px", marginLeft: "2px", fontSize: "14px", border: "none"}} buttonText={"Share"} /> */}
 
@@ -30,37 +31,6 @@ export default function CommentFooter({ comment, user, post, isReplying, setIsRe
     )
 }
 
-function VotingSection({ comment, user }) {
-    const votingState = userReactedCheck(user, comment);
-
-    let upvoteClassnames = "fa fa-arrow-up comment-upvote-button fa-lg";
-    let downvoteClassnames = "fa fa-arrow-down fa-lg comment-downvote-button";
-
-    if (votingState === "upvote") {
-        upvoteClassnames += ` has-${votingState}`;
-    }
-    if (votingState === "downvote") {
-        downvoteClassnames += ` has-${votingState}`;
-    }
-
-    return (
-        <div className="comment-voting-section">
-            <i
-                onClick={(e) => alert("Not yet implemented")}
-                className={upvoteClassnames}
-                aria-hidden="true"
-            ></i>
-            <p style={{paddingLeft: "3px", paddingRight: "3px"}} className={`comment-votes has-${votingState}`}>
-                {comment.upvotes}
-            </p>
-            <i
-                onClick={(e) => alert("Not yet implemented")}
-                className={downvoteClassnames}
-                aria-hidden="true"
-            ></i>
-        </div>
-    );
-}
 
 function ReplySection({ comment, setIsReplying, user }) {
     if (!user) {
