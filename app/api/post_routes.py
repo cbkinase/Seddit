@@ -160,6 +160,9 @@ def vote_on_post(post_id):
         .filter(PostVote.post_id == post_id,
                 PostVote.user_id == current_user.id).first()
 
+    if vote and vote.vote == body["vote"]:
+        return {"Posts": {post.id : post.to_dict()}}
+
     new_vote = PostVote(user=user, post=post, vote=body["vote"])
     if not vote:
         try:
@@ -169,8 +172,7 @@ def vote_on_post(post_id):
         except:
             return {"errors": ["Something went wrong..."]}, 500
 
-    if vote.vote == body["vote"]:
-        return {"Posts": {post.id : post.to_dict()}}
+
 
     if vote.vote != body["vote"]:
         try:
