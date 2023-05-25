@@ -57,7 +57,7 @@ export default function AllPostsPreview({ user }) {
     //     return post.title.toLowerCase().includes(searchTerm.toLowerCase());
     // });
     let items = Object.values(posts);
-    console.log(items);
+
     return (
         <>
             <div style={{ height: "30px", backgroundColor: "#dae0e6" }}></div>
