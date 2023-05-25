@@ -18,10 +18,11 @@ const addPost = (post) => {
     };
 };
 
-const loadPosts = (posts) => {
+const loadPosts = (posts, page) => {
     return {
         type: LOAD_POSTS,
         posts,
+        page,
     };
 };
 
@@ -41,7 +42,7 @@ export const getAllPosts = (page, per_page) => async (dispatch) => {
 
     if (res.ok) {
         const data = await res.json();
-        dispatch(loadPosts(data));
+        dispatch(loadPosts(data, page));
         return data;
     }
 };
@@ -151,6 +152,15 @@ const initialState = { Posts: {} };
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case LOAD_POSTS: {
+            if (action.page && action.page > 1) {
+                return {
+                    ...state,
+                    Posts: {
+                        ...state.Posts, ...action.posts.Posts
+                    }
+                }
+
+            }
             return action.posts;
         }
 

@@ -9,13 +9,13 @@ export default function AllPostsPreview({ user }) {
     const dispatch = useDispatch();
     // const [searchTerm, setSearchTerm] = useState("");
     // const [items, setItems] = useState([]);
-    // const [page, setPage] = useState(1);
+    const [page, setPage] = useState(1);
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
         // dispatch(getSubreddits());
-        dispatch(getAllPosts()).then(() => setIsLoaded(true));
-    }, [dispatch]);
+        dispatch(getAllPosts(page, 10)).then(() => setIsLoaded(true));
+    }, [dispatch, page]);
 
     // useEffect(() => {
     //     const fetchData = async () => {
@@ -34,19 +34,19 @@ export default function AllPostsPreview({ user }) {
     //     setSearchTerm(e.target.value);
     // };
 
-    // const handleScroll = () => {
-    //     if (
-    //         window.innerHeight + document.documentElement.scrollTop ===
-    //         document.documentElement.offsetHeight
-    //     ) {
-    //         setPage((prevPage) => prevPage + 1);
-    //     }
-    // };
+    const handleScroll = () => {
+        if (
+            window.innerHeight + document.documentElement.scrollTop ===
+            document.documentElement.offsetHeight
+        ) {
+            setPage((prevPage) => prevPage + 1);
+        }
+    };
 
-    // useEffect(() => {
-    //     window.addEventListener("scroll", handleScroll);
-    //     return () => window.removeEventListener("scroll", handleScroll);
-    // }, []);
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     // const subreddits = useSelector((state) => state.subreddits.Subreddits);
     const posts = useSelector((state) => state.posts.Posts);
@@ -57,6 +57,7 @@ export default function AllPostsPreview({ user }) {
     //     return post.title.toLowerCase().includes(searchTerm.toLowerCase());
     // });
     let items = Object.values(posts);
+    console.log(items);
     return (
         <>
             <div style={{ height: "30px", backgroundColor: "#dae0e6" }}></div>
@@ -83,8 +84,8 @@ export default function AllPostsPreview({ user }) {
                     items
                         .sort(
                             (a, b) =>
-                                Date.parse(b.created_at) -
-                                Date.parse(a.created_at)
+                                b.id -
+                                a.id
                         )
                         .map((post) => (
                             <IndividualAbridgedPost
