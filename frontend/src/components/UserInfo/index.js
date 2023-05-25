@@ -47,6 +47,7 @@ export default function UserInfo({ currentUser, subreddits, posts }) {
     };
 
     useEffect(() => {
+        setLoaded(false);
         const fn = async () => {
             let data = await fetch(`/api/users/u/${userName}`);
             let user = await data.json();
