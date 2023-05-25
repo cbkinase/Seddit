@@ -63,6 +63,12 @@ def vote_on_comment(comment_id):
         .filter(CommentVote.comment_id == comment_id,
                 CommentVote.user_id == current_user.id).first()
 
+    if vote and vote.vote == body["vote"]:
+        if body.get("IsUserComments"):
+            return {"Comments": {comment.id: comment.to_shortest_dict() for comment in ref_user.comments}}
+        else:
+            return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
+
     new_vote = CommentVote(user=user, comment=comment, vote=body["vote"])
     if not vote:
         try:
@@ -80,11 +86,6 @@ def vote_on_comment(comment_id):
             else:
                 return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
 
-    if vote.vote == body["vote"]:
-        if body.get("IsUserComments"):
-            return {"Comments": {comment.id: comment.to_shortest_dict() for comment in ref_user.comments}}
-        else:
-            return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
 
     if vote.vote != body["vote"]:
         try:
