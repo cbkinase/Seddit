@@ -168,8 +168,6 @@ export default function reducer(state = initialState, action) {
         }
 
         case HANDLE_VOTE: {
-            console.log();
-            console.log(state.Posts);
             const target = Object.values(action.post.Posts)[0]
             return {
                 ...state,

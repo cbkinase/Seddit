@@ -54,6 +54,7 @@ def vote_on_comment(comment_id):
     comment = Comment.query.get(comment_id)
     user = User.query.get(current_user.id)
     post = Post.query.get(body.get("post_id"))
+    ref_user = User.query.filter(User.username == body.get("refUser")).first()
 
     if not user or not comment:
         return {"errors": ["Resource not found"]}, 404
@@ -67,9 +68,17 @@ def vote_on_comment(comment_id):
         try:
             db.session.add(new_vote)
             db.session.commit()
-            return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
+
+            if body.get("IsUserComments"):
+                return {"Comments": {comment.id: comment.to_shortest_dict() for comment in ref_user.comments}}
+            else:
+                return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
+
         except:
-            return {"errors": ["Something went wrong..."]}, 500
+            if body.get("IsUserComments"):
+                return {"Comments": {comment.id: comment.to_shortest_dict() for comment in ref_user.comments}}
+            else:
+                return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
 
     if vote.vote == body["vote"]:
         return {"errors": ["Already voted "]}
@@ -79,6 +88,12 @@ def vote_on_comment(comment_id):
             db.session.delete(vote)
             db.session.add(new_vote)
             db.session.commit()
-            return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
+            if body.get("IsUserComments"):
+                return {"Comments": {comment.id: comment.to_shortest_dict() for comment in ref_user.comments}}
+            else:
+                return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
         except:
-            return {"errors": ["Something went wrong..."]}, 500
+            if body.get("IsUserComments"):
+                return {"Comments": {comment.id: comment.to_shortest_dict() for comment in ref_user.comments}}
+            else:
+                return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}

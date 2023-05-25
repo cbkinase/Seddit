@@ -154,7 +154,7 @@ export default function UserInfo({ currentUser, subreddits, posts }) {
                     <NoPostsUserProfile username={user.username} isComment={true} isOwnProfile={user.username === currentUser?.username} />
                 )}
                 {isDisplayComments(user) && Boolean(user.num_comments) && (
-                    <ShortComments selectedUser={user} currUser={currentUser} />
+                    <ShortComments IsUserComments={true} selectedUser={user} currUser={currentUser} />
                 )}
                 {isDisplaySaved(user) && <NoPostsUserProfile username={user.username} isSaved={true} />}
 

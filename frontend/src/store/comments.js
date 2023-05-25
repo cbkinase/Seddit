@@ -89,11 +89,15 @@ export const destroyComment = (commentId, postId) => async (dispatch) => {
     }
 }
 
-export const voteOnComment = (commentId, vote) => async (dispatch) => {
+export const voteOnComment = (commentId, vote, IsUserComments, refUser=null) => async (dispatch) => {
+    const payload = {
+        ...vote,
+        "refUser": refUser,
+    }
     const res = await fetch(`/api/comments/${commentId}/votes`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(vote),
+        body: JSON.stringify(payload),
     });
 
     if (res.ok) {
@@ -101,11 +105,18 @@ export const voteOnComment = (commentId, vote) => async (dispatch) => {
         dispatch(addComment(data));
         return data;
     }
+
+    else {
+        const data = await res.json();
+        return data;
+    }
 }
 
-export const deleteCommentVote = (postId, commentId, voteId) => async (dispatch) => {
+export const deleteCommentVote = (postId, commentId, voteId, IsUserComments=false, refUser=null) => async (dispatch) => {
     const res = await fetch(`/api/posts/${postId}/comments/${commentId}/votes/${voteId}`, {
         method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({"IsUserComments": IsUserComments, "refUser": refUser}),
     });
 
     if (res.ok) {

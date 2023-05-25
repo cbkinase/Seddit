@@ -54,9 +54,14 @@ function OpenModalButton({
             </> : null}
             <span className={hideTextIfSmallScreen
                 ? "hide-if-small"
-                : buttonText === "Create a Community" || buttonText === "Create Post" || buttonText === "Edit Community" || buttonText === "Delete Community"
-                  ? "diff-text"
-                  : ""}>{buttonText}</span>
+                : buttonText === "Create a Community"
+                  || buttonText === "Create Post"
+                  || buttonText === "Edit Community"
+                  || buttonText === "Delete Community"
+                  || buttonText === "Log In"
+                  || buttonText === "Sign Up"
+                    ? "diff-text"
+                    : ""}>{buttonText}</span>
         </button>
     );
 }

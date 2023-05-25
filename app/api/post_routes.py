@@ -131,11 +131,17 @@ def delete_comment(post_id, comment_id):
 def delete_comment_vote(post_id, comment_id, vote_id):
     post = Post.query.get(post_id)
     vote = CommentVote.query.get(vote_id)
+    body = request.get_json()
+    user = User.query.get(current_user.id)
+    ref_user = User.query.filter(User.username == body.get("refUser")).first()
 
     try:
         db.session.delete(vote)
         db.session.commit()
-        return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
+        if body.get("IsUserComments") == True:
+            return {"Comments": {comment.id: comment.to_shortest_dict() for comment in ref_user.comments}}
+        else:
+            return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
     except:
         return {"errors": ["Something went wrong..."]}, 500
 

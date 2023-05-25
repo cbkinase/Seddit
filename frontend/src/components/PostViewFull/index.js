@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CommentSection from "../CommentSection";
 import CommentShareModal from "../CommentSection/CommentShareModal";
 import userReactedCheck from "../../utils/hasUserUpvoted";
+import VotingSection from "../PostVotingSection/VotingSection";
 
 // subreddit = use;
 
@@ -78,18 +79,6 @@ export default function IndividualFullPost({ user }) {
 
     const comments = useSelector(state => state.comments.Comments)
 
-    // function getSubredditFromName(subreddits, subredditName) {
-    //     if (!subreddits.length) return undefined;
-    //     return subreddits.find(
-    //         (subreddit) =>
-    //             subreddit.name.toLowerCase() === subredditName.toLowerCase()
-    //     );
-    // }
-
-    // const subreddit = getSubredditFromName(
-    //     Object.values(subreddits),
-    //     subredditName
-    // );
     const post = useSelector((state) => state.posts.Posts[postId]);
     const subreddit = post?.subreddit_info
 
@@ -99,30 +88,6 @@ export default function IndividualFullPost({ user }) {
         if (word.length <= long) return word;
         return word.slice(0, long) + "...";
     };
-
-    // const ellipsisIfLong = (paragraph, long = 20) => {
-    //     if (!paragraph) return null;
-    //     let wordArr = paragraph.split(" ");
-    //     let newStr = "";
-    //     if (wordArr.length > long) {
-    //         for (let i = 0; i < long; i++) {
-    //             newStr += wordArr[i];
-    //             if (i !== long - 1) newStr += " ";
-    //         }
-
-    //         newStr += "...";
-    //         return newStr;
-    //     }
-
-    //     if (wordArr.length < long && paragraph.length > 100) {
-    //         return paragraph.slice(0, 100) + "...";
-    //     }
-    //     return paragraph;
-    // };
-
-    // const capitalizeFirstLetter = (word) => {
-    //     return word[0].toUpperCase() + word.slice(1);
-    // };
 
     function isUserAuthToEdit(user, post) {
         if (!user) return null;
@@ -339,36 +304,5 @@ export default function IndividualFullPost({ user }) {
         </div>
     ) : (
         <LoadingSpinner />
-    );
-}
-
-function VotingSection({ post, user }) {
-    const votingState = userReactedCheck(user, post)
-
-    let upvoteClassnames = "fa fa-arrow-up upvote-button fa-lg vote-adj-down";
-    let downvoteClassnames = "fa fa-arrow-down fa-lg downvote-button vote-adj-down";
-    if (votingState === "upvote") {
-        upvoteClassnames += ` has-${votingState}`;
-    }
-    if (votingState === "downvote") {
-        downvoteClassnames += ` has-${votingState}`;
-    }
-
-    return (
-        <div className="voting-section card-votes">
-            <i
-                onClick={(e) => alert("Not yet implemented")}
-                className={upvoteClassnames}
-                aria-hidden="true"
-            ></i>
-            <p className={`post-votes vote-adj-down has-${votingState}`}>
-                {post.upvotes}
-            </p>
-            <i
-                onClick={(e) => alert("Not yet implemented")}
-                className={downvoteClassnames}
-                aria-hidden="true"
-            ></i>
-        </div>
     );
 }

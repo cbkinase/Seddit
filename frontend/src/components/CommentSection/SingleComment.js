@@ -7,7 +7,7 @@ import CommentInput from "./CommentInput";
 import SoloCommentHeader from "../CommentsShort/SoloCommentHeader";
 
 
-export default function SingleComment({ comment, user, soloComment, post, sortingFunction }) {
+export default function SingleComment({ comment, user, soloComment, post, sortingFunction, IsUserComments }) {
     const [isDisplaying, setIsDisplaying] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [isReplying, setIsReplying] = useState(false);
@@ -77,7 +77,7 @@ export default function SingleComment({ comment, user, soloComment, post, sortin
                     {isEditing
                     ? <CommentInput setIsReplying={setIsReplying} isCommentReply={true} user={user} commentContext={comment} post={post} editInProgress={true} setIsEditing={setIsEditing} content={comment.content} />
                     :<span className="notosans" style={{display: stateToDisplay()}}>{comment.content}</span>}
-                    {isDisplaying ? <CommentFooter soloComment={soloComment} editInProgress={true} isEditing={isEditing} setIsEditing={setIsEditing} isReplying={isReplying} setIsReplying={setIsReplying} comment={comment} post={post} user={user} /> : null}
+                    {isDisplaying ? <CommentFooter IsUserComments={IsUserComments} soloComment={soloComment} editInProgress={true} isEditing={isEditing} setIsEditing={setIsEditing} isReplying={isReplying} setIsReplying={setIsReplying} comment={comment} post={post} user={user} /> : null}
                     {/* Display nested comments :) */}
                     {isDisplaying && comment.num_replies && !soloComment
                     ? <div>
