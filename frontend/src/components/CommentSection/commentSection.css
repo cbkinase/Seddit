@@ -74,6 +74,7 @@
     color: #1c1c1c;
     letter-spacing: 0.01em;
     margin-left: 6px;
+    overflow-wrap: break-word;
 }
 
 .comment-author-name-link {

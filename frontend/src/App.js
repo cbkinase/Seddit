@@ -15,6 +15,7 @@ import UserInfo from "./components/UserInfo";
 import IndividualFullPost from "./components/PostViewFull";
 import ScrollToTop from "./components/ScrollToTop";
 import LoadingSpinner from "./components/LoadingSpinner";
+import AboutMe from "./components/AboutMe";
 
 function App() {
     const dispatch = useDispatch();
@@ -28,12 +29,12 @@ function App() {
     return (
         <>
             <ScrollToTop />
+            <AboutMe />
             <Navigation isLoaded={isLoaded} />
             {isLoaded ? (
                 <Switch>
                     <Route exact path="/">
-                        <AllPostsPreview user={user}
-                        ></AllPostsPreview>
+                        <AllPostsPreview user={user} />
                     </Route>
                     <Route exact path="/explore">
                         <AbridgedSubredditDisplay user={user} />
@@ -54,9 +55,7 @@ function App() {
                         <PrivacyPolicy />
                     </Route>
                     <Route path="/r/:subredditName/posts/:postId">
-                        <IndividualFullPost
-                            user={user}
-                        />
+                        <IndividualFullPost user={user} />
                     </Route>
                     <Route path="/r/:subredditName">
                         <SubredditPage user={user} />
