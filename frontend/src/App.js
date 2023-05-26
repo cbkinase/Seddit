@@ -29,14 +29,15 @@ function App() {
     return (
         <>
             <ScrollToTop />
-            <AboutMe />
             <Navigation isLoaded={isLoaded} />
             {isLoaded ? (
                 <Switch>
                     <Route exact path="/">
+                        <AboutMe />
                         <AllPostsPreview user={user} />
                     </Route>
                     <Route exact path="/explore">
+                        <AboutMe />
                         <AbridgedSubredditDisplay user={user} />
                     </Route>
                     <Route path="/login">
@@ -55,9 +56,11 @@ function App() {
                         <PrivacyPolicy />
                     </Route>
                     <Route path="/r/:subredditName/posts/:postId">
+                        <AboutMe adjustDown={"short"} />
                         <IndividualFullPost user={user} />
                     </Route>
                     <Route path="/r/:subredditName">
+                        {/* <AboutMe adjustDown={"far"} /> */}
                         <SubredditPage user={user} />
                     </Route>
                     <Route path="/u/:userName">

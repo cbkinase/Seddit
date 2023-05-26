@@ -15,8 +15,12 @@
     /* right: calc(0.4vw + 50vw - 650px); */
   }
 
-  .home-section:hover {
-    outline: 1px solid black;
+  .home-adj-down {
+    top: 15.5vh;
+  }
+
+  .home-adj-far-down {
+    top: 38vh;
   }
 
   .home-header {
@@ -62,6 +66,13 @@
     text-align: center;
     justify-items: center;
     align-content: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+
+  .home-extra-icon {
+    margin-right: 8px;
   }
 
   .gh-repo-btn,
@@ -98,6 +109,7 @@
     background-color: #FFF;
     border: 1px solid #0079D3;
     color: #0079D3;
+    margin-top: 5px
   }
 
   .gh-repo-btn:hover {
@@ -107,6 +119,23 @@
 .linkedin-btn:hover {
     background: #f6f9fe;
     color: #174ea6;
+}
+
+.home-footer {
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+    padding-bottom: 5px;
+}
+
+.home-footer-link {
+    font-size: 9px;
+    color: #969696;
+    text-decoration: none;
+}
+
+.home-footer-link:hover {
+    text-decoration: underline;
 }
 
 @media screen and (max-width: 1329px) {
