@@ -34,7 +34,8 @@ All you really need to know about the model to make sense of this is that parent
 ` 'replies': {reply.id: reply.to_mega_short_dict(depth+1) for reply in self.children} if len(self.children) else None, `
 
 This, ultimately, yields a structure of comments that is organized in the following way:
-```
+
+```json
 Comments: 
  {comment_id}: {
   author_info: {...},
