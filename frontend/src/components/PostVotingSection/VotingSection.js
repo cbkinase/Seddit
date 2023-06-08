@@ -3,10 +3,17 @@ import { voteOnPost, deletePostVote } from "../../store/posts";
 import userReactedCheck from "../../utils/hasUserUpvoted";
 
 export default function VotingSection({ post, user, currentUser }) {
+    console.log({user}, {currentUser});
     if (currentUser) {
         user = currentUser;
     }
-    const votingState = userReactedCheck(user, post);
+    let votingState;
+    if (currentUser === null ) {
+        votingState = null;
+    }
+    else {
+        votingState = userReactedCheck(user, post);
+    }
     const dispatch = useDispatch();
 
     let upvoteClassnames = "fa fa-arrow-up upvote-button fa-lg vote-adj-down";
