@@ -35,7 +35,7 @@ All you really need to know about the model to make sense of this is that parent
 
 This, ultimately, yields a structure of comments that is organized in the following way:
 
-```json
+```js
 Comments: 
  {comment_id}: {
   author_info: {...},
