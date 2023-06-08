@@ -61,10 +61,7 @@ Resulting in a nice, easy to work with tree-like structure. But the battle was f
 Well... more recursion. We can imagine that, given the comments structure above, it's rather easy to render top-level comments. Just iterate over the values in comments, placing/styling each element as needed. It turns out that if you can render a single (top-level) comment, you only need to add a single line of code to render the rest of the replies. But to do this, you need to create a React component that calls itself:
 
 ```js
-/* 
-[within SingleComment.js]
-...
-*/
+// Within SingleComment.js
 {comment.num_replies
     ? <div>
       {Object.values(comment.replies).sort(sortingFunction).map(reply =>
