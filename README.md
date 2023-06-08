@@ -58,6 +58,38 @@ Comments:
 
 Resulting in a nice, easy to work with tree-like structure. But the battle was far from over, even at this point. How can I deal with showing them on the page properly now?
 
+Well... more recursion. We can imagine that, given the comments structure above, it's rather easy to render top-level comments. Just iterate over the values in comments, placing/styling each element as needed. It turns out that if you can render a single (top-level) comment, you only need to add a single line of code to render the rest of the replies. But to do this, you need to create a React component that calls itself:
+
+```js
+{comment.num_replies
+    ? <div>
+      {Object.values(comment.replies).sort(sortingFunction).map(reply =>
+        <SingleComment
+          key={reply.id}
+          comment={reply}
+          user={user}
+          post={post}
+          sortingFunction={sortingFunction}
+          />)}
+    </div>
+: null}
+```
+
+And... voila. I also used the depth information to adjust the spacing as needed, providing a visual representation of nesting:
+
+```js
+function setDivWidth() {
+        if (window.visualViewport.width > 700) {
+            return `${600 - comment.depth * 23}px`
+        }
+        else {
+            return `${"100%" - comment.depth * 23}px`
+        }
+    }
+ ```
+
+Overall, it was an extremely fun and interesting problem to solve, and I was excited to make use of my first 'recursive component'.
+
 ## Technologies used
 
 - Backend: Flask, SQLAlchemy, PostgreSQL
