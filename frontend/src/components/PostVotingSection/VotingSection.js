@@ -3,7 +3,6 @@ import { voteOnPost, deletePostVote } from "../../store/posts";
 import userReactedCheck from "../../utils/hasUserUpvoted";
 
 export default function VotingSection({ post, user, currentUser }) {
-    console.log({user}, {currentUser});
     if (currentUser) {
         user = currentUser;
     }
