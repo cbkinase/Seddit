@@ -40,7 +40,7 @@ export default function SubredditPage({ user }) {
         const data = await res.json();
         if (data.success) {
             setUserInSubreddit(true);
-            setNumMembers((prevMems) => prevMems + 1);
+            // setNumMembers((prevMems) => prevMems + 1);
         } else {
             // alert("Please try again momentarily!");
         }
@@ -53,7 +53,7 @@ export default function SubredditPage({ user }) {
         const data = await res.json();
         if (data.success) {
             setUserInSubreddit(false);
-            setNumMembers((prevMems) => prevMems - 1);
+            // setNumMembers((prevMems) => prevMems - 1);
         } else {
             // alert("Please try again momentarily!");
         }
@@ -68,7 +68,7 @@ export default function SubredditPage({ user }) {
             setUserInSubreddit(isUserInSubreddit(user, subreddit))
         };
         loadAndWait();
-    }, [dispatch, subredditName, numMembers]);
+    }, [dispatch, subredditName, isUserInSubreddit]);
 
 
     // let subreddit =
