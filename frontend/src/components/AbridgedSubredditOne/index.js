@@ -3,8 +3,16 @@ import moment from "moment";
 // import { useDispatch } from "react-redux";
 import SubredditHover from "../SubredditHover";
 import UserHover from "../UserHover";
+import { useState } from "react";
 
 export default function IndividualAbridgedSubreddit({ user, subreddit }) {
+
+    function isUserInSubreddit(user, subreddit) {
+        return user && subreddit.subscribers[user.username];
+    }
+
+    const [userInSubreddit, setUserInSubreddit] = useState(isUserInSubreddit(user, subreddit));
+
     // const dispatch = useDispatch();
     const shortenWord = (word, long = 20) => {
         if (!word) return null;
@@ -40,17 +48,9 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
         const res = await fetch(`/api/s/${subredditId}/subscribers`, {
             method: "POST",
         });
-
         const data = await res.json();
         if (data.success) {
-            let btn = document.getElementById(
-                `subreddit-${subredditId}-button`
-            );
-            btn.classList =
-                "act-subreddit-btn button-leave remove-bottom-margin";
-            btn.innerText = "Joined";
-            btn.onclick = (e) => alert(`Already joined r/${subredditName}!`);
-            // btn.onclick = (e) => handleLeaveCommunity(subredditId, userId);
+            setUserInSubreddit(true);
         } else {
             // alert("Please try again momentarily!");
         }
@@ -60,18 +60,9 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
         const res = await fetch(`/api/s/${subredditId}/subscribers/${userId}`, {
             method: "DELETE",
         });
-
         const data = await res.json();
-
         if (data.success) {
-            let btn = document.getElementById(
-                `subreddit-${subredditId}-button`
-            );
-            btn.classList =
-                "act-subreddit-btn button-join remove-bottom-margin";
-            btn.innerText = "Left Community";
-            btn.onclick = (e) => alert(`Already left r/${subredditName}!`);
-            // btn.onclick = (e) => handleJoinCommunity(subredditId, userId);
+            setUserInSubreddit(false);
         } else {
             // alert("Please try again momentarily!");
         }
@@ -121,7 +112,7 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
                 </span>
             </span>
             {/* User is not in community already */}
-            {user && !subreddit.subscribers[user.username] && (
+            {user && !userInSubreddit && (
                 <button
                     id={`subreddit-${subreddit.id}-button`}
                     onClick={(e) =>
@@ -137,7 +128,7 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
                 </button>
             )}
             {/* User is in community already */}
-            {user && subreddit.subscribers[user.username] && (
+            {userInSubreddit && (
                 <button
                     onClick={(e) =>
                         handleLeaveCommunity(

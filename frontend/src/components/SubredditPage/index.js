@@ -11,8 +11,16 @@ import CreatePostModal from "../CreatePostModal";
 import NoPostsSubreddit from "../NoPostsSubreddit";
 import LoadingSpinner from "../LoadingSpinner";
 
-export default function SubredditPage() {
+export default function SubredditPage({ user }) {
     const { subredditName } = useParams();
+    const subreddit = useSelector((state) => state.subreddits.Subreddits[subredditName]);
+
+    function isUserInSubreddit(user, subreddit) {
+        return user && subreddit.subscribers[user.username];
+    }
+
+    const [userInSubreddit, setUserInSubreddit] = useState(null);
+
     const dispatch = useDispatch();
     //   const history = useHistory();
     const [hasLoaded, setHasLoaded] = useState(false);
@@ -29,18 +37,10 @@ export default function SubredditPage() {
         const res = await fetch(`/api/s/${subredditId}/subscribers`, {
             method: "POST",
         });
-
         const data = await res.json();
         if (data.success) {
-            memberCount++;
-            setNumMembers(memberCount);
-            let btn = document.getElementById(
-                `subreddit-${subredditId}-button`
-            );
-            btn.classList = "button-leave adjust-btn-height-subreddit";
-            btn.innerText = "Joined";
-            btn.onclick = (e) => alert(`Already joined r/${subredditName}!`);
-            // btn.onclick = (e) => handleLeaveCommunity(subredditId, userId);
+            setUserInSubreddit(true);
+            setNumMembers((prevMems) => prevMems + 1);
         } else {
             // alert("Please try again momentarily!");
         }
@@ -50,19 +50,10 @@ export default function SubredditPage() {
         const res = await fetch(`/api/s/${subredditId}/subscribers/${userId}`, {
             method: "DELETE",
         });
-
         const data = await res.json();
-
         if (data.success) {
-            memberCount--;
-            setNumMembers(memberCount);
-            let btn = document.getElementById(
-                `subreddit-${subredditId}-button`
-            );
-            btn.classList = "button-join adjust-btn-height-subreddit";
-            btn.innerText = "Left";
-            btn.onclick = (e) => alert(`Already left r/${subredditName}!`);
-            // btn.onclick = (e) => handleJoinCommunity(subredditId, userId);
+            setUserInSubreddit(false);
+            setNumMembers((prevMems) => prevMems - 1);
         } else {
             // alert("Please try again momentarily!");
         }
@@ -70,14 +61,16 @@ export default function SubredditPage() {
 
     useEffect(() => {
         const loadAndWait = async () => {
-            await dispatch(getSubredditByName(subredditName));
+            let data = await dispatch(getSubredditByName(subredditName));
             setHasLoaded(true);
+            let subreddit = data.Subreddits[subredditName]
+            setNumMembers(subreddit.numSubscribers);
+            setUserInSubreddit(isUserInSubreddit(user, subreddit))
         };
         loadAndWait();
-    }, [dispatch, subredditName]);
+    }, [dispatch, subredditName, numMembers]);
 
-    const subreddit = useSelector((state) => state.subreddits.Subreddits[subredditName]);
-    const user = useSelector((state) => state.session.user);
+
     // let subreddit =
     //     subreddits &&
     //     Object.values(subreddits).filter(
@@ -93,11 +86,6 @@ export default function SubredditPage() {
         return word[0].toUpperCase() + word.slice(1);
     };
 
-    let memberCount = subreddit && subreddit.numSubscribers;
-
-    useEffect(() => {
-        setNumMembers(memberCount);
-    }, [memberCount]);
 
     if (hasLoaded && !subreddit) {
         return <h1>Not Found...</h1>
@@ -190,7 +178,7 @@ export default function SubredditPage() {
                         {user && <div style={{paddingBottom: "10px"}}></div>}
                         <div className="subreddit-stat">
                             {/* User is not in community already */}
-                            {user && !subreddit.subscribers[user.username] && (
+                            {user && !userInSubreddit && (
                                 <button
                                     style={{ width: "130px" }}
                                     id={`subreddit-${subreddit.id}-button`}
@@ -207,7 +195,7 @@ export default function SubredditPage() {
                                 </button>
                             )}
                             {/* User is in community already */}
-                            {user && subreddit.subscribers[user.username] && (
+                            {user && userInSubreddit && (
                                 <button
                                     style={{ width: "130px" }}
                                     onClick={(e) =>
