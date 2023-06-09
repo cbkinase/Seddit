@@ -130,6 +130,9 @@ def add_subscriber(subreddit_id):
     if not subreddit or not user:
         return {"errors": ["Resource not found"]}, 404
 
+    if user in subreddit.subscribers:
+        return {"errors": ["Already in subreddit"]}, 400
+
     try:
         subreddit.subscribers.append(user)
         db.session.commit()
