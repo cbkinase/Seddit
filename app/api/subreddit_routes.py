@@ -168,7 +168,7 @@ def get_subreddit_subscribers(subreddit_id):
     if not subreddit:
         return {"errors": ["Subreddit not found"]}, 404
 
-    return {"Subscribers": {subscriber.id : subscriber.to_dict() for subscriber in subreddit.subscribers}}
+    return {"Subscribers": {subscriber.id : subscriber.to_really_short_dict() for subscriber in subreddit.subscribers}}
 
 
 @subreddit_routes.route("/name/<subreddit_name>/posts")

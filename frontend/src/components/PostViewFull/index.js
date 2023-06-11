@@ -16,7 +16,7 @@ import { getSinglePost } from "../../store/posts";
 import { useDispatch, useSelector } from "react-redux";
 import CommentSection from "../CommentSection";
 import CommentShareModal from "../CommentSection/CommentShareModal";
-import userReactedCheck from "../../utils/hasUserUpvoted";
+// import userReactedCheck from "../../utils/hasUserUpvoted";
 import VotingSection from "../PostVotingSection/VotingSection";
 
 // subreddit = use;
@@ -159,9 +159,8 @@ export default function IndividualFullPost({ user }) {
                                     <UserHover post={post} />
                                     {shortenWord(post.author_info.username, 10)}
                                 </NavLink>{" "}
-                                {window.visualViewport.width > 700
-                                ? moment(Date.parse(post.created_at)).fromNow()
-                                : timeSince(post.created_at)}
+                                <span className="hide-if-small">{moment(Date.parse(post.created_at)).fromNow()}</span>
+                                <span className="hide-if-big">{timeSince(post.created_at)}</span>
                             </span>
                         </span>
                     </span>

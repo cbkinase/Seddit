@@ -1,7 +1,7 @@
 import UserHover from "../UserHover";
 import moment from "moment";
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CommentFooter from "./CommentFooter";
 import CommentInput from "./CommentInput";
 import SoloCommentHeader from "../CommentsShort/SoloCommentHeader";
@@ -21,14 +21,25 @@ export default function SingleComment({ comment, user, soloComment, post, sortin
         else return "none";
     }
 
-    function setDivWidth() {
+    // function setDivWidth() {
+    //     if (window.visualViewport.width > 700) {
+    //         return `${600 - comment.depth * 23}px`
+    //     }
+    //     else {
+    //         return `${"100%" - comment.depth * 23}px`
+    //     }
+    // }
+    let setDivWidth = () => {}
+    useEffect(() => {
+        setDivWidth = () => {
         if (window.visualViewport.width > 700) {
             return `${600 - comment.depth * 23}px`
         }
         else {
             return `${"100%" - comment.depth * 23}px`
         }
-    }
+        }
+    }, [window.visualViewport.width])
 
     const shortenWord = (word, long = 20) => {
         if (!word) return null;

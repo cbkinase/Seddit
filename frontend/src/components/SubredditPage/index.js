@@ -68,7 +68,7 @@ export default function SubredditPage({ user }) {
             setUserInSubreddit(isUserInSubreddit(user, subreddit))
         };
         loadAndWait();
-    }, [dispatch, subredditName]);
+    }, [dispatch, subredditName, user]);
 
 
     // let subreddit =
