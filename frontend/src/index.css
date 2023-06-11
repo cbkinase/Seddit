@@ -564,6 +564,7 @@ body {
 .subreddit-title-nav {
     text-decoration: inherit;
     color: inherit;
+    /* align-self: flex-start */
 }
 
 #post-attachment-image {
@@ -923,6 +924,9 @@ body {
     font-family: -apple-system, system-ui, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+.hide-if-big {
+    display: none;
+}
 
 @media screen and (max-width: 800px) {
     .subreddit-short-container {
@@ -968,8 +972,8 @@ body {
 }
 
 @media screen and (max-width: 700px) {
-    .post-info-small {
-        /* text-align: left; */
+    .hide-if-big {
+        display: revert;
     }
     .subreddit-short-main-container {
         background-color: inherit;

@@ -20,10 +20,10 @@ export default function AboutMe({ adjustDown }) {
           <p className="subtitle">Welcome to my Reddit clone!</p>
         </div>
         <div className="home-buttons">
-            <a target="_blank" href="https://github.com/cbkinase/Seddit" className="gh-repo-btn"><span>
+            <a target="_blank" rel="noreferrer" href="https://github.com/cbkinase/Seddit" className="gh-repo-btn"><span>
                 <i className="fab fa-github home-extra-icon"></i>
                 Github Repo</span></a>
-            <a target="_blank" href="https://www.linkedin.com/in/cameron-beck-4a9a44274/" className="linkedin-btn"><span>
+            <a target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/cameron-beck-4a9a44274/" className="linkedin-btn"><span>
                 <i className="fab fa-linkedin home-extra-icon"></i>
                 My LinkedIn
                 </span></a>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CommentInput from "./CommentInput";
 import PostComments from "./PostComments";
 import "./commentSection.css";
@@ -6,14 +6,25 @@ import "./commentSection.css";
 export default function CommentSection({comments, user, post}) {
     const [sortingBy, setSortingBy] = useState("new");
 
-    function setDivWidth() {
-        if (window.visualViewport.width > 700) {
-            return "600px"
+    let setDivWidth = () => {}
+    useEffect(() => {
+        setDivWidth = () => {
+            if (window.visualViewport.width > 700) {
+                return "600px"
+            }
+            else {
+                return `${window.visualViewport.width - 20}px`
+            }
         }
-        else {
-            return `${window.visualViewport.width - 20}px`
-        }
-    }
+    }, [window.visualViewport.width])
+    // function setDivWidth() {
+    //     if (window.visualViewport.width > 700) {
+    //         return "600px"
+    //     }
+    //     else {
+    //         return `${window.visualViewport.width - 20}px`
+    //     }
+    // }
     return (
     <div>
         <div style={{width: setDivWidth()}} className="subreddit-short-container post-short-container comment-short-container post-full-container box-dec-1">
