@@ -564,7 +564,7 @@ body {
 .subreddit-title-nav {
     text-decoration: inherit;
     color: inherit;
-    align-self: flex-start
+    /* align-self: flex-start */
 }
 
 #post-attachment-image {
