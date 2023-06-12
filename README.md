@@ -115,7 +115,4 @@ Overall, it was an extremely fun and interesting problem to solve, and I was exc
 ## How to Use Locally
 
 1. Install dependencies by running `pipenv install -r requirements.txt`
-2. Configure a `.env` file according to `.env.example`
-3. Migrate and seed your database and start the backend server by running ```pipenv shell && flask db upgrade && flask seed all && flask run```
-4. In the `frontend` directory, run ```npm i && npm start```
-5. Your front and back ends will now both be accessible.
+2. Run `bash start.sh` in the root directory of the project.
