@@ -20,6 +20,49 @@ export default function IndividualAbridgedPost({
 }) {
     // const dispatch = useDispatch();
 
+    let timeSince = function(date) {
+        if (typeof date !== 'object') {
+          date = new Date(date);
+        }
+
+        let seconds = Math.floor((new Date() - date) / 1000);
+        let intervalType;
+
+        let interval = Math.floor(seconds / 31536000);
+        if (interval >= 1) {
+          intervalType = 'y';
+        } else {
+          interval = Math.floor(seconds / 2592000);
+          if (interval >= 1) {
+            intervalType = 'm';
+          } else {
+            interval = Math.floor(seconds / 86400);
+            if (interval >= 1) {
+              intervalType = 'd';
+            } else {
+              interval = Math.floor(seconds / 3600);
+              if (interval >= 1) {
+                intervalType = "h";
+              } else {
+                interval = Math.floor(seconds / 60);
+                if (interval >= 1) {
+                  intervalType = "m";
+                } else {
+                  interval = seconds;
+                  intervalType = "now";
+                }
+              }
+            }
+          }
+        }
+
+        if (interval > 1 || interval === 0) {
+        //   intervalType += 's';
+        }
+
+        return interval + '' + intervalType;
+      };
+
     const shortenWord = (word, long = 20) => {
         if (!word) return null;
         if (word.length <= long) return word;
@@ -108,7 +151,8 @@ export default function IndividualAbridgedPost({
                             <UserHover post={post} />
                             {shortenWord(post.author_info.username, 10)}
                         </NavLink>{" "}
-                        {moment(Date.parse(post.created_at)).fromNow()}
+                        <span className="hide-if-small">{moment(Date.parse(post.created_at)).fromNow()}</span>
+                        <span className="hide-if-big">{timeSince(post.created_at)}</span>
                     </span>
                 </span>
             </span>

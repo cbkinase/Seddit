@@ -93,7 +93,7 @@ function Navigation({ isLoaded }) {
                     <NavLink exact to="/">
                         <div id="nav-svg-container">
                             <div>{redditLogoSvg}</div>
-                            <div style={{marginLeft: "8px"}}>{redditNameSvg}</div>
+                            <div className="hide-if-small" style={{marginLeft: "8px"}}>{redditNameSvg}</div>
                         </div>
                     </NavLink>
                 </li>
@@ -102,7 +102,7 @@ function Navigation({ isLoaded }) {
                     style={{textDecoration: "none"}}
                     exact to="/explore">
                         <button className="button-join head-nav-btn head-nav-btn-explore">
-                            Explore Communities
+                            Explore<span className="diff-text hide-if-small">&nbsp;Communities</span>
                         </button>
                     </NavLink>
                     {isLoaded && sessionUser && (
@@ -112,7 +112,8 @@ function Navigation({ isLoaded }) {
                     )}
                     {isLoaded && sessionUser && (
                         <OpenModalButton
-                            buttonText="Create a Community"
+                            buttonText="Create"
+                            addOnText="&nbsp;a Community"
                             className="button-leave head-nav-btn head-nav-btn-create"
                             modalComponent={<CreateCommunityModal />}
                         />
