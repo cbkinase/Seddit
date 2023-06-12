@@ -14,7 +14,8 @@ function OpenModalButton({
     commentNotLoggedIn,
     renderShareButton,
     renderDeleteButtonWithPadding,
-    hideTextIfSmallScreen
+    hideTextIfSmallScreen,
+    addOnText
 }) {
     const { setModalContent, setOnModalClose } = useModal();
 
@@ -54,7 +55,7 @@ function OpenModalButton({
             </> : null}
             <span className={hideTextIfSmallScreen
                 ? "hide-if-small"
-                : buttonText === "Create a Community"
+                : buttonText === "Create"
                   || buttonText === "Create Post"
                   || buttonText === "Edit Community"
                   || buttonText === "Delete Community"
@@ -62,6 +63,7 @@ function OpenModalButton({
                   || buttonText === "Sign Up"
                     ? "diff-text"
                     : ""}>{buttonText}</span>
+                    <span className="hide-if-small diff-text">{addOnText}</span>
         </button>
     );
 }

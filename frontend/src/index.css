@@ -1004,28 +1004,35 @@ body {
 
     .login-signup-btn-container {
         display: flex;
-        flex-direction: column;
+        /* flex-direction: column; */
         align-items: center;
         justify-content: center;
     }
     .head-nav-btn {
-        width: 75px;
-        height: 38px;
+        padding: 2px 12px;
+        /* font-size: 13px; */
+        /* font-size: 12px;
+        width: 93px; */
+        /* width: 80px;  */
+        /* height: 38px;
         font-size: 11px;
         margin-left: 0px;
         margin-right: 0px;
-        line-height: normal;
+        line-height: normal; */
     }
 
     #nav-container {
         margin: 0px 0px;
     }
     .logout-btn {
-        max-width: 60px;
+        padding-left: 15px;
+        padding-right: 15px;
+        /* font-size: 13px; */
+        /* max-width: 60px;
         line-height: normal;
         font-size: 11px;
         padding-left: 10px;
-        padding-right: 10px;
+        padding-right: 10px; */
     }
 
     /*
