@@ -114,5 +114,5 @@ Overall, it was an extremely fun and interesting problem to solve, and I was exc
 
 ## How to Use Locally
 
-1. Install dependencies by running `pipenv install -r requirements.txt`
+1. Copy this repository.
 2. Run `bash start.sh` in the root directory of the project.
