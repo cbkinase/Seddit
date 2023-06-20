@@ -5,12 +5,14 @@ import { useState, useEffect } from "react";
 import CommentFooter from "./CommentFooter";
 import CommentInput from "./CommentInput";
 import SoloCommentHeader from "../CommentsShort/SoloCommentHeader";
-
+import useViewportWidth from "../../hooks/useViewportWidth";
 
 export default function SingleComment({ comment, user, soloComment, post, sortingFunction, IsUserComments }) {
     const [isDisplaying, setIsDisplaying] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [isReplying, setIsReplying] = useState(false);
+    const viewportWidth = useViewportWidth();
+    const [divWidth, setDivWidth] = useState("100%");
 
     function toggleDisplayState() {
         setIsDisplaying(!isDisplaying);
@@ -21,25 +23,14 @@ export default function SingleComment({ comment, user, soloComment, post, sortin
         else return "none";
     }
 
-    // function setDivWidth() {
-    //     if (window.visualViewport.width > 700) {
-    //         return `${600 - comment.depth * 23}px`
-    //     }
-    //     else {
-    //         return `${"100%" - comment.depth * 23}px`
-    //     }
-    // }
-    let setDivWidth = () => {}
     useEffect(() => {
-        setDivWidth = () => {
-        if (window.visualViewport.width > 700) {
-            return `${600 - comment.depth * 23}px`
+        if (viewportWidth > 800) {
+            setDivWidth(`${600 - comment.depth * 23}px`);
         }
         else {
-            return `${"100%" - comment.depth * 23}px`
+            setDivWidth(`calc(100% - ${comment.depth * 23}px)`)
         }
-        }
-    }, [window.visualViewport.width])
+    }, [viewportWidth])
 
     const shortenWord = (word, long = 20) => {
         if (!word) return null;
@@ -50,7 +41,7 @@ export default function SingleComment({ comment, user, soloComment, post, sortin
         <>
         {soloComment ? <SoloCommentHeader comment={comment} /> : null}
         <div style={{height: "10px"}}></div>
-        <div style={{marginLeft: "-5px",
+        <div style={{marginLeft: "-5px", alignSelf: "flex-start"
         // marginRight: setRightMargin(comment)
         }} className="single-comment-container">
             <div>
@@ -67,7 +58,7 @@ export default function SingleComment({ comment, user, soloComment, post, sortin
                     e => toggleDisplayState()
                 } className="comment-border-link"></div>
             </div>
-            <div style={{width: setDivWidth()}} className="single-comment-content-main">
+            <div style={{width: divWidth}} className="single-comment-content-main">
                 <div>
                     <span style={{marginLeft: "7px"}}>
                         <NavLink

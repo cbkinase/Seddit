@@ -1,3 +1,5 @@
+# Assumes you are using pyenv 3.9.4 and Node 16.17.1
+
 source_file=".env.example"
 destination_file=".env"
 be_directory=".venv"
