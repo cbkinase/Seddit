@@ -24,7 +24,7 @@ export default function SingleComment({ comment, user, soloComment, post, sortin
     }
 
     useEffect(() => {
-        if (viewportWidth > 700) {
+        if (viewportWidth > 800) {
             setDivWidth(`${600 - comment.depth * 23}px`);
         }
         else {
