@@ -62,7 +62,7 @@ function NewProfileButton({ user }) {
                             width: "25px",
                             height: "25px",
                             cursor: "pointer",
-                            paddingRight: "5px"
+                            marginRight: "5px",
                         }}
                         className="topright-avatar"
                         src={user.avatar}

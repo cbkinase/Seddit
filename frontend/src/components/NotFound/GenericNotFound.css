@@ -1,0 +1,27 @@
+.generic-404-container {
+    max-width: 600px;
+    margin: 100px auto;
+    text-align: center;
+}
+
+.generic-404-title {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.generic-404-text {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.generic-404-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.generic-404-link:hover {
+    text-decoration: underline;
+}
