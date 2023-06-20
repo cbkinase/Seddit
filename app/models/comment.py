@@ -3,10 +3,13 @@ from random import choice, randint
 from faker import Faker
 
 def determine_votes(votes):
-    num_upvotes = len(list(filter(lambda vote: vote.vote == "upvote", votes)))
-    num_downvotes = len(list(filter(lambda vote: vote.vote == "downvote", votes)))
+    num_upvotes = len([vote for vote in votes if vote.vote == "upvote"])
+    num_downvotes = len([vote for vote in votes if vote.vote == "downvote"])
     return num_upvotes - num_downvotes
 
+    # num_votes = len(votes)
+    # num_downvotes = len([vote for vote in votes if vote.vote == "downvote"])
+    # return num_votes - (2 * num_downvotes)
 
 class Comment(db.Model):
     __tablename__ = 'comments'

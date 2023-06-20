@@ -12,7 +12,7 @@ export default function PostComments({ comments, user, sortingState, post }) {
 
     return (
     <>
-    <div style={{marginLeft: "-15px"}}>
+    <div style={{marginLeft: "-15px", width: "100%"}}>
         {topLevelComments.sort(sortingFunction).map(comment =>
         <SingleComment
           key={comment.id}
