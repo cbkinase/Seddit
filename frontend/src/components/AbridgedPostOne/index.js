@@ -12,6 +12,7 @@ import CommentShareModal from "../CommentSection/CommentShareModal";
 import userReactedCheck from "../../utils/hasUserUpvoted";
 import { deletePostVote, voteOnPost } from "../../store/posts";
 import VotingSection from "../PostVotingSection/VotingSection";
+import timeSince from "../../utils/timeSince";
 
 export default function IndividualAbridgedPost({
     user,
@@ -19,49 +20,6 @@ export default function IndividualAbridgedPost({
     currentUser,
 }) {
     // const dispatch = useDispatch();
-
-    let timeSince = function(date) {
-        if (typeof date !== 'object') {
-          date = new Date(date);
-        }
-
-        let seconds = Math.floor((new Date() - date) / 1000);
-        let intervalType;
-
-        let interval = Math.floor(seconds / 31536000);
-        if (interval >= 1) {
-          intervalType = 'y';
-        } else {
-          interval = Math.floor(seconds / 2592000);
-          if (interval >= 1) {
-            intervalType = 'm';
-          } else {
-            interval = Math.floor(seconds / 86400);
-            if (interval >= 1) {
-              intervalType = 'd';
-            } else {
-              interval = Math.floor(seconds / 3600);
-              if (interval >= 1) {
-                intervalType = "h";
-              } else {
-                interval = Math.floor(seconds / 60);
-                if (interval >= 1) {
-                  intervalType = "m";
-                } else {
-                  interval = seconds;
-                  intervalType = "now";
-                }
-              }
-            }
-          }
-        }
-
-        if (interval > 1 || interval === 0) {
-        //   intervalType += 's';
-        }
-
-        return interval + '' + intervalType;
-      };
 
     const shortenWord = (word, long = 20) => {
         if (!word) return null;
