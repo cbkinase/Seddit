@@ -118,6 +118,7 @@ export default function IndividualAbridgedPost({
                     <NavLink
                         className="subreddit-title-nav"
                         to={`/r/${subreddit.name}`}
+                        style={{alignSelf: "revert"}}
                     >
                         <img
                             onError={(e) => {

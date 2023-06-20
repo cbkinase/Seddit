@@ -73,6 +73,7 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
                 <span className="subreddit-title-preview">
                     <NavLink
                         className="subreddit-title-nav"
+                        style={{alignSelf: "revert"}}
                         to={`/r/${subreddit.name}`}
                     >
                         <img

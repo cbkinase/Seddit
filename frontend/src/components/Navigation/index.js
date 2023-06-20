@@ -9,6 +9,7 @@ import OpenModalButton from "../OpenModalButton";
 import CreateCommunityModal from "../CreateCommunityModal";
 import { logout } from "../../store/session";
 import EditModal from "../EditUserInfoModal";
+import NewProfileButton from "./NewProfileButton";
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector((state) => state.session.user);
@@ -121,7 +122,7 @@ function Navigation({ isLoaded }) {
                 </div>
                 {isLoaded && sessionUser && !onUserOwnPage(sessionUser) && (
                     <li>
-                        <ProfileButton user={sessionUser} />
+                        <NewProfileButton user={sessionUser} />
                     </li>
                 )}
                 {isLoaded && sessionUser && onUserOwnPage(sessionUser) && (
