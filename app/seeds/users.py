@@ -16,8 +16,8 @@ def seed_users(qty=30):
     db.session.add(demo)
     db.session.add(marnie)
     db.session.add(bobbie)
-    for user in dummy_users:
-        db.session.add(user)
+
+    db.session.add_all(dummy_users)
     db.session.commit()
 
     dummy_users.append(demo)
