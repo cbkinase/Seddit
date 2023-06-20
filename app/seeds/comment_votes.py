@@ -4,13 +4,9 @@ from sqlalchemy.sql import text
 
 def seed_comment_votes(users, comments, qty=2000):
     users = [user for user in users if user.id != 1]
-
     dummy_votes = CommentVote.create(qty, users, comments)
-
-    for vote in dummy_votes:
-        db.session.add(vote)
-        db.session.commit()
-
+    db.session.add_all(dummy_votes)
+    db.session.commit()
     return dummy_votes
 
 

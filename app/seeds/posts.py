@@ -4,15 +4,8 @@ from sqlalchemy.sql import text
 
 def seed_posts(users, subreddits, qty=200):
     dummy_posts = Post.create(qty, users, subreddits)
-
-    for post in dummy_posts:
-        db.session.add(post)
-
+    db.session.add_all(dummy_posts)
     db.session.commit()
-
-
-    db.session.commit()
-
     return dummy_posts
 
 

@@ -4,11 +4,8 @@ from sqlalchemy.sql import text
 
 def seed_comments(users, posts, qty=1500):
     dummy_comments = Comment.create(qty, users, posts)
-
-    for comment in dummy_comments:
-        db.session.add(comment)
-        db.session.commit()
-
+    db.session.add_all(dummy_comments)
+    db.session.commit()
     return dummy_comments
 
 
