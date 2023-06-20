@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
 import { useHistory } from "react-router-dom";
-import { NavLink } from "react-router-dom";
 
 function NewProfileButton({ user }) {
     const dispatch = useDispatch();
@@ -19,7 +18,7 @@ function NewProfileButton({ user }) {
         if (!showMenu) return;
 
         const closeMenu = (e) => {
-            if (!ulRef.current.contains(e.target)) {
+            if (ulRef.current && !ulRef.current.contains(e.target)) {
                 setShowMenu(false);
             }
         };
@@ -39,7 +38,6 @@ function NewProfileButton({ user }) {
         e.preventDefault();
         closeMenu();
         history.push(`/u/${user.username}`);
-
     }
 
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -92,16 +90,21 @@ function NewProfileButton({ user }) {
             <ul className={ulClassName} ref={ulRef}>
                 <>
                     <div className="dropdown-toggled-container">
+
                         <li style={{color: "#787c7e"}}>
                             <span style={{fontSize: "16px"}}><i className="far fa-user-circle"/></span>
                              <p>My Stuff</p>
                         </li>
+
                         <li onClick={handleProfileClick} className="dropdown-toggled-clickable">
                             <span></span>
                             <p className="dropdown-toggled-panel">Profile</p>
                         </li>
+
+                        <div className="dropdown-sep"></div>
+
                         <li onClick={handleLogout} className="dropdown-toggled-clickable">
-                            <span><i className="fas fa-sign-out-alt" /></span>
+                            <span><i className="fa fa-sign-out-alt" /></span>
                             <p>Log Out</p>
                         </li>
                     </div>
