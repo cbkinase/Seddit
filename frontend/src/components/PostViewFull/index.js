@@ -18,6 +18,7 @@ import CommentSection from "../CommentSection";
 import CommentShareModal from "../CommentSection/CommentShareModal";
 // import userReactedCheck from "../../utils/hasUserUpvoted";
 import VotingSection from "../PostVotingSection/VotingSection";
+import GenericNotFound from "../NotFound/GenericNotFound";
 
 // subreddit = use;
 
@@ -26,11 +27,12 @@ export default function IndividualFullPost({ user }) {
     const { subredditName, postId } = useParams();
     const [commentsLoaded, setCommentsLoaded] = useState(false);
     const [mainLoaded, setMainLoaded] = useState(false);
+    const [notFound, setNotFound] = useState(false);
     const dispatch = useDispatch();
 
-    let timeSince = function(date) {
+    let timeSince = function (date) {
         if (typeof date !== 'object') {
-          date = new Date(date);
+            date = new Date(date);
         }
 
         let seconds = Math.floor((new Date() - date) / 1000);
@@ -38,43 +40,48 @@ export default function IndividualFullPost({ user }) {
 
         let interval = Math.floor(seconds / 31536000);
         if (interval >= 1) {
-          intervalType = 'y';
+            intervalType = 'y';
         } else {
-          interval = Math.floor(seconds / 2592000);
-          if (interval >= 1) {
-            intervalType = 'm';
-          } else {
-            interval = Math.floor(seconds / 86400);
+            interval = Math.floor(seconds / 2592000);
             if (interval >= 1) {
-              intervalType = 'd';
+                intervalType = 'm';
             } else {
-              interval = Math.floor(seconds / 3600);
-              if (interval >= 1) {
-                intervalType = "h";
-              } else {
-                interval = Math.floor(seconds / 60);
+                interval = Math.floor(seconds / 86400);
                 if (interval >= 1) {
-                  intervalType = "m";
+                    intervalType = 'd';
                 } else {
-                  interval = seconds;
-                  intervalType = "now";
+                    interval = Math.floor(seconds / 3600);
+                    if (interval >= 1) {
+                        intervalType = "h";
+                    } else {
+                        interval = Math.floor(seconds / 60);
+                        if (interval >= 1) {
+                            intervalType = "m";
+                        } else {
+                            interval = seconds;
+                            intervalType = "now";
+                        }
+                    }
                 }
-              }
             }
-          }
         }
 
         if (interval > 1 || interval === 0) {
-        //   intervalType += 's';
+            //   intervalType += 's';
         }
 
         return interval + '' + intervalType;
-      };
+    };
 
     useEffect(() => {
         dispatch(getSinglePost(postId))
+            .then((res) => {
+                if (!res) {
+                    setNotFound(true);
+                }
+            })
         dispatch(getAllPostComments(postId))
-        .then(() => setCommentsLoaded(true));
+            .then(() => setCommentsLoaded(true));
     }, [dispatch, postId])
 
     const comments = useSelector(state => state.comments.Comments)
@@ -95,6 +102,10 @@ export default function IndividualFullPost({ user }) {
             user.id === post.author_info.id ||
             user.id === post.subreddit_info.owner_id
         );
+    }
+
+    if (notFound) {
+        return <GenericNotFound />
     }
 
     return post && subreddit ? (
@@ -126,7 +137,7 @@ export default function IndividualFullPost({ user }) {
                             <NavLink
                                 className="subreddit-title-nav"
                                 to={`/r/${subreddit.name}`}
-                                style={{alignSelf: "revert"}}
+                                style={{ alignSelf: "revert" }}
                             >
                                 <img
                                     onError={(e) => {
@@ -167,26 +178,26 @@ export default function IndividualFullPost({ user }) {
                     </span>
                     <div
                         className="subreddit-title-nav post-prev-adjust-right"
-                        // to={`/r/${subreddit.name}/posts/${post.id}`}
+                    // to={`/r/${subreddit.name}/posts/${post.id}`}
                     >
                         <h2 className="card-info post-info-small">{post.title}</h2>
                     </div>
                     <div
                         className="subreddit-title-nav"
                         id="post-prev-attachment-container"
-                        // to={`/r/${subreddit.name}/posts/${post.id}`}
+                    // to={`/r/${subreddit.name}/posts/${post.id}`}
                     >
                         {post.attachment && <a target="_blank" rel="noreferrer" href={post.attachment}>
                             <img
-                            alt="post attachment"
-                            onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src =
-                                    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png";
-                            }}
-                            id="post-attachment-image"
-                            src={post.attachment}
-                        ></img>
+                                alt="post attachment"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src =
+                                        "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png";
+                                }}
+                                id="post-attachment-image"
+                                src={post.attachment}
+                            ></img>
                         </a>}
                     </div>
                     {post.attachment && (
@@ -196,7 +207,7 @@ export default function IndividualFullPost({ user }) {
                         <div
                             className="subreddit-title-nav"
                             id="post-prev-attachment-container"
-                            // to={`/r/${subreddit.name}/posts/${post.id}`}
+                        // to={`/r/${subreddit.name}/posts/${post.id}`}
                         >
                             <p
                                 style={{
@@ -229,7 +240,7 @@ export default function IndividualFullPost({ user }) {
                             {post.num_comments}
                             <span className="hide-if-small"> Comment{post.num_comments !== 1 && "s"}</span>
                         </NavLink>
-                        <OpenModalButton hideTextIfSmallScreen={true} renderShareButton={true} modalComponent={<CommentShareModal post={post} />} id="post-comment-upvote" style={{marginLeft: "7px", border: "none"}} buttonText={"Share"} />
+                        <OpenModalButton hideTextIfSmallScreen={true} renderShareButton={true} modalComponent={<CommentShareModal post={post} />} id="post-comment-upvote" style={{ marginLeft: "7px", border: "none" }} buttonText={"Share"} />
                         {/* <NavLink
                             style={{ marginLeft: "7px" }}
                             onClick={(e) => {

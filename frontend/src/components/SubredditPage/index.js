@@ -10,6 +10,7 @@ import SubredditPostsPreview from "../SubredditPostsPreview";
 import CreatePostModal from "../CreatePostModal";
 import NoPostsSubreddit from "../NoPostsSubreddit";
 import LoadingSpinner from "../LoadingSpinner";
+import GenericNotFound from "../NotFound/GenericNotFound";
 
 export default function SubredditPage({ user }) {
     const { subredditName } = useParams();
@@ -63,6 +64,9 @@ export default function SubredditPage({ user }) {
         const loadAndWait = async () => {
             let data = await dispatch(getSubredditByName(subredditName));
             setHasLoaded(true);
+            if (!data) {
+                return;
+            }
             let subreddit = data.Subreddits[subredditName]
             setNumMembers(subreddit.numSubscribers);
             setUserInSubreddit(isUserInSubreddit(user, subreddit))
@@ -88,7 +92,7 @@ export default function SubredditPage({ user }) {
 
 
     if (hasLoaded && !subreddit) {
-        return <h1>Not Found...</h1>
+        return <GenericNotFound />
     }
 
 

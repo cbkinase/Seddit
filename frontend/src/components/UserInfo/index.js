@@ -6,6 +6,7 @@ import UserPostsPreview from "../UserPostsPreview";
 import NoPostsUserProfile from "../NoPostsUserProfile";
 import LoadingSpinner from "../LoadingSpinner";
 import ShortComments from "../CommentsShort";
+import GenericNotFound from "../NotFound/GenericNotFound";
 
 export default function UserInfo({ currentUser, subreddits, posts }) {
     const dispatch = useDispatch();
@@ -64,7 +65,7 @@ export default function UserInfo({ currentUser, subreddits, posts }) {
     }, [dispatch, userName]);
 
     if (error) {
-      return <h1>Error Loading!!</h1>
+      return <GenericNotFound />
     }
 
     // The whole currentUser.id === user.id business in the header is to ensure the component gets re-rendered when a user edits their own profile

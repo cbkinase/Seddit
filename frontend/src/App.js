@@ -16,6 +16,7 @@ import IndividualFullPost from "./components/PostViewFull";
 import ScrollToTop from "./components/ScrollToTop";
 import LoadingSpinner from "./components/LoadingSpinner";
 import AboutMe from "./components/AboutMe";
+import GenericNotFound from "./components/NotFound/GenericNotFound";
 
 function App() {
     const dispatch = useDispatch();
@@ -66,8 +67,11 @@ function App() {
                     <Route path="/u/:userName">
                         <UserInfo currentUser={user} />
                     </Route>
+                    <Route path="*">
+                        <GenericNotFound />
+                    </Route>
                 </Switch>
-            ): <LoadingSpinner />}
+            ) : <LoadingSpinner />}
         </>
     );
 }
