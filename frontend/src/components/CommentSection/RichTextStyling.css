@@ -22,8 +22,11 @@
     margin-left: 15px;
  }
 
+ .notosans > .dangerous-content {
+   font-family: "Noto Sans", Arial, sans-serif;
+ }
+
 .dangerous-content {
-    font-family: "Noto Sans", Arial, sans-serif;
     line-height: 21px;
     color: #1c1c1c;
     letter-spacing: 0.01em;
