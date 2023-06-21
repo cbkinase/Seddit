@@ -20,6 +20,7 @@ import CommentShareModal from "../CommentSection/CommentShareModal";
 import VotingSection from "../PostVotingSection/VotingSection";
 import GenericNotFound from "../NotFound/GenericNotFound";
 import timeSince from "../../utils/timeSince";
+import useViewportWidth from "../../hooks/useViewportWidth";
 
 // subreddit = use;
 
@@ -30,6 +31,17 @@ export default function IndividualFullPost({ user }) {
     const [mainLoaded, setMainLoaded] = useState(false);
     const [notFound, setNotFound] = useState(false);
     const dispatch = useDispatch();
+    const viewportWidth = useViewportWidth();
+    const [divWidth, setDivWidth] = useState("100%");
+
+    useEffect(() => {
+        if (viewportWidth > 800) {
+            setDivWidth(`600px`);
+        }
+        else {
+            setDivWidth(`70vw`);
+        }
+    }, [viewportWidth])
 
     useEffect(() => {
         dispatch(getSinglePost(postId))
@@ -167,7 +179,7 @@ export default function IndividualFullPost({ user }) {
                             id="post-prev-attachment-container"
                         // to={`/r/${subreddit.name}/posts/${post.id}`}
                         >
-                            <p
+                            <div
                                 style={{
                                     overflowWrap: "anywhere",
                                     marginBottom: "13px",
@@ -176,8 +188,8 @@ export default function IndividualFullPost({ user }) {
                                     lineHeight: "21px"
                                 }}
                             >
-                                {post.content}
-                            </p>
+                                 <div style={{width: divWidth}} className="dangerous-content" dangerouslySetInnerHTML={{ __html: post.content }} />
+                            </div>
                         </div>
                     }
                     {/* <h3 className="card-category">

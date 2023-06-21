@@ -30,9 +30,11 @@
     margin-left: 6px;
     overflow-wrap: break-word;
     margin: 0;
+    max-width: 100%;
 }
 
 .dangerous-content * {
         font-family: "Noto Sans", Arial, sans-serif;
         overflow-wrap: break-word;
+        max-width: 100%;
 }

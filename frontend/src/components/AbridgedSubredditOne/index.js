@@ -4,6 +4,7 @@ import moment from "moment";
 import SubredditHover from "../SubredditHover";
 import UserHover from "../UserHover";
 import { useState } from "react";
+import ellipsisIfLong from "../../utils/ellipsisIfLong";
 
 export default function IndividualAbridgedSubreddit({ user, subreddit }) {
 
@@ -18,26 +19,6 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
         if (!word) return null;
         if (word.length <= long) return word;
         return word.slice(0, long) + "...";
-    };
-
-    const ellipsisIfLong = (paragraph, long = 20) => {
-        if (!paragraph) return null;
-        let wordArr = paragraph.split(" ");
-        let newStr = "";
-        if (wordArr.length > long) {
-            for (let i = 0; i < long; i++) {
-                newStr += wordArr[i];
-                if (i !== long - 1) newStr += " ";
-            }
-
-            newStr += "...";
-            return newStr;
-        }
-
-        if (wordArr.length < long && paragraph.length > 100) {
-            return paragraph.slice(0, 100) + "...";
-        }
-        return paragraph;
     };
 
     const capitalizeFirstLetter = (word) => {

@@ -13,6 +13,9 @@ import userReactedCheck from "../../utils/hasUserUpvoted";
 import { deletePostVote, voteOnPost } from "../../store/posts";
 import VotingSection from "../PostVotingSection/VotingSection";
 import timeSince from "../../utils/timeSince";
+import ellipsisIfLong from "../../utils/ellipsisIfLong";
+import { useEffect, useState } from "react";
+import useViewportWidth from "../../hooks/useViewportWidth";
 
 export default function IndividualAbridgedPost({
     user,
@@ -20,31 +23,22 @@ export default function IndividualAbridgedPost({
     currentUser,
 }) {
     // const dispatch = useDispatch();
+    const viewportWidth = useViewportWidth();
+    const [divWidth, setDivWidth] = useState("100%");
+
+    useEffect(() => {
+        if (viewportWidth > 800) {
+            setDivWidth(`600px`);
+        }
+        else {
+            setDivWidth(`70vw`);
+        }
+    }, [viewportWidth])
 
     const shortenWord = (word, long = 20) => {
         if (!word) return null;
         if (word.length <= long) return word;
         return word.slice(0, long) + "...";
-    };
-
-    const ellipsisIfLong = (paragraph, long = 20) => {
-        if (!paragraph) return null;
-        let wordArr = paragraph.split(" ");
-        let newStr = "";
-        if (wordArr.length > long) {
-            for (let i = 0; i < long; i++) {
-                newStr += wordArr[i];
-                if (i !== long - 1) newStr += " ";
-            }
-
-            newStr += "...";
-            return newStr;
-        }
-
-        if (wordArr.length < long && paragraph.length > 100) {
-            return paragraph.slice(0, 100) + "...";
-        }
-        return paragraph;
     };
 
     // const capitalizeFirstLetter = (word) => {
@@ -143,16 +137,16 @@ export default function IndividualAbridgedPost({
                     id="post-prev-attachment-container"
                     to={`/r/${subreddit.name}/posts/${post.id}`}
                 >
-                    <p
+                    <div
                         style={{
                             marginBottom: "18px",
                             marginLeft: "7px",
                             marginTop: "-5px",
-                            overflowWrap: "anywhere"
+                            overflowWrap: "anywhere",
                         }}
                     >
-                        {ellipsisIfLong(post.content)}
-                    </p>
+                        <div style={{width: divWidth}} className="dangerous-content" dangerouslySetInnerHTML={{ __html: ellipsisIfLong(post.content) }} />
+                    </div>
                 </NavLink>
             )}
             {/* <h3 className="card-category">
