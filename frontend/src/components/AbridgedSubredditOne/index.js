@@ -5,6 +5,7 @@ import SubredditHover from "../SubredditHover";
 import UserHover from "../UserHover";
 import { useState } from "react";
 import ellipsisIfLong from "../../utils/ellipsisIfLong";
+import getRawTextContent from "../../utils/getRawTextContent";
 
 export default function IndividualAbridgedSubreddit({ user, subreddit }) {
 
@@ -48,6 +49,10 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
             // alert("Please try again momentarily!");
         }
     };
+
+    const rawSubredditAbout = getRawTextContent(subreddit.about)
+
+
     return (
         <div className="box-dec-1 subreddit-short-container">
             <span className="subreddit-abridged-top subreddit-abridged-top-short">
@@ -129,7 +134,7 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
                 className="subreddit-title-nav"
                 to={`/r/${subreddit.name}`}
             >
-                <h2 className="card-info">{ellipsisIfLong(subreddit.about)}</h2>
+                <h2 className="card-info">{ellipsisIfLong(rawSubredditAbout)}</h2>
             </NavLink>
             <h3 className="card-category">
                 {subreddit.category &&

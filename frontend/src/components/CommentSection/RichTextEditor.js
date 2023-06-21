@@ -3,11 +3,11 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import './quill-custom.css';
 
-function RichTextEditor({ content, setContent, setTextContent, isPost }) {
+function RichTextEditor({ content, setContent, setTextContent, isPost, isCommunity }) {
   const editorRef = useRef(null);
   let placeholder = "What are your thoughts?";
 
-  if (isPost) placeholder = "Enter text (optional)";
+  if (isPost || isCommunity) placeholder = "Enter text (optional)";
 
 
   const handleChange = (content, delta, source, editor) => {

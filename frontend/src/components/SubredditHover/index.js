@@ -1,4 +1,5 @@
 import "./subredditHover.css";
+import getRawTextContent from "../../utils/getRawTextContent";
 
 export default function SubredditHover({ subreddit }) {
     return (
@@ -29,7 +30,7 @@ export default function SubredditHover({ subreddit }) {
                     style={{ marginBottom: "10px" }}
                     className="hover-description"
                 >
-                    {subreddit.about}
+                    {getRawTextContent(subreddit.about)}
                 </p>
             </div>
             <button style={{ width: "100%" }} className="button-join">

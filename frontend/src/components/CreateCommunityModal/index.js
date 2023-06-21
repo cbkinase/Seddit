@@ -10,7 +10,7 @@ function CreateCommunityModal() {
     const [communityName, setCommunityName] = useState("");
     const [communityCategory, setCommunityCategory] = useState("");
     const [communityDescription, setCommunityDescription] = useState("");
-    const [descriptionText, setDescriptionText] = useState("")
+    const [descriptionText, setDescriptionText] = useState("");
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
     const dispatch = useDispatch();
@@ -174,7 +174,7 @@ function CreateCommunityModal() {
                     >
                         Community Description
                     </label>
-                    <textarea
+                    {/* <textarea
                         className="create-comm-input"
                         id="community-description"
                         name="community-description"
@@ -183,7 +183,13 @@ function CreateCommunityModal() {
                             setCommunityDescription(event.target.value)
                         }
                         rows="8"
-                    ></textarea>
+                    ></textarea> */}
+                    <RichTextEditor
+                        content={communityDescription}
+                        setContent={setCommunityDescription}
+                        setTextContent={setDescriptionText}
+                        isCommunity={true}
+                    />
                     {descriptionText.length <= 2000 ? (
                         <p style={{ fontSize: "12px" }}>
                             {2000 - descriptionText.length} character
