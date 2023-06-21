@@ -11,6 +11,8 @@ import CreatePostModal from "../CreatePostModal";
 import NoPostsSubreddit from "../NoPostsSubreddit";
 import LoadingSpinner from "../LoadingSpinner";
 import GenericNotFound from "../NotFound/GenericNotFound";
+import ellipsisIfLong from "../../utils/ellipsisIfLong";
+import getRawTextContent from "../../utils/getRawTextContent";
 
 export default function SubredditPage({ user }) {
     const { subredditName } = useParams();
@@ -155,18 +157,18 @@ export default function SubredditPage({ user }) {
                 <section className="subreddit-info">
                     <div className="subreddit-description">
                         <h2 className="subreddit-title">
-                            {capitalizeFirstLetter(subreddit.name)}
+                            {subreddit.name}
                         </h2>
-                        { subreddit.about.length <= 50 ? <p className="subreddit-description-text">{subreddit.about}</p>
+                        { getRawTextContent(subreddit.about).length <= 50 ? <div className="subreddit-description-text"><div className="dangerous-content" dangerouslySetInnerHTML={{ __html: subreddit.about }} /></div>
                         : isExpanded ?
                         <div>
-                            <p className="subreddit-description-text">
-                            {subreddit.about}
-                        </p>
+                            <div className="subreddit-description-text">
+                            <div className="dangerous-content" dangerouslySetInnerHTML={{ __html: subreddit.about }} />
+                        </div>
                         <button className="show-less-btn" onClick={toggleExpanded}>Show less</button>
                         </div>
                              : <div className="truncated-text-container">
-                             <p style={{marginLeft: "20px"}} className="subreddit-description-text">{`${subreddit.about.slice(0,50)}...`}</p>
+                             <p style={{marginLeft: "20px"}} className="subreddit-description-text">{ellipsisIfLong(getRawTextContent(subreddit.about))}</p>
                              <button className="read-more-btn" onClick={toggleExpanded}>Read more</button>
                              </div> }
                     </div>

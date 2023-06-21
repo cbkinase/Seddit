@@ -3,6 +3,8 @@ import { useModal } from "../../context/Modal";
 import { editSubreddit } from "../../store/subreddits";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import RichTextEditor from "../CommentSection/RichTextEditor";
+import DOMPurify from 'dompurify';
 
 function EditCommunityModal({ subreddit }) {
     const categoryConverter = (str) => {
@@ -28,6 +30,7 @@ function EditCommunityModal({ subreddit }) {
     const [communityDescription, setCommunityDescription] = useState(
         subreddit.about || ""
     );
+    const [descriptionText, setDescriptionText] = useState("");
     const [communityPicture, setCommunityPicture] = useState(
         subreddit.main_pic || ""
     );
@@ -39,7 +42,7 @@ function EditCommunityModal({ subreddit }) {
 
     useEffect(() => {
         let errors = [];
-        if (communityDescription.length > 2000)
+        if (descriptionText.length > 2000)
             errors.push("Description must be fewer than 2000 characters");
         // if (communityName.length > 21)
         //     errors.push("Name must be 21 or fewer characters");
@@ -47,7 +50,7 @@ function EditCommunityModal({ subreddit }) {
         // if (communityName.length > 21) errors.push("Name must be shorter");
 
         setErrors(errors);
-    }, [communityDescription]);
+    }, [descriptionText]);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -61,7 +64,7 @@ function EditCommunityModal({ subreddit }) {
         if (!errors.length) {
             const payload = {
                 // name: communityName,
-                about: communityDescription,
+                about: DOMPurify.sanitize(communityDescription),
                 category: Number(communityCategory),
                 main_pic: communityPicture,
             };
@@ -161,7 +164,7 @@ function EditCommunityModal({ subreddit }) {
                     >
                         Community Description
                     </label>
-                    <textarea
+                    {/* <textarea
                         className="create-comm-input"
                         id="community-description"
                         name="community-description"
@@ -170,19 +173,25 @@ function EditCommunityModal({ subreddit }) {
                             setCommunityDescription(event.target.value)
                         }
                         rows="8"
-                    ></textarea>
-                    {communityDescription.length <= 2000 ? (
+                    ></textarea> */}
+                    <RichTextEditor
+                        content={communityDescription}
+                        setContent={setCommunityDescription}
+                        setTextContent={setDescriptionText}
+                        isCommunity={true}
+                    />
+                    {descriptionText.length <= 2000 ? (
                         <p style={{ fontSize: "12px" }}>
-                            {2000 - communityDescription.length} character
-                            {2000 - communityDescription.length !== 1 &&
+                            {2000 - descriptionText.length} character
+                            {2000 - descriptionText.length !== 1 &&
                                 "s"}{" "}
                             remaining
                         </p>
                     ) : (
                         <p style={{ fontSize: "12px", color: "red" }}>
-                            You are {communityDescription.length - 2000}{" "}
+                            You are {descriptionText.length - 2000}{" "}
                             character
-                            {communityDescription.length - 2000 !== 1 &&
+                            {descriptionText.length - 2000 !== 1 &&
                                 "s"}{" "}
                             above the allowed limit
                         </p>
