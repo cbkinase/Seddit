@@ -36,8 +36,11 @@
     max-width: 100%;
 }
 
+.notosans > .dangerous-content * {
+   font-family: "Noto Sans", Arial, sans-serif;
+}
+
 .dangerous-content * {
-        font-family: "Noto Sans", Arial, sans-serif;
         overflow-wrap: break-word;
         max-width: 100%;
 }

@@ -3,11 +3,14 @@ import { useModal } from "../../context/Modal";
 import { createSubreddit } from "../../store/subreddits";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import RichTextEditor from "../CommentSection/RichTextEditor";
+import DOMPurify from 'dompurify';
 
 function CreateCommunityModal() {
     const [communityName, setCommunityName] = useState("");
     const [communityCategory, setCommunityCategory] = useState("");
     const [communityDescription, setCommunityDescription] = useState("");
+    const [descriptionText, setDescriptionText] = useState("")
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
     const dispatch = useDispatch();
@@ -47,7 +50,7 @@ function CreateCommunityModal() {
             "{",
             "}",
         ];
-        if (communityDescription.length > 2000)
+        if (descriptionText.length > 2000)
             errors.push("Description must be fewer than 2000 characters");
         if (badChars.some((char) => communityName.includes(char)))
             errors.push("Name must not contain special characters");
@@ -55,7 +58,7 @@ function CreateCommunityModal() {
         if (communityName.length > 21) errors.push("Name must be shorter");
 
         setErrors(errors);
-    }, [communityName, communityDescription]);
+    }, [communityName, descriptionText]);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -69,7 +72,7 @@ function CreateCommunityModal() {
         if (!errors.length) {
             const payload = {
                 name: communityName,
-                about: communityDescription,
+                about: DOMPurify.sanitize(communityDescription),
                 category: Number(communityCategory),
             };
             subreddit = await dispatch(createSubreddit(payload));
@@ -181,18 +184,18 @@ function CreateCommunityModal() {
                         }
                         rows="8"
                     ></textarea>
-                    {communityDescription.length <= 2000 ? (
+                    {descriptionText.length <= 2000 ? (
                         <p style={{ fontSize: "12px" }}>
-                            {2000 - communityDescription.length} character
-                            {2000 - communityDescription.length !== 1 &&
+                            {2000 - descriptionText.length} character
+                            {2000 - descriptionText.length !== 1 &&
                                 "s"}{" "}
                             remaining
                         </p>
                     ) : (
                         <p style={{ fontSize: "12px", color: "red" }}>
-                            You are {communityDescription.length - 2000}{" "}
+                            You are {descriptionText.length - 2000}{" "}
                             character
-                            {communityDescription.length - 2000 !== 1 &&
+                            {descriptionText.length - 2000 !== 1 &&
                                 "s"}{" "}
                             above the allowed limit
                         </p>
