@@ -1,0 +1,19 @@
+.ql-editor {
+    min-height: 122px;
+}
+
+.quill {
+    display: flex;
+    flex-direction: column-reverse;
+    /* border-top: 1px solid #ccc; */
+    border: 1px solid rgba(186, 188, 190, 0.3) !important;
+}
+
+.ql-toolbar {
+    border: 1px solid rgba(186, 188, 190, 0.3) !important;
+    background-color: #F6F7F8;
+}
+
+.ql-container.ql-snow {
+    border: inherit;
+}

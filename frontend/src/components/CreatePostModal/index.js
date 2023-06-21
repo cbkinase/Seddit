@@ -3,11 +3,14 @@ import { useModal } from "../../context/Modal";
 import { createPost } from "../../store/posts";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import RichTextEditor from "../CommentSection/RichTextEditor";
+import DOMPurify from 'dompurify';
 
 function CreatePostModal({ subreddit }) {
     const [communityName, setCommunityName] = useState("");
     const [communityPicture, setCommunityPicture] = useState("");
     const [communityDescription, setCommunityDescription] = useState("");
+    const [postText, setPostText] = useState("")
     const [errors, setErrors] = useState([]);
     const { closeModal } = useModal();
     const dispatch = useDispatch();
@@ -17,7 +20,7 @@ function CreatePostModal({ subreddit }) {
     useEffect(() => {
         let errors = [];
 
-        if (communityDescription.length > 2000)
+        if (postText.length > 2000)
             errors.push("Description must be fewer than 2000 characters");
         // if (badChars.some((char) => communityName.includes(char)))
         //     errors.push("Name must not contain special characters");
@@ -26,7 +29,7 @@ function CreatePostModal({ subreddit }) {
             errors.push("Title must be shorter");
 
         setErrors(errors);
-    }, [communityName, communityDescription, nameLengthMax]);
+    }, [communityName, postText, nameLengthMax]);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -50,7 +53,7 @@ function CreatePostModal({ subreddit }) {
             };
 
             if (communityPicture) payload.attachment = communityPicture;
-            if (communityDescription) payload.content = communityDescription;
+            if (communityDescription) payload.content = DOMPurify.sanitize(communityDescription);
             post = await dispatch(createPost(payload));
         }
 
@@ -132,33 +135,28 @@ function CreatePostModal({ subreddit }) {
                     />
                 </div>
                 <div className="form-group">
-                    <textarea
-                        className="create-comm-input"
-                        id="community-description"
-                        name="community-description"
-                        placeholder="Text (optional)"
-                        value={communityDescription}
-                        onChange={(event) =>
-                            setCommunityDescription(event.target.value)
-                        }
-                        rows="8"
-                    ></textarea>
-                    {communityDescription.length <= 2000 ? (
+                    <RichTextEditor
+                        content={communityDescription}
+                        setContent={setCommunityDescription}
+                        setTextContent={setPostText}
+                        isPost={true}
+                    />
+                    {postText.length <= 2000 ? (
                         <p
                             style={{
                                 fontSize: "12px",
                             }}
                         >
-                            {2000 - communityDescription.length} character
-                            {2000 - communityDescription.length !== 1 &&
+                            {2000 - postText.length} character
+                            {2000 - postText.length !== 1 &&
                                 "s"}{" "}
                             remaining
                         </p>
                     ) : (
                         <p style={{ fontSize: "12px", color: "red" }}>
-                            You are {communityDescription.length - 2000}{" "}
+                            You are {postText.length - 2000}{" "}
                             character
-                            {communityDescription.length - 2000 !== 1 &&
+                            {postText.length - 2000 !== 1 &&
                                 "s"}{" "}
                             above the allowed limit
                         </p>

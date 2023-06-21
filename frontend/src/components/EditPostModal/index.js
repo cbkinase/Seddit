@@ -4,9 +4,12 @@ import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { editPost } from "../../store/posts";
+import RichTextEditor from "../CommentSection/RichTextEditor";
+import DOMPurify from 'dompurify';
 
 function EditPostModal({ post, subreddit }) {
     const [communityName, setCommunityName] = useState(post.title);
+    const [postText, setPostText] = useState("")
     const [communityPicture, setCommunityPicture] = useState(
         post.attachment || ""
     );
@@ -22,7 +25,7 @@ function EditPostModal({ post, subreddit }) {
     useEffect(() => {
         let errors = [];
 
-        if (communityDescription.length > 2000)
+        if (postText.length > 2000)
             errors.push("Description must be fewer than 2000 characters");
         // if (badChars.some((char) => communityName.includes(char)))
         //     errors.push("Name must not contain special characters");
@@ -31,7 +34,7 @@ function EditPostModal({ post, subreddit }) {
             errors.push("Title must be shorter");
 
         setErrors(errors);
-    }, [communityName, communityDescription, nameLengthMax]);
+    }, [communityName, postText, nameLengthMax]);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -55,7 +58,7 @@ function EditPostModal({ post, subreddit }) {
             };
 
             payload.attachment = communityPicture;
-            payload.content = communityDescription;
+            payload.content = DOMPurify.sanitize(communityDescription);
             ePost = await dispatch(editPost(payload, post.id));
         }
         if (ePost.errors) {
@@ -136,7 +139,7 @@ function EditPostModal({ post, subreddit }) {
                     />
                 </div>
                 <div className="form-group">
-                    <textarea
+                    {/* <textarea
                         className="create-comm-input"
                         id="community-description"
                         name="community-description"
@@ -146,23 +149,29 @@ function EditPostModal({ post, subreddit }) {
                             setCommunityDescription(event.target.value)
                         }
                         rows="8"
-                    ></textarea>
-                    {communityDescription.length <= 2000 ? (
+                    ></textarea> */}
+                    <RichTextEditor
+                        content={communityDescription}
+                        setContent={setCommunityDescription}
+                        setTextContent={setPostText}
+                        isPost={true}
+                    />
+                    {postText.length <= 2000 ? (
                         <p
                             style={{
                                 fontSize: "12px",
                             }}
                         >
-                            {2000 - communityDescription.length} character
-                            {2000 - communityDescription.length !== 1 &&
+                            {2000 - postText.length} character
+                            {2000 - postText.length !== 1 &&
                                 "s"}{" "}
                             remaining
                         </p>
                     ) : (
                         <p style={{ fontSize: "12px", color: "red" }}>
-                            You are {communityDescription.length - 2000}{" "}
+                            You are {postText.length - 2000}{" "}
                             character
-                            {communityDescription.length - 2000 !== 1 &&
+                            {postText.length - 2000 !== 1 &&
                                 "s"}{" "}
                             above the allowed limit
                         </p>
