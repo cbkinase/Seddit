@@ -1,7 +1,7 @@
 .dangerous-content h1              { font-size: 1.75em; margin: .67em 0 }
 .dangerous-content h2              { font-size: 1.3em; margin: .75em 0 }
 .dangerous-content h3              { font-size: 1.17em; margin: .83em 0 }
-.dangerous-content h4, .dangerous-content p,
+.dangerous-content h4,
 .dangerous-content blockquote, .dangerous-content ul,
 .dangerous-content fieldset, .dangerous-content form,
 .dangerous-content ol, .dangerous-content dl, .dangerous-content dir,
@@ -21,3 +21,18 @@
  .dangerous-content li {
     margin-left: 15px;
  }
+
+.dangerous-content {
+    font-family: "Noto Sans", Arial, sans-serif;
+    line-height: 21px;
+    color: #1c1c1c;
+    letter-spacing: 0.01em;
+    margin-left: 6px;
+    overflow-wrap: break-word;
+    margin: 0;
+}
+
+.dangerous-content * {
+        font-family: "Noto Sans", Arial, sans-serif;
+        overflow-wrap: break-word;
+}
