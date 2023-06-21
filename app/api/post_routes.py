@@ -55,9 +55,11 @@ def create_post():
     subreddit = Subreddit.query.get(subreddit_id)
 
     new_post = Post(author=author, subreddit=subreddit, title=data.get("title"), content=data.get("content"), attachment=data.get("attachment"))
+    new_vote = PostVote(user=author, post=new_post, vote="upvote")
 
     try:
         db.session.add(new_post)
+        db.session.add(new_vote)
         db.session.commit()
         return new_post.to_dict()
     except:

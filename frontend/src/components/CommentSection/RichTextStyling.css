@@ -1,0 +1,23 @@
+.dangerous-content h1              { font-size: 1.75em; margin: .67em 0 }
+.dangerous-content h2              { font-size: 1.3em; margin: .75em 0 }
+.dangerous-content h3              { font-size: 1.17em; margin: .83em 0 }
+.dangerous-content h4, .dangerous-content p,
+.dangerous-content blockquote, .dangerous-content ul,
+.dangerous-content fieldset, .dangerous-content form,
+.dangerous-content ol, .dangerous-content dl, .dangerous-content dir,
+.dangerous-content menu            { margin: 0 0 }
+.dangerous-content h5              { font-size: .83em; margin: 1.5em 0 }
+.dangerous-content h6              { font-size: .75em; margin: 1.67em 0 }
+
+.dangerous-content ul {
+    list-style-type: disc;
+    list-style-position: inside;
+ }
+ .dangerous-content ol {
+    list-style-type: decimal;
+    list-style-position: inside;
+ }
+
+ .dangerous-content li {
+    margin-left: 15px;
+ }

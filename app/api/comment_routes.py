@@ -22,8 +22,10 @@ def create_comment():
         content = body.get("content"),
         parent = parent
     )
+    new_vote = CommentVote(user=user, comment=new_comment, vote="upvote")
     try:
         db.session.add(new_comment)
+        db.session.add(new_vote)
         db.session.commit()
         # return new_comment.to_short_dict()
         return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}

@@ -6,6 +6,7 @@ import CommentFooter from "./CommentFooter";
 import CommentInput from "./CommentInput";
 import SoloCommentHeader from "../CommentsShort/SoloCommentHeader";
 import useViewportWidth from "../../hooks/useViewportWidth";
+import "./RichTextStyling.css"
 
 export default function SingleComment({ comment, user, soloComment, post, sortingFunction, IsUserComments }) {
     const [isDisplaying, setIsDisplaying] = useState(true);
@@ -78,7 +79,7 @@ export default function SingleComment({ comment, user, soloComment, post, sortin
                     {isDisplaying ? null : <div>&nbsp;</div>}
                     {isEditing
                     ? <CommentInput setIsReplying={setIsReplying} isCommentReply={true} user={user} commentContext={comment} post={post} editInProgress={true} setIsEditing={setIsEditing} content={comment.content} />
-                    :<span className="notosans" style={{display: stateToDisplay()}}>{comment.content}</span>}
+                    :<span className="notosans" style={{display: stateToDisplay()}}>      <div className="dangerous-content" dangerouslySetInnerHTML={{ __html: comment.content }} /></span>}
                     {isDisplaying ? <CommentFooter IsUserComments={IsUserComments} soloComment={soloComment} editInProgress={true} isEditing={isEditing} setIsEditing={setIsEditing} isReplying={isReplying} setIsReplying={setIsReplying} comment={comment} post={post} user={user} /> : null}
                     {/* Display nested comments :) */}
                     {isDisplaying && comment.num_replies && !soloComment
