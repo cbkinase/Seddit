@@ -8,11 +8,12 @@ import RichTextEditor from "../CommentSection/RichTextEditor";
 import DOMPurify from 'dompurify';
 import ellipsisIfLong from "../../utils/ellipsisIfLong";
 import Popup from "../Popup";
+import usePopup from "../../hooks/usePopup";
 import UploadButton from "../UploadButton/UploadButton";
 
 function EditPostModal({ post, subreddit }) {
     const fileInputRef = useRef(null);
-    const [showPopup, setShowPopup] = useState(false);
+    const [showPopup, setShowPopup] = usePopup();
     const [picChanged, setPicChanged] = useState(false);
     const [communityName, setCommunityName] = useState(post.title);
     const [postText, setPostText] = useState("")
@@ -39,16 +40,6 @@ function EditPostModal({ post, subreddit }) {
 
         setErrors(errors);
     }, [communityName, postText, nameLengthMax, communityPicture]);
-
-    useEffect(() => {
-        if (showPopup) {
-            const timer = setTimeout(() => {
-                setShowPopup(false);
-            }, 4900);
-
-            return () => clearTimeout(timer);
-        }
-    }, [showPopup]);
 
     async function handleSubmit(e) {
         e.preventDefault();

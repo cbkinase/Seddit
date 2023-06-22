@@ -8,10 +8,10 @@ import DOMPurify from 'dompurify';
 import "./CustomUploadButton.css";
 import Popup from "../Popup";
 import UploadButton from "../UploadButton/UploadButton";
+import usePopup from "../../hooks/usePopup";
 
 function CreatePostModal({ subreddit }) {
     const fileInputRef = useRef(null);
-    const [showPopup, setShowPopup] = useState(false);
     const [communityName, setCommunityName] = useState("");
     const [communityPicture, setCommunityPicture] = useState(null);
     const [communityDescription, setCommunityDescription] = useState("");
@@ -21,6 +21,7 @@ function CreatePostModal({ subreddit }) {
     const dispatch = useDispatch();
     const [hasSubmitted, setHasSubmitted] = useState(false);
     const history = useHistory();
+    const [showPopup, setShowPopup] = usePopup();
     let nameLengthMax = 300;
     useEffect(() => {
         let errors = [];
@@ -33,16 +34,6 @@ function CreatePostModal({ subreddit }) {
 
         setErrors(errors);
     }, [communityName, postText, nameLengthMax, communityPicture]);
-
-    useEffect(() => {
-        if (showPopup) {
-            const timer = setTimeout(() => {
-                setShowPopup(false);
-            }, 4900);
-
-            return () => clearTimeout(timer);
-        }
-    }, [showPopup]);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -144,6 +135,7 @@ function CreatePostModal({ subreddit }) {
                             </p>
                         )}
                     </div>
+
                     <UploadButton
                         setAttachmentFn={setCommunityPicture}
                         attachment={communityPicture}
@@ -151,6 +143,7 @@ function CreatePostModal({ subreddit }) {
                         handleFileSelect={handleFileSelect}
                         fileInputRef={fileInputRef}
                          />
+
                     <div className="form-group">
                         <RichTextEditor
                             content={communityDescription}
