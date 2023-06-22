@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import ProfileButton from "./ProfileButton";
+// import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";

@@ -95,8 +95,7 @@ export const signUp = (username, email, password) => async (dispatch) => {
 export const editUserInfo = (userPayload, userId) => async (dispatch) => {
     const res = await fetch(`/api/users/u/${userId}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userPayload),
+        body: userPayload,
     });
 
     if (res.ok) {
@@ -104,7 +103,8 @@ export const editUserInfo = (userPayload, userId) => async (dispatch) => {
         dispatch(setUser(data));
         return data;
     } else {
-        return { errors: "Username already taken" };
+        const data = await res.json();
+        return data;
     }
 };
 

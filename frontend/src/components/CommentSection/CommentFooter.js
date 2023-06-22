@@ -2,10 +2,10 @@ import CommentInput from "./CommentInput";
 import { useState } from "react";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
-import EllipsisDropdown from "./EllipsisDropdown";
-import CommentShareModal from "./CommentShareModal";
+// import EllipsisDropdown from "./EllipsisDropdown";
+// import CommentShareModal from "./CommentShareModal";
 import DeleteCommentModal from "../DeleteCommentModal";
-import userReactedCheck from "../../utils/hasUserUpvoted";
+// import userReactedCheck from "../../utils/hasUserUpvoted";
 import VotingSection from "./VotingSection";
 
 

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import moment from "moment";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import SubredditHover from "../SubredditHover";
 import UserHover from "../UserHover";
 import "./ShortPosts.css";
@@ -9,8 +9,8 @@ import DeletePostModal from "../DeletePostModal";
 import EditPostModal from "../EditPostModal";
 import LoadingSpinner from "../LoadingSpinner";
 import CommentShareModal from "../CommentSection/CommentShareModal";
-import userReactedCheck from "../../utils/hasUserUpvoted";
-import { deletePostVote, voteOnPost } from "../../store/posts";
+// import userReactedCheck from "../../utils/hasUserUpvoted";
+// import { deletePostVote, voteOnPost } from "../../store/posts";
 import VotingSection from "../PostVotingSection/VotingSection";
 import timeSince from "../../utils/timeSince";
 import ellipsisIfLong from "../../utils/ellipsisIfLong";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSubreddits } from "../../store/subreddits";
+// import { getSubreddits } from "../../store/subreddits";
 import IndividualAbridgedPost from "../AbridgedPostOne";
 import { getAllPosts } from "../../store/posts";
 import LoadingSpinner from "../LoadingSpinner";
