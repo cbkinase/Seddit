@@ -80,8 +80,7 @@ export const getSinglePost = (postId) => async (dispatch) => {
 export const createPost = (post) => async (dispatch) => {
     const res = await fetch("/api/posts/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(post),
+        body: post,
     });
 
     if (res.ok) {
@@ -96,8 +95,7 @@ export const createPost = (post) => async (dispatch) => {
 export const editPost = (content, postId) => async (dispatch) => {
     const res = await fetch(`/api/posts/${postId}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(content),
+        body: content,
     });
 
     if (res.ok) {

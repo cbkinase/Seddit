@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import User, Subreddit, Post, Comment, db, CommentVote, PostVote
+from ..forms.aws_form import UploadForm
+from app.aws_helpers import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 
 
 post_routes = Blueprint('posts', __name__)
@@ -40,21 +42,30 @@ def get_post_by_id(post_id):
     return {"Posts": {post.id : post.to_dict()}}
 
 
-# @post_routes.route("/user/<int:user_id>")
-# def get_all_user_posts(user_id):
-#     user_posts = Post.query.filter(Post.user_id == user_id)
-#     return {"Posts": {post.id : post.to_dict() for post in user_posts}}
-
-
 @post_routes.route("/", methods=["POST"])
 @login_required
 def create_post():
     author = User.query.get(current_user.id)
-    data = request.get_json()
-    subreddit_id = data["subreddit_id"]
-    subreddit = Subreddit.query.get(subreddit_id)
 
-    new_post = Post(author=author, subreddit=subreddit, title=data.get("title"), content=data.get("content"), attachment=data.get("attachment"))
+    form_data = request.form
+    subreddit_id = form_data.get("subreddit_id")
+    attachment = request.files.get("attachment")
+
+    subreddit = Subreddit.query.get(subreddit_id)
+    upload = {}
+    if attachment:
+        form = UploadForm()
+        form['csrf_token'].data = request.cookies['csrf_token']
+
+        if form.validate_on_submit():
+            attachment.filename = get_unique_filename(attachment.filename)
+            upload = upload_file_to_s3(attachment)
+            if "url" not in upload:
+                return {"errors": ["Failed to upload to AWS"]}, 500
+        else:
+            return {"errors": ["Failed AWS upload validation(s)"]}, 415
+
+    new_post = Post(author=author, subreddit=subreddit, title=form_data.get("title"), content=form_data.get("content"), attachment=upload.get("url"))
     new_vote = PostVote(user=author, post=new_post, vote="upvote")
 
     try:
@@ -63,8 +74,7 @@ def create_post():
         db.session.commit()
         return new_post.to_dict()
     except:
-        return {"errors": ["Something went wrong..."]}, 500
-
+        return {"errors": ["Something went really wrong..."]}, 500
 
 
 @post_routes.route("/<int:post_id>", methods=["PUT"])
@@ -73,18 +83,60 @@ def edit_post_by_id(post_id):
     post = Post.query.get(post_id)
     post_subreddit_owner = post.subreddit.owner.id
 
+    form_data = request.form
+    attachment = request.files.get("attachment")
+    title = form_data.get("title")
+    content = form_data.get("content")
+
     if not post:
         return {"errors": ["Post not found"]}, 404
 
     if current_user.id == post.user_id or current_user.id == post_subreddit_owner:
+        upload = {}
 
-        for key, value in request.get_json().items():
-            setattr(post, key, value)
+        if attachment:
+            form = UploadForm()
+            form['csrf_token'].data = request.cookies['csrf_token']
+
+            if form.validate_on_submit():
+                attachment.filename = get_unique_filename(attachment.filename)
+                upload = upload_file_to_s3(attachment)
+
+                if "url" not in upload:
+                    return {"errors": ["Failed to upload to AWS"]}, 500
+            else:
+                return {"errors": ["Failed AWS upload validation(s)"]}, 415
+            post.attachment = upload.get("url")
+
+        if title:
+            post.title = title
+        if content:
+            post.content = content
 
         db.session.commit()
         return post.to_dict()
 
     return {"errors": ["Not authorized to perform this edit"]}, 403
+
+
+# @post_routes.route("/<int:post_id>", methods=["PUT"])
+# @login_required
+# def edit_post_by_id(post_id):
+#     post = Post.query.get(post_id)
+#     post_subreddit_owner = post.subreddit.owner.id
+
+#     if not post:
+#         return {"errors": ["Post not found"]}, 404
+
+#     if current_user.id == post.user_id or current_user.id == post_subreddit_owner:
+
+#         for key, value in request.get_json().items():
+#             setattr(post, key, value)
+
+#         db.session.commit()
+#         return post.to_dict()
+
+#     return {"errors": ["Not authorized to perform this edit"]}, 403
 
 
 
@@ -122,7 +174,7 @@ def delete_comment(post_id, comment_id):
     comment = Comment.query.get(comment_id)
 
     try:
-        comment.content = "[deleted]"
+        comment.content = "<p><em>[deleted]</em></p>"
         db.session.commit()
         return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
     except:

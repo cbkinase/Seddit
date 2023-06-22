@@ -245,3 +245,11 @@
     outline: none;
     border: 1px solid #4285f4;
 }
+
+@media screen and (max-width: 700px) {
+    .custom-comment-container {
+        padding-left: 15px !important;
+        padding-right: 10px !important;
+        min-width: 88vw !important;
+    }
+}
