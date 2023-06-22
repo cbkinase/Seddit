@@ -6,6 +6,11 @@ import uuid
 BUCKET_NAME = os.environ.get("S3_BUCKET")
 S3_LOCATION = f"https://{BUCKET_NAME}.s3.amazonaws.com/"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "xbm", "tif", "tiff", "pjp", "apng", "svgz", "ico", "svg", "jfif", "webp", "bmp", "pjpeg", "avif"}
+BUCKET_FOLDERS = {
+    "users": "seddit_users/",
+    "posts": "seddit_posts/",
+    "subreddits": "seddit_communities/"
+}
 
 s3 = boto3.client(
    "s3",
@@ -20,12 +25,13 @@ def get_unique_filename(filename):
     return f"{unique_filename}.{ext}"
 
 
-def upload_file_to_s3(file, acl="public-read"):
+def upload_file_to_s3(file, bucket_folder, acl="public-read"):
+    folder_name = BUCKET_FOLDERS[bucket_folder]
     try:
         s3.upload_fileobj(
             file,
             BUCKET_NAME,
-            file.filename,
+            f"{folder_name}{file.filename}",
             ExtraArgs={
                 "ACL": acl,
                 "ContentType": file.content_type
@@ -34,13 +40,14 @@ def upload_file_to_s3(file, acl="public-read"):
     except Exception as e:
         return {"errors": str(e)}
 
-    return {"url": f"{S3_LOCATION}{file.filename}"}
+    return {"url": f"{S3_LOCATION}{folder_name}{file.filename}"}
 
 
 def remove_file_from_s3(image_url):
-    # AWS needs the image file name, not the URL,
-    # so we split that out of the URL
-    key = image_url.rsplit("/", 1)[1]
+    # AWS needs the image file name, not the URL
+    folder = image_url.rsplit("/", 2)[1] + '/'
+    file = image_url.rsplit("/", 1)[1]
+    key = folder + file
     try:
         s3.delete_object(
         Bucket=BUCKET_NAME,
