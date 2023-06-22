@@ -5,8 +5,6 @@
 Seddit is a reddit clone, complete with subreddits, posts, comments, and voting. <a href="https://cameron-seddit.onrender.com/">Come check it out!</a>
 
 Future functionality includes
-- A rich text editor for posts and comments
-- The ability to upload your own post attachments via AWS
 - Different post attachment types (such as links or short videos), not just images
 - The ability to follow, be followed by, and direct message other users.
 
