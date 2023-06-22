@@ -88,7 +88,7 @@ export const createPost = (post) => async (dispatch) => {
         dispatch(addPost(data));
         return data;
     } else {
-        return { errors: "Not cool, man..." };
+        return { errors: "Unsupported file type or maximum attachment size exceeded" };
     }
 };
 
@@ -102,6 +102,8 @@ export const editPost = (content, postId) => async (dispatch) => {
         const data = await res.json();
         dispatch(addPost(data));
         return data;
+    } else {
+        return { errors: "Unsupported file type or maximum attachment size exceeded" };
     }
 };
 
