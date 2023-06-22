@@ -86,7 +86,7 @@ function EditPostModal({ post, subreddit }) {
     return (
         <>
             {showPopup && (
-                <Popup textTitle={"File uploading"} textBody={"Upload in progress."} />
+                <Popup textTitle={"File uploading"} textBody={"Upload in progress..."} />
             )}
             <div className="modal">
                 <div className="modal-header">

@@ -87,6 +87,7 @@ def edit_post_by_id(post_id):
     attachment = request.files.get("attachment")
     title = form_data.get("title")
     content = form_data.get("content")
+    prev_attachment = post.attachment
 
     if not post:
         return {"errors": ["Post not found"]}, 404
@@ -107,6 +108,10 @@ def edit_post_by_id(post_id):
             else:
                 return {"errors": ["Failed AWS upload validation(s)"]}, 415
             post.attachment = upload.get("url")
+            try:
+                remove_file_from_s3(prev_attachment)
+            except:
+                print("Failed to remove existing attachment. Probably a seed delete.")
 
         if title:
             post.title = title
