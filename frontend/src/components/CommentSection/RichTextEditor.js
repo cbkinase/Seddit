@@ -23,7 +23,7 @@ function RichTextEditor({ content, setContent, setTextContent, isPost, isCommuni
       const txt = editor.getText();
       setTextContent(txt);
     }
-  }, [])
+  }, [setTextContent])
 
   let modules = {
     toolbar: [

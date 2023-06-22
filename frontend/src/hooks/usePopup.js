@@ -11,7 +11,7 @@ export default function usePopup(timeout = 4900) {
 
             return () => clearTimeout(timer);
         }
-    }, [showPopup]);
+    }, [showPopup, timeout]);
 
     return [showPopup, setShowPopup]
 

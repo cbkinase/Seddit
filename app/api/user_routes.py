@@ -89,7 +89,7 @@ def edit_user_info(user_id):
     try:
         db.session.commit()
     except:
-        return {"errors": ["Username not unique"]}
+        return {"errors": ["Username already taken"]}, 500
 
     return user.to_dict()
 

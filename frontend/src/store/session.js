@@ -103,7 +103,8 @@ export const editUserInfo = (userPayload, userId) => async (dispatch) => {
         dispatch(setUser(data));
         return data;
     } else {
-        return { errors: "Username already taken" };
+        const data = await res.json();
+        return data;
     }
 };
 

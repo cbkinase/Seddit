@@ -1,6 +1,6 @@
 import { useModal } from "../../context/Modal";
 import { destroyComment } from "../../store/comments";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 export default function DeleteCommentModal({ post, comment }) {

@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { editPost } from "../../store/posts";
 import RichTextEditor from "../CommentSection/RichTextEditor";
 import DOMPurify from 'dompurify';
-import ellipsisIfLong from "../../utils/ellipsisIfLong";
+// import ellipsisIfLong from "../../utils/ellipsisIfLong";
 import Popup from "../Popup";
 import usePopup from "../../hooks/usePopup";
 import UploadButton from "../UploadButton/UploadButton";

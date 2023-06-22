@@ -31,7 +31,7 @@ export default function SingleComment({ comment, user, soloComment, post, sortin
         else {
             setDivWidth(`calc(100% - ${comment.depth * 23}px)`)
         }
-    }, [viewportWidth])
+    }, [viewportWidth, comment.depth])
 
     const shortenWord = (word, long = 20) => {
         if (!word) return null;

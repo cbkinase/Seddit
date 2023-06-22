@@ -26,9 +26,9 @@ import useViewportWidth from "../../hooks/useViewportWidth";
 
 export default function IndividualFullPost({ user }) {
     // const dispatch = useDispatch();
-    const { subredditName, postId } = useParams();
+    const { postId } = useParams();
     const [commentsLoaded, setCommentsLoaded] = useState(false);
-    const [mainLoaded, setMainLoaded] = useState(false);
+    // const [mainLoaded, setMainLoaded] = useState(false);
     const [notFound, setNotFound] = useState(false);
     const dispatch = useDispatch();
     const viewportWidth = useViewportWidth();

@@ -74,7 +74,7 @@ function NewProfileButton({ user }) {
                         <p className="user-dropdown-container-name">{user.username}</p>
                     </div>
                     <div style={{ display: "flex", alignItems: "center" }}>
-                        <img style={{marginRight: "2px"}} src="https://i.gyazo.com/70063a7c7fbfaadec9c88e6eb9f87b2e.png"></img>
+                        <img alt="flower" style={{marginRight: "2px"}} src="https://i.gyazo.com/70063a7c7fbfaadec9c88e6eb9f87b2e.png"></img>
                         <p className="user-dropdown-container-karma">{user.karma} karma</p>
                     </div>
                 </div>

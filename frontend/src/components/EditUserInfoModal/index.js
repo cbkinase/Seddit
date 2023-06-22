@@ -23,18 +23,11 @@ function EditModal({ user }) {
         let errors = [];
         if (!name.length) errors.push("Username must be provided");
 
-        // if (name.length > 20)
-        //     errors.push("Username must be fewer than 20 characters");
-
         setErrors(errors);
     }, [name, avatar, bio]);
 
     const handleNameChange = (e) => {
         setName(e.target.value);
-    };
-
-    const handleAvatarChange = (e) => {
-        setAvatar(e.target.value);
     };
 
     const handleBioChange = (e) => {
@@ -125,20 +118,8 @@ function EditModal({ user }) {
                             </p>
                         )}
                     </div>
-                    {/* <div className="form-group">
-                        <label className="create-comm-label" htmlFor="avatar">
-                            Avatar
-                        </label>
-                        <input
-                            className="create-comm-input"
-                            type="text"
-                            id="avatar"
-                            name="avatar"
-                            value={avatar}
-                            onChange={handleAvatarChange}
-                        />
-                    </div> */}
 
+                    <div className="create-comm-label">Avatar</div>
                     <UploadButton
                         setAttachmentFn={setAvatar}
                         attachment={avatar}
