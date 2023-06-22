@@ -7,6 +7,7 @@ import RichTextEditor from "../CommentSection/RichTextEditor";
 import DOMPurify from 'dompurify';
 import "./CustomUploadButton.css";
 import Popup from "../Popup";
+import UploadButton from "../UploadButton/UploadButton";
 
 function CreatePostModal({ subreddit }) {
     const fileInputRef = useRef(null);
@@ -143,21 +144,13 @@ function CreatePostModal({ subreddit }) {
                             </p>
                         )}
                     </div>
-                    <div className="custom-button-wrapper">
-                        <div className="form-group">
-                            <input
-                                className="custom-file-input"
-                                type="file"
-                                ref={fileInputRef}
-                                accept="image/*"
-                                onChange={handleFileSelect}
-                            />
-                            <button onClick={handleFileInputChange} className="button-leave adjust-btn-height-subreddit custom-button"></button>
-                            {communityPicture && <div style={{ fontSize: "12px", marginTop: "2px" }}>Selected File: {communityPicture.name || communityPicture} <button onClick={e => setCommunityPicture(null)} className="remove-attachment-btn">&#215;</button> </div>}
-
-                            {!communityPicture && <p style={{ fontSize: "12px", fontStyle: "italic", marginTop: "2px" }}>Optional: attachment</p>}
-                        </div>
-                    </div>
+                    <UploadButton
+                        setAttachmentFn={setCommunityPicture}
+                        attachment={communityPicture}
+                        handleFileInputChange={handleFileInputChange}
+                        handleFileSelect={handleFileSelect}
+                        fileInputRef={fileInputRef}
+                         />
                     <div className="form-group">
                         <RichTextEditor
                             content={communityDescription}
