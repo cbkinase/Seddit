@@ -8,10 +8,12 @@ import RichTextEditor from "../CommentSection/RichTextEditor";
 import DOMPurify from 'dompurify';
 import ellipsisIfLong from "../../utils/ellipsisIfLong";
 import Popup from "../Popup";
+import usePopup from "../../hooks/usePopup";
+import UploadButton from "../UploadButton/UploadButton";
 
 function EditPostModal({ post, subreddit }) {
     const fileInputRef = useRef(null);
-    const [showPopup, setShowPopup] = useState(false);
+    const [showPopup, setShowPopup] = usePopup();
     const [picChanged, setPicChanged] = useState(false);
     const [communityName, setCommunityName] = useState(post.title);
     const [postText, setPostText] = useState("")
@@ -38,16 +40,6 @@ function EditPostModal({ post, subreddit }) {
 
         setErrors(errors);
     }, [communityName, postText, nameLengthMax, communityPicture]);
-
-    useEffect(() => {
-        if (showPopup) {
-            const timer = setTimeout(() => {
-                setShowPopup(false);
-            }, 4900);
-
-            return () => clearTimeout(timer);
-        }
-    }, [showPopup]);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -151,26 +143,14 @@ function EditPostModal({ post, subreddit }) {
                         )}
                     </div>
 
-                    <div className="custom-button-wrapper">
-                        <div className="form-group">
-                            <input
-                                className="custom-file-input"
-                                ref={fileInputRef}
-                                type="file"
-                                accept="image/*"
-                                onChange={handleFileSelect}
-                            />
-
-                            <button onClick={handleFileInputChange} className="button-leave adjust-btn-height-subreddit custom-button"></button>
-
-                            {communityPicture && <div style={{ fontSize: "12px", marginTop: "2px" }}>Selected File: {communityPicture.name || ellipsisIfLong(communityPicture, 20, true)} <button onClick={e => {
-                                setCommunityPicture(null);
-                                setPicChanged(true);
-                            }} className="remove-attachment-btn">&#215;</button> </div>}
-
-                            {!communityPicture && <p style={{ fontSize: "12px", fontStyle: "italic", marginTop: "2px" }}>Optional: attachment</p>}
-                        </div>
-                    </div>
+                    <UploadButton
+                        setAttachmentFn={setCommunityPicture}
+                        attachment={communityPicture}
+                        handleFileInputChange={handleFileInputChange}
+                        handleFileSelect={handleFileSelect}
+                        fileInputRef={fileInputRef}
+                        setUpdateState={setPicChanged}
+                    />
 
                     <div className="form-group">
                         <RichTextEditor
