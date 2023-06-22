@@ -127,27 +127,6 @@ def edit_post_by_id(post_id):
     return {"errors": ["Not authorized to perform this edit"]}, 403
 
 
-# @post_routes.route("/<int:post_id>", methods=["PUT"])
-# @login_required
-# def edit_post_by_id(post_id):
-#     post = Post.query.get(post_id)
-#     post_subreddit_owner = post.subreddit.owner.id
-
-#     if not post:
-#         return {"errors": ["Post not found"]}, 404
-
-#     if current_user.id == post.user_id or current_user.id == post_subreddit_owner:
-
-#         for key, value in request.get_json().items():
-#             setattr(post, key, value)
-
-#         db.session.commit()
-#         return post.to_dict()
-
-#     return {"errors": ["Not authorized to perform this edit"]}, 403
-
-
-
 @post_routes.route("/<int:post_id>", methods=["DELETE"])
 @login_required
 def delete_post_by_id(post_id):
