@@ -94,7 +94,7 @@ Overall, it was an extremely fun and interesting problem to solve, and I was exc
 
 ## Technologies used
 
-- Backend: Flask, SQLAlchemy, PostgreSQL
+- Backend: Flask, SQLAlchemy, PostgreSQL, AWS S3
 - Frontend: React, Redux
 
 
@@ -116,3 +116,4 @@ Overall, it was an extremely fun and interesting problem to solve, and I was exc
 
 1. Copy this repository.
 2. Run `bash start.sh` in the root directory of the project.
+3. Note: to use image uploading features, you will need to configure your .env with the appropriate variables found in .env.example with the information for your Amazon S3 bucket.
