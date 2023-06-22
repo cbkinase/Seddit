@@ -1,148 +1,118 @@
-# Flask React Project
+# Seddit
 
-This is the starter for the Flask React project.
+## Intro
 
-## Getting started
-1. Clone this repository (only this branch)
+Seddit is a reddit clone, complete with subreddits, posts, comments, and voting. <a href="https://cameron-seddit.onrender.com/">Come check it out!</a>
 
-2. Install dependencies
+Future functionality includes
+- A rich text editor for posts and comments
+- The ability to upload your own post attachments via AWS
+- Different post attachment types (such as links or short videos), not just images
+- The ability to follow, be followed by, and direct message other users.
 
-      ```bash
-      pipenv install -r requirements.txt
-      ```
+## Challenges
 
-3. Create a **.env** file based on the example with proper settings for your
-   development environment
+One of the biggest technical hurdles to completing this project was the management of nested comments. To tackle this challenge on the database level, I used the adjacency list pattern, allowing me to represent hierarchical data in a 'flat' table.
 
-4. Make sure the SQLite3 database connection URL is in the **.env** file
+But this was far from the only challenge associated with nesting comments. Once I had the database set up, I had to figure out the most effective way of getting that information out of the database, representing it as JSON, and sending it through my API. Though I likely did not figure out the "most effective way", I did figure out something that worked with some degree of success. My solution to this was, perhaps unsurprisingly, to make extensive use of recursion. Let's work backwards from the API route to understand how it works.
 
-5. This starter organizes all tables inside the `flask_schema` schema, defined
-   by the `SCHEMA` environment variable.  Replace the value for
-   `SCHEMA` with a unique name, **making sure you use the snake_case
-   convention**.
+The following is the route for getting all of the comments of a post:
 
-6. Get into your pipenv, migrate your database, seed your database, and run your Flask app
+```py
+@post_routes.route("/<int:post_id>/comments")
+def get_all_post_comments(post_id):
+    post = Post.query.get(post_id)
 
-   ```bash
-   pipenv shell
-   ```
+    if not post:
+        return {"errors": ["Post not found"]}, 404
 
-   ```bash
-   flask db upgrade
-   ```
-
-   ```bash
-   flask seed all
-   ```
-
-   ```bash
-   flask run
-   ```
-
-7. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
-
-
-## Deployment through Render.com
-
-First, refer to your Render.com deployment articles for more detailed
-instructions about getting started with [Render.com], creating a production
-database, and deployment debugging tips.
-
-From the [Dashboard], click on the "New +" button in the navigation bar, and
-click on "Web Service" to create the application that will be deployed.
-
-Look for the name of the application you want to deploy, and click the "Connect"
-button to the right of the name.
-
-Now, fill out the form to configure the build and start commands, as well as add
-the environment variables to properly deploy the application.
-
-### Part A: Configure the Start and Build Commands
-
-Start by giving your application a name.
-
-Leave the root directory field blank. By default, Render will run commands from
-the root directory.
-
-Make sure the Environment field is set set to "Python 3", the Region is set to
-the location closest to you, and the Branch is set to "main".
-
-Next, add your Build command. This is a script that should include everything
-that needs to happen _before_ starting the server.
-
-For your Flask project, enter the following command into the Build field, all in
-one line:
-
-```shell
-# build command - enter all in one line
-npm install --prefix react-app &&
-npm run build --prefix react-app &&
-pip install -r requirements.txt &&
-pip install psycopg2 &&
-flask db upgrade &&
-flask seed all
+    return {"Comments": {comment.id: comment.to_short_dict() for comment in post.comments if comment.parent_id == None}}
 ```
 
-This script will install dependencies for the frontend, and run the build
-command in the __package.json__ file for the frontend, which builds the React
-application. Then, it will install the dependencies needed for the Python
-backend, and run the migration and seed files.
+All you really need to know about the model to make sense of this is that parent_id refers to the parent ID of a comment -- that is, if a comment is a top-level comment, it will have a parent_id of NULL (None), and if it is a nested comment, that parent_id will be some integer value. In this way, we retrieve all of the top-level comments of a post. Within the `comment.to_short_dict()` method, I get all of the nested replies using by defining a `replies` key like so:
 
-Now, add your start command in the Start field:
+` 'replies': {reply.id: reply.to_mega_short_dict(depth+1) for reply in self.children} if len(self.children) else None, `
 
-```shell
-# start script
-gunicorn app:app
+This, ultimately, yields a structure of comments that is organized in the following way:
+
+```js
+Comments {
+    { comment_id }: {
+        author_info: { ... },
+        content: "",
+        created_at: "",
+        depth: "",
+        id: "",
+        num_replies: "",
+        parent_id: "",
+        post_id: "",
+        reaction_info: { ... },
+        replies: {
+            { reply_id }: { ... },
+        }
+        updated_at: "",
+        upvotes: 5,
+    },
+    { comment_id_2 }: { ... },
+}
 ```
 
-_If you are using websockets, use the following start command instead for increased performance:_
+Resulting in a nice, easy to work with tree-like structure. But the battle wasn't over just yet. How can I deal with showing them on the page properly now?
 
-`gunicorn --worker-class eventlet -w 1 app:app`
+Well... more recursion. We can imagine that, given the comments structure above, it's rather easy to render top-level comments. Just iterate over the values in comments, placing/styling each element as needed. It turns out that if you can render a single (top-level) comment, you only need to add a single line of code to render the rest of the replies. But to do this, you need to create a React component that calls itself:
 
-### Part B: Add the Environment Variables
+```js
+// Within SingleComment.js
+{comment.num_replies
+    ? <div>
+      {Object.values(comment.replies).sort(sortingFunction).map(reply =>
+        <SingleComment
+          key={reply.id}
+          comment={reply}
+          user={user}
+          post={post}
+          sortingFunction={sortingFunction}
+          />)}
+    </div>
+: null}
+```
 
-Click on the "Advanced" button at the bottom of the form to configure the
-environment variables your application needs to access to run properly. In the
-development environment, you have been securing these variables in the __.env__
-file, which has been removed from source control. In this step, you will need to
-input the keys and values for the environment variables you need for production
-into the Render GUI.
+And... voila. I also used the depth information to adjust the spacing as needed, providing a visual representation of nesting:
 
-Click on "Add Environment Variable" to start adding all of the variables you
-need for the production environment.
+```js
+function setDivWidth() {
+        if (window.visualViewport.width > 700) {
+            return `${600 - comment.depth * 23}px`
+        }
+        else {
+            return `${"100%" - comment.depth * 23}px`
+        }
+    }
+ ```
 
-Add the following keys and values in the Render GUI form:
+Overall, it was an extremely fun and interesting problem to solve, and I was excited to make use of my first 'recursive component'.
 
-- SECRET_KEY (click "Generate" to generate a secure secret for production)
-- FLASK_ENV production
-- FLASK_APP app
-- SCHEMA (your unique schema name, in snake_case)
-- REACT_APP_BASE_URL (use render.com url, located at top of page, similar to
-  https://this-application-name.onrender.com)
+## Technologies used
 
-In a new tab, navigate to your dashboard and click on your Postgres database
-instance.
+- Backend: Flask, SQLAlchemy, PostgreSQL
+- Frontend: React, Redux
 
-Add the following keys and values:
 
-- DATABASE_URL (copy value from Internal Database URL field)
+## Demo
 
-_Note: Add any other keys and values that may be present in your local __.env__
-file. As you work to further develop your project, you may need to add more
-environment variables to your local __.env__ file. Make sure you add these
-environment variables to the Render GUI as well for the next deployment._
+### Landing page (all posts)
+<img src="https://i.gyazo.com/c287c2bf4f6f64851d9b82a578fc6a68.png">
 
-Next, choose "Yes" for the Auto-Deploy field. This will re-deploy your
-application every time you push to main.
+### Explore communities page
+<img src="https://i.gyazo.com/87f3defce03bb7c5a01ed62947da793a.png">
 
-Now, you are finally ready to deploy! Click "Create Web Service" to deploy your
-project. The deployment process will likely take about 10-15 minutes if
-everything works as expected. You can monitor the logs to see your build and
-start commands being executed, and see any errors in the build process.
+### Comments on posts
+<img src="https://i.gyazo.com/edb4fc7b1beb018f6f6d5816e12dd7a4.png">
 
-When deployment is complete, open your deployed site and check to see if you
-successfully deployed your Flask application to Render! You can find the URL for
-your site just below the name of the Web Service at the top of the page.
+### User profile page
+<img src="https://i.gyazo.com/00819d653aa4b05f1e111fc05acb0608.png">
 
-[Render.com]: https://render.com/
-[Dashboard]: https://dashboard.render.com/
+## How to Use Locally
+
+1. Copy this repository.
+2. Run `bash start.sh` in the root directory of the project.
