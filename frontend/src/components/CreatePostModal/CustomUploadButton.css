@@ -1,0 +1,35 @@
+/* Hide the default file input */
+.custom-file-input {
+    visibility: hidden;
+    position: absolute;
+}
+
+/* Style the custom button */
+.custom-button {
+    border-radius: 12px;
+}
+
+/* Style the custom button to mimic the appearance of the default file input button */
+.custom-button::before {
+    content: "Choose File";
+}
+
+/* Position the custom button over the file input */
+.custom-button-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-button-wrapper input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.remove-attachment-btn {
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+}

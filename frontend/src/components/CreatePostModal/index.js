@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useModal } from "../../context/Modal";
 import { createPost } from "../../store/posts";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import RichTextEditor from "../CommentSection/RichTextEditor";
 import DOMPurify from 'dompurify';
+import "./CustomUploadButton.css"
 
 function CreatePostModal({ subreddit }) {
+    const fileInputRef = useRef(null);
     const [communityName, setCommunityName] = useState("");
     const [communityPicture, setCommunityPicture] = useState(null);
     const [communityDescription, setCommunityDescription] = useState("");
@@ -54,6 +56,17 @@ function CreatePostModal({ subreddit }) {
             closeModal();
             history.push(`/r/${subreddit.name}/posts/${post.id}`);
         }
+    }
+
+    function handleFileInputChange(event) {
+        event.preventDefault();
+        fileInputRef.current.click();
+    }
+
+    function handleFileSelect(event) {
+        event.preventDefault();
+        const file = fileInputRef.current.files[0];
+        setCommunityPicture(file);
     }
 
     return (
@@ -111,16 +124,20 @@ function CreatePostModal({ subreddit }) {
                         </p>
                     )}
                 </div>
-                <div className="form-group">
-                    <input
-                        className="create-comm-input"
-                        type="file"
-                        accept="image/*"
-                        onChange={(event) =>
-                            setCommunityPicture(event.target.files[0])
-                        }
-                    />
-                    <p style={{fontSize: "12px", fontStyle: "italic"}}>Optional: attachment</p>
+                <div className="custom-button-wrapper">
+                    <div className="form-group">
+                        <input
+                            className="custom-file-input"
+                            type="file"
+                            ref={fileInputRef}
+                            accept="image/*"
+                            onChange={handleFileSelect}
+                        />
+                        <button onClick={handleFileInputChange} className="button-leave adjust-btn-height-subreddit custom-button"></button>
+                        {communityPicture && <div style={{ fontSize: "12px", marginTop: "2px"}}>Selected File: {communityPicture.name || communityPicture} <button onClick={e => setCommunityPicture(null)} className="remove-attachment-btn">&#215;</button> </div>}
+
+                        {!communityPicture && <p style={{ fontSize: "12px", fontStyle: "italic", marginTop: "2px" }}>Optional: attachment</p>}
+                    </div>
                 </div>
                 <div className="form-group">
                     <RichTextEditor

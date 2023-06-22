@@ -113,6 +113,14 @@ def edit_post_by_id(post_id):
         if content:
             post.content = content
 
+        if form_data.get("attachment") == "null":
+            if post.attachment:
+                try:
+                    remove_file_from_s3(post.attachment)
+                except:
+                    pass
+            post.attachment = None
+
         db.session.commit()
         return post.to_dict()
 
@@ -151,6 +159,11 @@ def delete_post_by_id(post_id):
     post_subreddit_owner = post.subreddit.owner.id
 
     if current_user.id == post.user_id or current_user.id == post_subreddit_owner:
+        if post.attachment:
+            try:
+                remove_file_from_s3(post.attachment)
+            except:
+                print("Failed to delete from AWS. Probably a seed post delete...")
         db.session.delete(post)
         db.session.commit()
         return {"success": "Successfully deleted"}
