@@ -8,7 +8,7 @@ export default function UploadButton({
     fileInputRef,
     setUpdateState,
 }) {
-    let fileName = attachment?.name || ellipsisIfLong(attachment, 20, true);
+    let fileName = attachment?.name || attachment?.avatar || ellipsisIfLong(attachment, 20, true);
 
     function handleRemove(e) {
         e.preventDefault();

@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import User, Subreddit, Post, Comment, db, CommentVote, PostVote
-from ..forms.aws_form import UploadForm
+from ..forms.aws_form import create_upload_form
 from app.aws_helpers import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 
 
@@ -54,7 +54,7 @@ def create_post():
     subreddit = Subreddit.query.get(subreddit_id)
     upload = {}
     if attachment:
-        form = UploadForm()
+        form = create_upload_form("attachment")
         form['csrf_token'].data = request.cookies['csrf_token']
 
         if form.validate_on_submit():
@@ -96,7 +96,7 @@ def edit_post_by_id(post_id):
         upload = {}
 
         if attachment:
-            form = UploadForm()
+            form = create_upload_form("attachment")
             form['csrf_token'].data = request.cookies['csrf_token']
 
             if form.validate_on_submit():

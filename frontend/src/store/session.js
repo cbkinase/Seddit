@@ -95,8 +95,7 @@ export const signUp = (username, email, password) => async (dispatch) => {
 export const editUserInfo = (userPayload, userId) => async (dispatch) => {
     const res = await fetch(`/api/users/u/${userId}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userPayload),
+        body: userPayload,
     });
 
     if (res.ok) {
