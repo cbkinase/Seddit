@@ -8,7 +8,7 @@ import DOMPurify from 'dompurify';
 
 function CreatePostModal({ subreddit }) {
     const [communityName, setCommunityName] = useState("");
-    const [communityPicture, setCommunityPicture] = useState("");
+    const [communityPicture, setCommunityPicture] = useState(null);
     const [communityDescription, setCommunityDescription] = useState("");
     const [postText, setPostText] = useState("")
     const [errors, setErrors] = useState([]);
@@ -22,8 +22,6 @@ function CreatePostModal({ subreddit }) {
 
         if (postText.length > 2000)
             errors.push("Description must be fewer than 2000 characters");
-        // if (badChars.some((char) => communityName.includes(char)))
-        //     errors.push("Name must not contain special characters");
         if (!communityName.length) errors.push("Title must be provided");
         if (communityName.length > nameLengthMax)
             errors.push("Title must be shorter");
@@ -41,20 +39,12 @@ function CreatePostModal({ subreddit }) {
         let post;
 
         if (!errors.length) {
-            // const payload = {
-            //     name: communityName,
-            //     about: communityDescription,
-            //     category: Number(communityCategory),
-            // };
-            // subreddit = await dispatch(createSubreddit(payload));
-            let payload = {
-                subreddit_id: subreddit.id,
-                title: communityName,
-            };
-
-            if (communityPicture) payload.attachment = communityPicture;
-            if (communityDescription) payload.content = DOMPurify.sanitize(communityDescription);
-            post = await dispatch(createPost(payload));
+            const formData = new FormData();
+            if (communityPicture) formData.append("attachment", communityPicture);
+            if (communityDescription) formData.append("content", DOMPurify.sanitize(communityDescription));
+            formData.append("subreddit_id", subreddit.id);
+            formData.append("title", communityName);
+            post = await dispatch(createPost(formData));
         }
 
         if (post.errors) {
@@ -84,7 +74,7 @@ function CreatePostModal({ subreddit }) {
                     </li>
                 )
             )}
-            <form onSubmit={handleSubmit}>
+            <form encType="multipart/form-data" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <input
                         className="create-comm-input"
@@ -124,15 +114,13 @@ function CreatePostModal({ subreddit }) {
                 <div className="form-group">
                     <input
                         className="create-comm-input"
-                        type="text"
-                        id="community-picture"
-                        name="community-picture"
-                        placeholder="Picture (optional)"
-                        value={communityPicture}
+                        type="file"
+                        accept="image/*"
                         onChange={(event) =>
-                            setCommunityPicture(event.target.value)
+                            setCommunityPicture(event.target.files[0])
                         }
                     />
+                    <p style={{fontSize: "12px", fontStyle: "italic"}}>Optional: attachment</p>
                 </div>
                 <div className="form-group">
                     <RichTextEditor

@@ -615,6 +615,8 @@ body {
     max-width: 90%;
     padding: 24px;
     margin-left: 5px;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .modal-header {
@@ -976,6 +978,7 @@ body {
     }
     .subreddit-short-main-container {
         background-color: inherit;
+        padding-bottom: 20px;
     }
     .subreddit-abridged-top-short {
         justify-content: center;

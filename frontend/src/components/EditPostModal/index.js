@@ -27,8 +27,6 @@ function EditPostModal({ post, subreddit }) {
 
         if (postText.length > 2000)
             errors.push("Description must be fewer than 2000 characters");
-        // if (badChars.some((char) => communityName.includes(char)))
-        //     errors.push("Name must not contain special characters");
         if (!communityName.length) errors.push("Title must be provided");
         if (communityName.length > nameLengthMax)
             errors.push("Title must be shorter");
@@ -46,20 +44,12 @@ function EditPostModal({ post, subreddit }) {
         let ePost;
 
         if (!errors.length) {
-            // const payload = {
-            //     name: communityName,
-            //     about: communityDescription,
-            //     category: Number(communityCategory),
-            // };
-            // subreddit = await dispatch(createSubreddit(payload));
-            let payload = {
-                subreddit_id: subreddit.id,
-                title: communityName,
-            };
-
-            payload.attachment = communityPicture;
-            payload.content = DOMPurify.sanitize(communityDescription);
-            ePost = await dispatch(editPost(payload, post.id));
+            const formData = new FormData();
+            if (communityPicture) formData.append("attachment", communityPicture);
+            formData.append("content", DOMPurify.sanitize(communityDescription));
+            formData.append("subreddit_id", subreddit.id);
+            formData.append("title", communityName);
+            ePost = await dispatch(editPost(formData, post.id));
         }
 
         if (ePost.errors) {
@@ -89,7 +79,7 @@ function EditPostModal({ post, subreddit }) {
                     </li>
                 )
             )}
-            <form onSubmit={handleSubmit}>
+            <form encType="multipart/form-data" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <input
                         className="create-comm-input"
@@ -129,28 +119,15 @@ function EditPostModal({ post, subreddit }) {
                 <div className="form-group">
                     <input
                         className="create-comm-input"
-                        type="text"
-                        id="community-picture"
-                        name="community-picture"
-                        placeholder="Picture (optional)"
-                        value={communityPicture}
+                        type="file"
+                        accept="image/*"
                         onChange={(event) =>
-                            setCommunityPicture(event.target.value)
+                            setCommunityPicture(event.target.files[0])
                         }
                     />
+                    <p style={{fontSize: "12px", fontStyle: "italic"}}>Optional: choose a new attachment</p>
                 </div>
                 <div className="form-group">
-                    {/* <textarea
-                        className="create-comm-input"
-                        id="community-description"
-                        name="community-description"
-                        placeholder="Text (optional)"
-                        value={communityDescription}
-                        onChange={(event) =>
-                            setCommunityDescription(event.target.value)
-                        }
-                        rows="8"
-                    ></textarea> */}
                     <RichTextEditor
                         content={communityDescription}
                         setContent={setCommunityDescription}
