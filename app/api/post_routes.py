@@ -59,7 +59,7 @@ def create_post():
 
         if form.validate_on_submit():
             attachment.filename = get_unique_filename(attachment.filename)
-            upload = upload_file_to_s3(attachment)
+            upload = upload_file_to_s3(attachment, "posts")
             if "url" not in upload:
                 return {"errors": ["Failed to upload to AWS"]}, 500
         else:
@@ -101,7 +101,7 @@ def edit_post_by_id(post_id):
 
             if form.validate_on_submit():
                 attachment.filename = get_unique_filename(attachment.filename)
-                upload = upload_file_to_s3(attachment)
+                upload = upload_file_to_s3(attachment, "posts")
 
                 if "url" not in upload:
                     return {"errors": ["Failed to upload to AWS"]}, 500
