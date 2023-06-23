@@ -1,9 +1,10 @@
 from crypt import methods
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, db, Post
+from app.models import User, db, Post, Comment
 from ..forms.aws_form import create_upload_form
 from app.aws_helpers import get_unique_filename, upload_file_to_s3, remove_file_from_s3
+from sqlalchemy.orm import joinedload
 
 user_routes = Blueprint('users', __name__)
 
@@ -115,12 +116,14 @@ def edit_user_info(user_id):
 @user_routes.route("/u/<int:user_id>/comments")
 def get_user_comments(user_id):
     user = User.query.get(user_id)
+    comments = Comment.query.filter_by(user_id=user_id).options(joinedload(Comment.votes)).all()
 
     if not user:
         return {"errors": f"User #'{user_id}' not found"}, 404
 
     # return {comment.id: comment.to_short_dict() for comment in user.comments}
-    return {"Comments": {comment.id: comment.to_shortest_dict() for comment in user.comments}}
+    return {"Comments": {comment.id: comment.to_shortest_dict() for comment in comments}}
+    # return {"Comments": {comment.id: comment.to_shortest_dict() for comment in user.comments}}
 
 @user_routes.route("/u/<username>/posts")
 def get_user_posts(username):
