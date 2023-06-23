@@ -3,51 +3,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSubreddits } from "../../store/subreddits";
 import IndividualAbridgedSubreddit from "../AbridgedSubredditOne";
 import LoadingSpinner from "../LoadingSpinner";
+import useInfiniteScrolling from "../../hooks/useInfiniteScrolling";
 
 export default function AbridgedSubredditDisplay({ user }) {
     const dispatch = useDispatch();
-    const [searchTerm, setSearchTerm] = useState("");
+    const page = useInfiniteScrolling();
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        dispatch(getSubreddits()).then(() => setLoaded(true));
-    }, [dispatch]);
-
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
-    };
+        dispatch(getSubreddits(page, 10)).then(() => setLoaded(true));
+    }, [dispatch, page]);
 
     const subreddits = useSelector((state) => state.subreddits.Subreddits);
 
     const allSubredditsArr = Object.values(subreddits);
 
-    const filteredSubreddits = allSubredditsArr.filter((subreddit) => {
-        return subreddit.name.toLowerCase().includes(searchTerm.toLowerCase());
-    });
+    const filteredSubreddits = allSubredditsArr;
 
     return ( loaded ?
         <>
             <div style={{ height: "30px", backgroundColor: "#dae0e6" }}></div>
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    paddingTop: "20px",
-                    paddingBottom: "20px",
-                    backgroundColor: "#dae0e6",
-                }}
-            >
-                <input
-                    id="subreddit-search"
-                    type="text"
-                    placeholder="Search for a subreddit"
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                />
-            </div>
+
             <div className="subreddit-short-main-container">
-                {filteredSubreddits.map((subreddit) => (
+                {filteredSubreddits.sort((a, b) => b.id - a.id).map((subreddit) => (
                     <IndividualAbridgedSubreddit
                         key={subreddit.id}
                         user={user}

@@ -5,29 +5,30 @@ from faker import Faker
 from sqlalchemy.orm import joinedload
 from app.models.post import Post
 from app.models.comment import Comment
+from app.models.post_votes import PostVote
+from app.models.comment_votes import CommentVote
+from sqlalchemy.sql import func
 
-
-def determine_votes(votes):
-    vote_count = 0
-    for vote in votes:
-        if vote.vote == "upvote":
-            vote_count += 1
-        elif vote.vote == "downvote":
-            vote_count -= 1
-    return vote_count
-
-def get_posts_and_comments(user_id):
-    posts = Post.query.filter_by(user_id=user_id).options(joinedload('votes')).all()
-    comments = Comment.query.filter_by(user_id=user_id).options(joinedload('votes')).all()
-    return posts, comments
 
 def determineKarma(user_id):
-    posts, comments = get_posts_and_comments(user_id)
-    return sum([determine_votes(comment.votes) for comment in comments]) + sum([determine_votes(post.votes) for post in posts])
+    # Get ids of posts and comments made by user
+    post_ids = db.session.query(Post.id).filter(Post.user_id == user_id).subquery()
+    comment_ids = db.session.query(Comment.id).filter(Comment.user_id == user_id).subquery()
 
-# def determineKarma(posts, comments):
-#     return sum([determine_votes(comment.votes) for comment in comments]) + sum([determine_votes(post.votes) for post in posts])
+    # Get votes on those posts and comments
+    post_upvotes = db.session.query(func.count(PostVote.id)).filter(PostVote.post_id.in_(post_ids), PostVote.vote == "upvote").scalar()
+    post_downvotes = db.session.query(func.count(PostVote.id)).filter(PostVote.post_id.in_(post_ids), PostVote.vote == "downvote").scalar()
 
+    comment_upvotes = db.session.query(func.count(CommentVote.id)).filter(CommentVote.comment_id.in_(comment_ids), CommentVote.vote == "upvote").scalar()
+    comment_downvotes = db.session.query(func.count(CommentVote.id)).filter(CommentVote.comment_id.in_(comment_ids), CommentVote.vote == "downvote").scalar()
+
+    post_upvotes = post_upvotes if post_upvotes is not None else 0
+    post_downvotes = post_downvotes if post_downvotes is not None else 0
+    comment_upvotes = comment_upvotes if comment_upvotes is not None else 0
+    comment_downvotes = comment_downvotes if comment_downvotes is not None else 0
+
+    total_karma = (post_upvotes - post_downvotes) + (comment_upvotes - comment_downvotes)
+    return total_karma
 
 
 class User(db.Model, UserMixin):
