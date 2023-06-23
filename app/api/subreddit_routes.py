@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app.models import User, Subreddit, db, Post
 from ..forms.aws_form import create_upload_form
 from app.aws_helpers import get_unique_filename, upload_file_to_s3, remove_file_from_s3
+from sqlalchemy.orm import joinedload
 
 subreddit_routes = Blueprint('s', __name__)
 
@@ -223,4 +224,25 @@ def get_subreddit_posts(subreddit_name):
     if not subreddit:
         return {"errors": ["Subreddit not found"]}, 404
 
-    return {"Posts": {post.id : post.to_dict() for post in subreddit.posts}}
+    page = request.args.get('page', type=int)
+    per_page = request.args.get('per_page', type=int)
+    limit = None
+    offset = None
+
+    if page and per_page:
+        offset = (page - 1) * per_page
+        limit = per_page
+
+    posts = db.session.query(Post)\
+        .join(Subreddit, Subreddit.id == Post.subreddit_id)\
+        .options(joinedload(Post.subreddit))\
+        .filter(Subreddit.name == subreddit_name)\
+        .order_by(
+            Post.id.desc(),
+    )
+    if (limit):
+        posts = posts.limit(limit)
+    if (offset):
+        posts = posts.offset(offset)
+
+    return {"Posts": {post.id : post.to_dict() for post in posts}}

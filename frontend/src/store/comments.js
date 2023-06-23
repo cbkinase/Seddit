@@ -24,12 +24,17 @@ const deleteComment = (comment) => {
     };
 };
 
-export const getAllPostComments = (postId) => async (dispatch) => {
-    const res = await fetch(`/api/posts/${postId}/comments`);
+export const getAllPostComments = (postId, page, per_page) => async (dispatch) => {
+    let fetchUrl = `/api/posts/${postId}/comments`;
+    if (page && per_page) {
+        fetchUrl += `?page=${page}&per_page=${per_page}`;
+    }
+
+    const res = await fetch(fetchUrl);
 
     if (res.ok) {
         const data = await res.json();
-        dispatch(loadComments(data));
+        dispatch(loadComments(data, page));
         return data;
     }
 };

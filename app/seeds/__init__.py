@@ -30,13 +30,13 @@ def seed():
 
     users = seed_users(30)
     subreddits = seed_subreddits(users, 15)
-    posts = seed_posts(users, subreddits, 200)
-    comments = seed_comments(users, posts, 1500)
-    post_votes = seed_post_votes(users, posts, 1000)
+    posts = seed_posts(users, subreddits, 20000)
+    comments = seed_comments(users, posts, 150000)
+    post_votes = seed_post_votes(users, posts, 100000)
     if environment == "production":
-        comment_votes = seed_comment_votes(users, comments, 10000)
+        comment_votes = seed_comment_votes(users, comments, 1000000)
     else:
-        comment_votes = seed_comment_votes(users, comments, 10000)
+        comment_votes = seed_comment_votes(users, comments, 1000000)
 
     # Add other seed functions here
 

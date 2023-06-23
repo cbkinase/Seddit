@@ -47,22 +47,32 @@ export const getAllPosts = (page, per_page) => async (dispatch) => {
     }
 };
 
-export const getSubredditPosts = (subredditName) => async (dispatch) => {
-    const res = await fetch(`/api/s/name/${subredditName}/posts`)
+export const getSubredditPosts = (subredditName, page, per_page) => async (dispatch) => {
+    let fetchUrl = `/api/s/name/${subredditName}/posts`;
+    if (page && per_page) {
+        fetchUrl += `?page=${page}&per_page=${per_page}`;
+    }
+
+    const res = await fetch(fetchUrl)
 
     if (res.ok) {
         const data = await res.json();
-        dispatch(loadPosts(data));
+        dispatch(loadPosts(data, page));
         return data;
     }
 }
 
-export const getUserPosts = (username) => async (dispatch) => {
-    const res = await fetch(`/api/users/u/${username}/posts`)
+export const getUserPosts = (username, page, per_page) => async (dispatch) => {
+    let fetchUrl = `/api/users/u/${username}/posts`;
+    if (page && per_page) {
+        fetchUrl += `?page=${page}&per_page=${per_page}`;
+    }
+
+    const res = await fetch(fetchUrl);
 
     if (res.ok) {
         const data = await res.json();
-        dispatch(loadPosts(data));
+        dispatch(loadPosts(data, page));
         return data;
     }
 }

@@ -134,4 +134,25 @@ def get_user_posts(username):
     if not user:
         return {"errors": "User not found"}
 
-    return {"Posts": {post.id : post.to_dict() for post in user.posts}}
+    page = request.args.get('page', type=int)
+    per_page = request.args.get('per_page', type=int)
+    limit = None
+    offset = None
+
+    if page and per_page:
+        offset = (page - 1) * per_page
+        limit = per_page
+
+    posts = db.session.query(Post)\
+        .options(joinedload(Post.votes))\
+        .filter(Post.user_id == user.id)\
+        .order_by(
+            Post.id.desc(),
+    )
+
+    if (limit):
+        posts = posts.limit(limit)
+    if (offset):
+        posts = posts.offset(offset)
+
+    return {"Posts": {post.id : post.to_dict() for post in posts}}
