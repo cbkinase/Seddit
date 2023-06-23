@@ -31,8 +31,6 @@ def determineKarma(user_id):
     return total_karma
 
 
-
-
 class User(db.Model, UserMixin):
 
     __tablename__ = 'users'
