@@ -5,8 +5,8 @@ from .posts import seed_posts, undo_posts
 from .comments import seed_comments, undo_comments
 from .comment_votes import seed_comment_votes, undo_comment_votes
 from .post_votes import seed_post_votes, undo_post_votes
-
 from app.models.db import db, environment, SCHEMA
+import datetime
 
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`
@@ -28,18 +28,28 @@ def seed():
         undo_subreddits()
         undo_users()
 
-    users = seed_users(30)
-    subreddits = seed_subreddits(users, 15)
-    posts = seed_posts(users, subreddits, 200)
-    comments = seed_comments(users, posts, 1500)
-    post_votes = seed_post_votes(users, posts, 3000)
+    prod_env_val = 'production_zz' # change this from 'production' to seed a lot
+
+    num_users = 30 if environment == prod_env_val else 50
+    num_subreddits = 15 if environment == prod_env_val else 30
+    num_posts = 200 if environment == prod_env_val else 800
+    num_comments = 1500 if environment == prod_env_val else 12_000
+    num_post_votes = 3000 if environment == prod_env_val else 24_000
+    num_comment_votes = 20_000 if environment == prod_env_val else 160_000
+    print(f"{datetime.datetime.now()}")
+
+    users = seed_users(num_users)
+    subreddits = seed_subreddits(users, num_subreddits)
+    posts = seed_posts(users, subreddits, num_posts)
+    comments = seed_comments(users, posts, num_comments)
+    seed_post_votes(users, posts, num_post_votes)
+    print(f"\t{datetime.datetime.now()}")
     if environment == "production":
-        comment_votes = seed_comment_votes(users, comments, 20_000)
+        seed_comment_votes(users, comments, num_comment_votes)
     else:
-        comment_votes = seed_comment_votes(users, comments, 20_000)
+        seed_comment_votes(users, comments, num_comment_votes)
 
-    # Add other seed functions here
-
+    print(f"{datetime.datetime.now()}")
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')

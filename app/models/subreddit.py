@@ -41,13 +41,11 @@ class Subreddit(db.Model):
     def create(cls, qty, users):
         fake = Faker()
         filtered_cat_pics = [pic['url'] for pic in cat_info if pic['url'].endswith("jpg")]
-        return [cls(owner = choice(users),
+        return [cls(owner_id = choice(users).id,
                     name=fake.unique.word(),
                     about=fake.sentence(nb_words=randint(20, 200)),
                     main_pic = choice(filtered_cat_pics),
                     background_pic = choice(filtered_cat_pics),
-                    # main_pic = fake.image(size=(32, 32), image_format="png"),
-                    # background_pic = fake.image(size=(1000, 200), image_format="png"),
                     category = randint(1, len(categories.keys())))
                     for _ in range(qty)]
 

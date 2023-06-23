@@ -1,5 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from random import choice
+from random import choices
+
 
 class CommentVote(db.Model):
     __tablename__ = 'comment_votes'
@@ -18,10 +19,17 @@ class CommentVote(db.Model):
     @classmethod
     def create(cls, qty, users, comments):
         vote_options = ["upvote", "downvote", "upvote", "upvote", "upvote", "upvote", "upvote", "upvote", "upvote"] # seed more upvotes than downvotes
-        return [cls(
-            user=choice(users),
-            comment=choice(comments),
-            vote=choice(vote_options) ) for _ in range(qty)]
+
+        # pre-generate all random selections
+        user_choices = choices(users, k=qty)
+        comment_choices = choices(comments, k=qty)
+        vote_choices = choices(vote_options, k=qty)
+
+        # defer creation of associations until later
+        # to improve seeding performance
+        comment_votes = [cls(user_id=user.id, comment_id=comment.id, vote=vote) for user, comment, vote in zip(user_choices, comment_choices, vote_choices)]
+
+        return comment_votes
 
 
     def to_dict(self):

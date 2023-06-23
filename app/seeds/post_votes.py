@@ -8,10 +8,10 @@ def seed_post_votes(users, posts, qty=5000):
     dummy_votes = PostVote.create(qty, users, posts)
 
     for chnk in chunk(dummy_votes):
-        db.session.add_all(chnk)
+        db.session.bulk_save_objects(chnk)
         db.session.commit()
 
-    return dummy_votes
+    # return dummy_votes
 
 
 # Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't

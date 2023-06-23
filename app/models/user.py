@@ -7,7 +7,35 @@ from app.models.comment import Comment
 from app.models.post_votes import PostVote
 from app.models.comment_votes import CommentVote
 from sqlalchemy.sql import func
+from sqlalchemy.orm import joinedload
 
+
+def get_user_posts(user_id):
+    user = User.query.options(joinedload(User.posts).joinedload(Post.votes)).get(user_id)
+    return user.posts
+
+
+def get_user_comments(user_id):
+    user = User.query.options(joinedload(User.comments).joinedload(Comment.votes)).get(user_id)
+    return user.comments
+
+
+def get_user_data(user_id):
+    user = User.query.options(
+        joinedload(User.posts).joinedload(Post.votes),
+        joinedload(User.posts).joinedload(Post.subreddit),
+        joinedload(User.comments).joinedload(Comment.votes)
+    ).get(user_id)
+    return user
+
+
+def get_user_data(user_id):
+    user = User.query.options(
+        joinedload(User.posts).joinedload(Post.votes),
+        joinedload(User.posts).joinedload(Post.subreddit),
+        joinedload(User.comments).joinedload(Comment.votes)
+    ).get(user_id)
+    return user
 
 def determineKarma(user_id):
     # Get ids of posts and comments made by user
@@ -58,8 +86,18 @@ class User(db.Model, UserMixin):
     @classmethod
     def create(cls, qty):
         fake = Faker()
-        profile_data = [fake.profile() for i in range(qty)]
-        new_users = [cls(username=user['username'], email=user['mail'], password="password", bio=fake.paragraph()) for user in profile_data]
+        profiles = []
+        emails = set()
+        usernames = set()
+
+        while len(profiles) < qty:
+            profile = fake.profile()
+            if profile['mail'] not in emails and profile['username'] not in usernames:
+                profiles.append(profile)
+                emails.add(profile['mail'])
+                usernames.add(profile['username'])
+
+        new_users = [cls(username=user['username'], email=user['mail'], password="password", bio=fake.paragraph()) for user in profiles]
         return new_users
 
 
@@ -74,9 +112,10 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-
-
     def to_dict(self):
+        # posts = get_user_posts(self.id)
+        # comments = get_user_comments(self.id)
+        user = get_user_data(self.id)
         return {
             'id': self.id,
             'username': self.username,
@@ -84,13 +123,16 @@ class User(db.Model, UserMixin):
             'avatar': self.avatar,
             'bio': self.bio,
             'created_at': self.created_at,
-            'num_posts': len(self.posts),
-            'num_comments': len(self.comments),
-            'subreddits': {sub.name : sub.to_short_dict() for sub in self.subreddits},
+            'num_posts': len(user.posts),
+            'num_comments': len(user.comments),
+            'subreddits': {sub.name : sub.to_short_dict() for sub in user.subreddits},
             'karma': determineKarma(self.id),
         }
 
     def to_short_dict(self):
+        # posts = get_user_posts(self.id)
+        # comments = get_user_comments(self.id)
+        user = get_user_data(self.id)
         return {
             'id': self.id,
             'username': self.username,
@@ -98,8 +140,8 @@ class User(db.Model, UserMixin):
             'avatar': self.avatar,
             'bio': self.bio,
             'created_at': self.created_at,
-            'num_posts': len(self.posts),
-            'num_comments': len(self.comments),
+            'num_posts': len(user.posts),
+            'num_comments': len(user.comments),
             'karma': determineKarma(self.id),
         }
 
