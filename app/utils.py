@@ -1,7 +1,7 @@
 from itertools import islice
 
 
-def chunk(it, size=100_000):
+def chunk(it, size=1_000_000):
     # Convert iterable into iterator object
 
     # Take next 'size' from iterator using islice

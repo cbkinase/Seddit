@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from random import choice
+from random import choices
 
 class PostVote(db.Model):
     __tablename__ = 'post_votes'
@@ -18,10 +18,12 @@ class PostVote(db.Model):
     @classmethod
     def create(cls, qty, users, posts):
         vote_options = ["upvote", "downvote", "upvote", "upvote", "upvote", "upvote", "upvote", "upvote", "upvote"] # seed more upvotes than downvotes
-        return [cls(
-            user=choice(users),
-            post=choice(posts),
-            vote=choice(vote_options) ) for _ in range(qty)]
+
+        user_choices = choices(users, k=qty)
+        post_choices = choices(posts, k=qty)
+        vote_choices = choices(vote_options, k=qty)
+
+        return [cls(user_id=user.id, post_id=post.id, vote=vote) for user, post, vote in zip(user_choices, post_choices, vote_choices)]
 
     def to_dict(self):
         return {

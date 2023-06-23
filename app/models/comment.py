@@ -2,14 +2,17 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from random import choice, randint
 from faker import Faker
 
+
 def determine_votes(votes):
-    num_upvotes = len([vote for vote in votes if vote.vote == "upvote"])
-    num_downvotes = len([vote for vote in votes if vote.vote == "downvote"])
+    num_upvotes = 0
+    num_downvotes = 0
+    for vote in votes:
+        if vote.vote == "upvote":
+            num_upvotes += 1
+        elif vote.vote == "downvote":
+            num_downvotes += 1
     return num_upvotes - num_downvotes
 
-    # num_votes = len(votes)
-    # num_downvotes = len([vote for vote in votes if vote.vote == "downvote"])
-    # return num_votes - (2 * num_downvotes)
 
 class Comment(db.Model):
     __tablename__ = 'comments'
@@ -21,7 +24,7 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=True, index=True)
     post_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("posts.id")), nullable=True, index=True)
     parent_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("comments.id")), nullable=True, index=True)
-    content = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text, nullable=False, index=True)
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(db.DateTime, default=db.func.now())
 
@@ -40,10 +43,11 @@ class Comment(db.Model):
         for i in range(qty):
             rand_post = choice(posts)
             rand_comment = choice(rand_post.comments) if (len(comments) > 0 and randint(0, 1) and len(rand_post.comments)) else None
+
             new_comment = cls(author=choice(users),
                     post=rand_post,
                     content = fake.sentence(nb_words = randint(3, 70)),
-                    parent = rand_comment)
+                    parent = rand_comment if rand_comment else None)
             comments.append(new_comment)
         return comments
 
