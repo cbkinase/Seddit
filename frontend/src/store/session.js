@@ -98,14 +98,13 @@ export const editUserInfo = (userPayload, userId) => async (dispatch) => {
         body: userPayload,
     });
 
+    const data = await res.json();
+
     if (res.ok) {
-        const data = await res.json();
         dispatch(setUser(data));
-        return data;
-    } else {
-        const data = await res.json();
-        return data;
     }
+
+    return data;
 };
 
 export default function reducer(state = initialState, action) {

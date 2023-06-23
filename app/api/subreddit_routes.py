@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import User, Subreddit, db, Post
+from ..forms.aws_form import create_upload_form
+from app.aws_helpers import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 
 subreddit_routes = Blueprint('s', __name__)
 
@@ -74,7 +76,6 @@ def create_subreddit():
         return {"errors": ["That subreddit name is already taken"]}, 400
 
 
-
 @subreddit_routes.route("/<int:subreddit_id>", methods=["PUT"])
 @login_required
 def edit_subreddit(subreddit_id):
@@ -89,8 +90,46 @@ def edit_subreddit(subreddit_id):
     if current_user.id != subreddit.owner_id:
         return {"errors": ["Attempted editor is not owner"]}, 403
 
-    for key, value in request.get_json().items():
-        setattr(subreddit, key, value)
+    form_data = request.form
+    main_pic = request.files.get("main_pic")
+    about = form_data.get("about")
+    category = form_data.get("category")
+    prev_main_pic = subreddit.main_pic
+
+    upload = {}
+
+    if main_pic:
+        form = create_upload_form("main_pic")
+        form['csrf_token'].data = request.cookies['csrf_token']
+
+        if form.validate_on_submit():
+            main_pic.filename = get_unique_filename(main_pic.filename)
+            upload = upload_file_to_s3(main_pic, "subreddits")
+
+            if "url" not in upload:
+                return {"errors": ["Failed to upload to AWS"]}, 500
+        else:
+            return {"errors": ["Failed AWS upload verification(s)"]}, 415
+
+        subreddit.main_pic = upload.get("url")
+        try:
+            remove_file_from_s3(prev_main_pic)
+        except:
+            print("Failed to remove existing picture. Probably a seed delete.")
+
+    if about:
+        subreddit.about = about
+    if category:
+        subreddit.category = category
+
+    if form_data.get("main_pic") == "null":
+        if subreddit.main_pic:
+            try:
+                remove_file_from_s3(subreddit.main_pic)
+            except:
+                pass
+        subreddit.main_pic = "https://i.redd.it/72kquwbkihq91.jpg"
+
 
     db.session.commit()
     return subreddit.to_dict()
@@ -109,6 +148,12 @@ def delete_subreddit(subreddit_id):
 
     if current_user.id != subreddit.owner_id:
         return {"errors": ["Attempted deleter is not owner"]}, 403
+
+    if subreddit.main_pic:
+        try:
+            remove_file_from_s3(subreddit.main_pic)
+        except:
+            print("Failed to delete from AWS. Probably a seed post delete...")
 
     db.session.delete(subreddit)
     db.session.commit()
