@@ -95,35 +95,37 @@ def edit_user_info(user_id):
     return user.to_dict()
 
 
-# @user_routes.route("/u/<int:user_id>", methods=["PUT"])
-# @login_required
-# def edit_user_info(user_id):
-#     if current_user.id != user_id:
-#         return {"errors": "Not authorized to perform this action"}, 403
-#     user = User.query.get(user_id)
-
-#     if not user:
-#         return {"errors": f"User #'{user_id}' not found"}, 404
-
-#     for key, value in request.get_json().items():
-#         setattr(user, key, value)
-
-#     db.session.commit()
-
-#     return user.to_dict()
-
-
 @user_routes.route("/u/<int:user_id>/comments")
 def get_user_comments(user_id):
     user = User.query.get(user_id)
-    comments = Comment.query.filter_by(user_id=user_id).options(joinedload(Comment.votes)).all()
 
     if not user:
         return {"errors": f"User #'{user_id}' not found"}, 404
 
-    # return {comment.id: comment.to_short_dict() for comment in user.comments}
+    page = request.args.get('page', type=int)
+    per_page = request.args.get('per_page', type=int)
+    limit = None
+    offset = None
+
+    if page and per_page:
+        offset = (page - 1) * per_page
+        limit = per_page
+
+    comments = db.session.query(Comment)\
+        .options(joinedload(Comment.votes))\
+        .filter(Comment.user_id == user_id)\
+        .order_by(
+            Comment.id.desc(),
+            # Comment.created_at.desc(),
+    )
+
+    if (limit):
+        comments = comments.limit(limit)
+    if (offset):
+        comments = comments.offset(offset)
+
     return {"Comments": {comment.id: comment.to_shortest_dict() for comment in comments}}
-    # return {"Comments": {comment.id: comment.to_shortest_dict() for comment in user.comments}}
+
 
 @user_routes.route("/u/<username>/posts")
 def get_user_posts(username):

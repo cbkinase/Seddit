@@ -9,10 +9,11 @@ const addComment = (comment) => {
     };
 };
 
-const loadComments = (comments) => {
+const loadComments = (comments, page) => {
     return {
         type: LOAD_COMMENTS,
         comments,
+        page,
     };
 };
 
@@ -33,12 +34,16 @@ export const getAllPostComments = (postId) => async (dispatch) => {
     }
 };
 
-export const getAllUserComments = (userId) => async (dispatch) => {
-    const res = await fetch(`/api/users/u/${userId}/comments`);
+export const getAllUserComments = (userId, page, per_page) => async (dispatch) => {
+    let fetchUrl = `/api/users/u/${userId}/comments`
+    if (page && per_page) {
+        fetchUrl += `?page=${page}&per_page=${per_page}`;
+    }
+    const res = await fetch(fetchUrl);
 
     if (res.ok) {
         const data = await res.json();
-        dispatch(loadComments(data));
+        dispatch(loadComments(data, page));
         return data;
     }
 }
@@ -145,6 +150,14 @@ const initialState = { Comments: {} };
 export default function reducer(state = initialState, action) {
     switch(action.type) {
         case LOAD_COMMENTS: {
+            if (action.page && action.page > 1) {
+                return {
+                    ...state,
+                    Comments: {
+                        ...state.Comments, ...action.comments.Comments
+                    }
+                }
+            }
             return action.comments;
         }
         case ADD_COMMENT: {

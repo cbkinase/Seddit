@@ -3,20 +3,20 @@ import { useEffect, useState } from "react";
 import { getAllUserComments } from "../../store/comments";
 import LoadingSpinner from "../LoadingSpinner";
 import SingleComment from "../CommentSection/SingleComment";
+import useInfiniteScrolling from "../../hooks/useInfiniteScrolling";
 
 export default function ShortComments({ selectedUser, currUser, IsUserComments }) {
     const dispatch = useDispatch();
+    const page = useInfiniteScrolling();
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        dispatch(getAllUserComments(selectedUser.id)).then(() => setIsLoaded(true));
-    }, [dispatch, selectedUser])
+        dispatch(getAllUserComments(selectedUser.id, page, 10)).then(() => setIsLoaded(true));
+    }, [dispatch, selectedUser, page])
 
     const comments = useSelector((state) => state.comments.Comments);
 
-    const sortingFunction = (a, b) =>
-        Date.parse(b.created_at) -
-        Date.parse(a.created_at)
+    const sortingFunction = (a, b) => b.id - a.id
 
     return (
         isLoaded
