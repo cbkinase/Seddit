@@ -1,12 +1,16 @@
 from app.models import db, environment, SCHEMA, PostVote
 from sqlalchemy.sql import text
+from ..utils import chunk
 
 
 def seed_post_votes(users, posts, qty=5000):
     users = [user for user in users if user.id != 1]
     dummy_votes = PostVote.create(qty, users, posts)
-    db.session.add_all(dummy_votes)
-    db.session.commit()
+
+    for chnk in chunk(dummy_votes):
+        db.session.add_all(chnk)
+        db.session.commit()
+
     return dummy_votes
 
 
@@ -18,7 +22,8 @@ def seed_post_votes(users, posts, qty=5000):
 # it will reset the primary keys for you as well.
 def undo_post_votes():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.post_votes RESTART IDENTITY CASCADE;")
+        db.session.execute(
+            f"TRUNCATE table {SCHEMA}.post_votes RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM post_votes"))
 

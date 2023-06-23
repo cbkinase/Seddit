@@ -1,11 +1,15 @@
 from app.models import db, Post, environment, SCHEMA
 from sqlalchemy.sql import text
+from ..utils import chunk
 
 
 def seed_posts(users, subreddits, qty=200):
     dummy_posts = Post.create(qty, users, subreddits)
-    db.session.add_all(dummy_posts)
-    db.session.commit()
+
+    for chnk in chunk(dummy_posts):
+        db.session.add_all(chnk)
+        db.session.commit()
+
     return dummy_posts
 
 

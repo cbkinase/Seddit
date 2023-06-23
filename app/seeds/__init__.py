@@ -28,15 +28,15 @@ def seed():
         undo_subreddits()
         undo_users()
 
-    users = seed_users(50)
-    subreddits = seed_subreddits(users, 50)
-    posts = seed_posts(users, subreddits, 500)
-    comments = seed_comments(users, posts, 5000)
-    post_votes = seed_post_votes(users, posts, 10_000)
+    users = seed_users(25)
+    subreddits = seed_subreddits(users, 25)
+    posts = seed_posts(users, subreddits, 300)
+    comments = seed_comments(users, posts, 8500)
+    post_votes = seed_post_votes(users, posts, 15_000)
     if environment == "production":
-        comment_votes = seed_comment_votes(users, comments, 100_000)
+        comment_votes = seed_comment_votes(users, comments, 200_000)
     else:
-        comment_votes = seed_comment_votes(users, comments, 100_000)
+        comment_votes = seed_comment_votes(users, comments, 200_000)
 
     # Add other seed functions here
 

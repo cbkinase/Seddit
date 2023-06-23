@@ -1,11 +1,15 @@
 from app.models import db, Comment, environment, SCHEMA
 from sqlalchemy.sql import text
+from ..utils import chunk
 
 
 def seed_comments(users, posts, qty=1500):
     dummy_comments = Comment.create(qty, users, posts)
-    db.session.add_all(dummy_comments)
-    db.session.commit()
+
+    for chnk in chunk(dummy_comments):
+        db.session.add_all(chnk)
+        db.session.commit()
+
     return dummy_comments
 
 

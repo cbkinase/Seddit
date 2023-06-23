@@ -1,12 +1,16 @@
 from app.models import db, environment, SCHEMA, CommentVote
 from sqlalchemy.sql import text
+from ..utils import chunk
 
 
 def seed_comment_votes(users, comments, qty=2000):
     users = [user for user in users if user.id != 1]
     dummy_votes = CommentVote.create(qty, users, comments)
-    db.session.add_all(dummy_votes)
-    db.session.commit()
+
+    for chnk in chunk(dummy_votes):
+        db.session.add_all(chnk)
+        db.session.commit()
+
     return dummy_votes
 
 
