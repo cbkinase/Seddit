@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getAllUserComments } from "../../store/comments";
 import LoadingSpinner from "../LoadingSpinner";
 import SingleComment from "../CommentSection/SingleComment";
@@ -20,16 +20,23 @@ export default function ShortComments({ selectedUser, currUser, IsUserComments }
 
     return (
         isLoaded
-        ? <>
-        <div>
-            {Object.values(comments).sort(sortingFunction).map((comment) =>
-            <>
+            ? <>
+                <div>
+                    {Object.values(comments).sort(sortingFunction).map((comment) =>
+                        <React.Fragment key={comment.id}>
 
-            <SingleComment IsUserComments={IsUserComments} key={comment.id} comment={comment} user={currUser} soloComment={true} sortingFunction={sortingFunction} post={comment.post_info} />
-            <div style={{height: "5px", backgroundColor: "rgb(218, 224, 230)"}}></div>
-            </> )}
-        </div>
-        </>
-        : <LoadingSpinner />
+                            <SingleComment
+                                IsUserComments={IsUserComments}
+                                comment={comment}
+                                user={currUser}
+                                soloComment={true}
+                                sortingFunction={sortingFunction}
+                                post={comment.post_info}
+                            />
+                            <div style={{ height: "5px", backgroundColor: "rgb(218, 224, 230)" }}></div>
+                        </React.Fragment>)}
+                </div>
+            </>
+            : <LoadingSpinner />
     )
 }
