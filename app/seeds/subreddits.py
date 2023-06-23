@@ -3,15 +3,15 @@ from sqlalchemy.sql import text
 from random import sample, randint
 
 
-# Adds a demo user, you can add other users here if you want
 def seed_subreddits(users, qty=15):
     dummy_subreddits = Subreddit.create(qty, users)
 
     for subreddit in dummy_subreddits:
-        db.session.add(subreddit)
         new_subs = sample(users, randint(2, len(users)))
         for sub in new_subs:
             subreddit.subscribers.append(sub)
+
+    db.session.add_all(dummy_subreddits)
     db.session.commit()
 
     return dummy_subreddits
