@@ -8,8 +8,8 @@ class CommentVote(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
-    comment_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("comments.id")))
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), index=True)
+    comment_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("comments.id")), index=True)
     vote = db.Column(db.String, nullable=False)
 
     user = db.relationship("User", back_populates="comment_votes")

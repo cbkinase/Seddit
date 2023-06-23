@@ -2,16 +2,31 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from faker import Faker
+from sqlalchemy.orm import joinedload
+from app.models.post import Post
+from app.models.comment import Comment
 
 
 def determine_votes(votes):
-    num_upvotes = len(list(filter(lambda vote: vote.vote == "upvote", votes)))
-    num_downvotes = len(list(filter(lambda vote: vote.vote == "downvote", votes)))
-    return num_upvotes - num_downvotes
+    vote_count = 0
+    for vote in votes:
+        if vote.vote == "upvote":
+            vote_count += 1
+        elif vote.vote == "downvote":
+            vote_count -= 1
+    return vote_count
 
+def get_posts_and_comments(user_id):
+    posts = Post.query.filter_by(user_id=user_id).options(joinedload('votes')).all()
+    comments = Comment.query.filter_by(user_id=user_id).options(joinedload('votes')).all()
+    return posts, comments
 
-def determineKarma(posts, comments):
+def determineKarma(user_id):
+    posts, comments = get_posts_and_comments(user_id)
     return sum([determine_votes(comment.votes) for comment in comments]) + sum([determine_votes(post.votes) for post in posts])
+
+# def determineKarma(posts, comments):
+#     return sum([determine_votes(comment.votes) for comment in comments]) + sum([determine_votes(post.votes) for post in posts])
 
 
 
@@ -24,7 +39,7 @@ class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), nullable=False, unique=True, index=True)
-    email = db.Column(db.String(255), nullable=False, unique=True)
+    email = db.Column(db.String(255), nullable=False, unique=True, index=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     avatar = db.Column(db.String(255), default="https://www.redditstatic.com/avatars/avatar_default_02_A5A4A4.png")
     bio = db.Column(db.String(2000))
@@ -72,7 +87,7 @@ class User(db.Model, UserMixin):
             'num_posts': len(self.posts),
             'num_comments': len(self.comments),
             'subreddits': {sub.name : sub.to_short_dict() for sub in self.subreddits},
-            'karma': determineKarma(self.posts, self.comments),
+            'karma': determineKarma(self.id),
         }
 
     def to_short_dict(self):
@@ -85,7 +100,7 @@ class User(db.Model, UserMixin):
             'created_at': self.created_at,
             'num_posts': len(self.posts),
             'num_comments': len(self.comments),
-            'karma': determineKarma(self.posts, self.comments),
+            'karma': determineKarma(self.id),
         }
 
     def to_really_short_dict(self):
