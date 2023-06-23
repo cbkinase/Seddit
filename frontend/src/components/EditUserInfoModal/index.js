@@ -92,7 +92,7 @@ function EditModal({ user }) {
                         {error}
                     </li>
                 ))}
-                <form onSubmit={handleSubmit}>
+                <form encType="multipart/form-data" onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label className="create-comm-label" htmlFor="name">
                             Username

@@ -62,17 +62,17 @@ export const createSubreddit = (content) => async (dispatch) => {
 export const editSubreddit = (content, subredditId) => async (dispatch) => {
     const res = await fetch(`/api/s/${subredditId}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(content),
+        body: content,
     });
 
+    const data = await res.json();
+
     if (res.ok) {
-        const data = await res.json();
         dispatch(addSubreddit(data));
-        return data;
-    } else {
-        return { errors: "Name already taken" };
+
     }
+
+    return data;
 };
 
 export const destroySubreddit = (subreddit) => async (dispatch) => {
