@@ -1,10 +1,11 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import './quill-custom.css';
 
 function RichTextEditor({ content, setContent, setTextContent, isPost, isCommunity }) {
   const editorRef = useRef(null);
+  const [isFocused, setIsFocused] = useState(false);
   let placeholder = "What are your thoughts?";
 
   if (isPost || isCommunity) placeholder = "Enter text (optional)";
@@ -14,6 +15,15 @@ function RichTextEditor({ content, setContent, setTextContent, isPost, isCommuni
     setContent(content);
     setTextContent(editor.getText());
   };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
 
   useEffect(() => {
     // Ensures that on component mount, the calling prop
@@ -40,16 +50,30 @@ function RichTextEditor({ content, setContent, setTextContent, isPost, isCommuni
     'list', 'bullet',
     'link'
   ]
-
+  let divClassName;
+  if (!isFocused) {
+    divClassName = "";
+  }
+  else {
+    if (!isPost && !isCommunity) {
+      divClassName = "comment-rte";
+    }
+    else {
+      divClassName = "other-rte";
+    }
+  }
   return (
-    <div>
+    <div className={divClassName}>
       <ReactQuill
+        style={{borderRadius: "5px"}}
         ref={editorRef}
         modules={modules}
         formats={formats}
         placeholder={placeholder}
         value={content}
         onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       />
     </div>
   );
