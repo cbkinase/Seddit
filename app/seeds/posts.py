@@ -7,7 +7,7 @@ def seed_posts(users, subreddits, qty=200):
     dummy_posts = Post.create(qty, users, subreddits)
 
     for chnk in chunk(dummy_posts):
-        db.session.bulk_save_objects(chnk)
+        db.session.add_all(chnk)
         db.session.commit()
 
     return dummy_posts
