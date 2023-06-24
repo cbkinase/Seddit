@@ -102,7 +102,7 @@ function Navigation({ isLoaded }) {
                     <NavLink
                     style={{textDecoration: "none"}}
                     exact to="/explore">
-                        <button className="button-join head-nav-btn head-nav-btn-explore">
+                        <button className="button-join head-nav-btn head-nav-btn-explore hide-if-300">
                             Explore<span className="diff-text hide-if-small">&nbsp;Communities</span>
                         </button>
                     </NavLink>
@@ -121,7 +121,7 @@ function Navigation({ isLoaded }) {
                         />
                     )}
                 </div>
-                <div style={{minWidth: "30%", justifyContent: "flex-end", display: "flex"}}>
+                <div className="third-nav-sec">
                 {isLoaded && sessionUser && (
                     <li>
                         <NewProfileButton user={sessionUser} />
@@ -148,14 +148,14 @@ function Navigation({ isLoaded }) {
                             buttonText="Log In"
                             onItemClick={closeMenu}
                             modalComponent={<LoginFormModal />}
-                            className="button-alt"
+                            className="button-alt hide-if-800"
                         />
 
                         <OpenModalButton
                             buttonText="Sign Up"
                             onItemClick={closeMenu}
                             modalComponent={<SignupFormModal />}
-                            className="button-main"
+                            className="button-main signup-btn-proper"
                         />
                     </div>
                 )}
