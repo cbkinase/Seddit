@@ -66,7 +66,7 @@ export default function CommentInput({
                     ? null
                     :
                         <p style={{ marginBottom: "4px", fontSize: "12px" }}>
-                            Comment as
+                            Comment as{" "}
                                 <NavLink className="user-commenter-navlink" exact to={`/u/${user.username}`}>
                                     {user.username}
                                 </NavLink>
