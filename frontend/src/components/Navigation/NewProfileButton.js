@@ -2,12 +2,21 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/session";
 import { useHistory } from "react-router-dom";
+import { useModal } from "../../context/Modal";
+import EditModal from "../EditUserInfoModal";
 
 function NewProfileButton({ user }) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
     const history = useHistory();
+    const { setModalContent, setOnModalClose } = useModal();
+
+    const onModalItemClick = (modalComponent, onModalClose, onItemClick) => {
+        if (onModalClose) setOnModalClose(onModalClose);
+        setModalContent(modalComponent);
+        if (onItemClick) onItemClick();
+    };
 
     const openMenu = () => {
         if (showMenu) return;
@@ -99,6 +108,11 @@ function NewProfileButton({ user }) {
                         <li onClick={handleProfileClick} className="dropdown-toggled-clickable">
                             <span></span>
                             <p className="dropdown-toggled-panel">Profile</p>
+                        </li>
+
+                        <li onClick={e => onModalItemClick(<EditModal user={user} />)} className="dropdown-toggled-clickable">
+                            <span></span>
+                            <p className="dropdown-toggled-panel">User Settings</p>
                         </li>
 
                         <div className="dropdown-sep"></div>

@@ -10,12 +10,30 @@ search_routes = Blueprint('search', __name__)
 @search_routes.route("/", methods=["POST"])
 def search_all():
     search = request.get_json().get("search")
+    page = request.args.get('page', type=int)
+    per_page = request.args.get('per_page', type=int)
 
     try:
-        posts = db.session.query(Post).filter(or_(Post.title.ilike(f"%{search}%"), Post.content.ilike(f"%{search}%"))).all()
-        comments = db.session.query(Comment).filter(Comment.content.ilike(f"%{search}%")).all()
-        users = db.session.query(User).filter(User.username.ilike(f"%{search}%")).all()
-        subreddits = db.session.query(Subreddit).filter(Subreddit.name.ilike(f"%{search}%")).all()
+        posts = db.session.query(Post)\
+            .filter(or_(Post.title.ilike(f"%{search}%"), Post.content.ilike(f"%{search}%")))\
+            .order_by(Post.id.desc())\
+            .paginate(page=page, per_page=per_page)
+
+        comments = db.session.query(Comment)\
+            .filter(Comment.content.ilike(f"%{search}%"))\
+            .order_by(Comment.id.desc())\
+            .paginate(page=page, per_page=per_page)
+
+        users = db.session.query(User)\
+            .filter(User.username.ilike(f"%{search}%"))\
+            .order_by(User.id.desc())\
+            .paginate(page=page, per_page=per_page)
+
+        subreddits = db.session.query(Subreddit)\
+            .filter(Subreddit.name.ilike(f"%{search}%"))\
+            .order_by(Subreddit.id.desc())\
+            .paginate(page=page, per_page=per_page)
+
     except SQLAlchemyError as e:
         print(f"Error executing query: {e}")
         return {"errors": "Query failed"}, 500

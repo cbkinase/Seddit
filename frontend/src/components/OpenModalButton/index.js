@@ -32,7 +32,7 @@ function OpenModalButton({
             )}
 
             {renderDeleteButtonWithPadding && (
-                <i style={{padding: "6px 6px", height: "17px"}} className="fas fa-trash"></i>
+                <i style={{ padding: "6px 6px", height: "17px" }} className="fas fa-trash"></i>
             )}
 
             {renderEditButton && (
@@ -40,30 +40,32 @@ function OpenModalButton({
             )}
             {renderShareButton && (
                 <i
-                // style={{ marginRight: "5px" }}
-                className="fa fa-share"
-                aria-hidden="true"
-            ></i>
+                    // style={{ marginRight: "5px" }}
+                    className="fa fa-share"
+                    aria-hidden="true"
+                ></i>
             )}
             {commentNotLoggedIn ? <>
                 <i
-        // style={{ marginRight: "5px" }}
-        className="fa fa-comments"
-        aria-hidden="true"
-        ></i>
-        <span style={{marginLeft: "5px", color: "grey", fontSize: "14px"}}>Reply</span>
+                    // style={{ marginRight: "5px" }}
+                    className="fa fa-comments"
+                    aria-hidden="true"
+                ></i>
+                <span style={{ marginLeft: "5px", color: "grey", fontSize: "14px" }}>Reply</span>
             </> : null}
-            <span className={hideTextIfSmallScreen
-                ? "hide-if-small"
-                : buttonText === "Create"
-                  || buttonText === "Create Post"
-                  || buttonText === "Edit Community"
-                  || buttonText === "Delete Community"
-                  || buttonText === "Log In"
-                  || buttonText === "Sign Up"
-                    ? "diff-text"
-                    : ""}>{buttonText}</span>
-                    <span className="hide-if-small diff-text">{addOnText}</span>
+            <span>
+                <span className={hideTextIfSmallScreen
+                    ? "hide-if-small"
+                    : buttonText === "Create"
+                        || buttonText === "Create Post"
+                        || buttonText === "Edit Community"
+                        || buttonText === "Delete Community"
+                        || buttonText === "Log In"
+                        || buttonText === "Sign Up"
+                        ? "diff-text"
+                        : ""}>{buttonText}</span>
+                <span className="hide-if-small diff-text">{addOnText}</span>
+            </span>
         </button>
     );
 }

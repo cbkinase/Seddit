@@ -77,7 +77,7 @@ def edit_user_info(user_id):
 
     if username:
             user.username = username
-    if bio:
+    if bio or bio == "":
             user.bio = bio
 
     if form_data.get("avatar") == "null":

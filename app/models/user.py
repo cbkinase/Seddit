@@ -6,7 +6,7 @@ from app.models.post import Post
 from app.models.comment import Comment
 from app.models.post_votes import PostVote
 from app.models.comment_votes import CommentVote
-from sqlalchemy.sql import func
+from sqlalchemy.sql import func, select
 from sqlalchemy.orm import joinedload
 
 
@@ -43,11 +43,11 @@ def determineKarma(user_id):
     comment_ids = db.session.query(Comment.id).filter(Comment.user_id == user_id).subquery()
 
     # Get votes on those posts and comments
-    post_upvotes = db.session.query(func.count(PostVote.id)).filter(PostVote.post_id.in_(post_ids), PostVote.vote == "upvote").scalar()
-    post_downvotes = db.session.query(func.count(PostVote.id)).filter(PostVote.post_id.in_(post_ids), PostVote.vote == "downvote").scalar()
+    post_upvotes = db.session.query(func.count(PostVote.id)).filter(PostVote.post_id.in_(select(post_ids)), PostVote.vote == "upvote").scalar()
+    post_downvotes = db.session.query(func.count(PostVote.id)).filter(PostVote.post_id.in_(select(post_ids)), PostVote.vote == "downvote").scalar()
 
-    comment_upvotes = db.session.query(func.count(CommentVote.id)).filter(CommentVote.comment_id.in_(comment_ids), CommentVote.vote == "upvote").scalar()
-    comment_downvotes = db.session.query(func.count(CommentVote.id)).filter(CommentVote.comment_id.in_(comment_ids), CommentVote.vote == "downvote").scalar()
+    comment_upvotes = db.session.query(func.count(CommentVote.id)).filter(CommentVote.comment_id.in_(select(comment_ids)), CommentVote.vote == "upvote").scalar()
+    comment_downvotes = db.session.query(func.count(CommentVote.id)).filter(CommentVote.comment_id.in_(select(comment_ids)), CommentVote.vote == "downvote").scalar()
 
     post_upvotes = post_upvotes if post_upvotes is not None else 0
     post_downvotes = post_downvotes if post_downvotes is not None else 0
