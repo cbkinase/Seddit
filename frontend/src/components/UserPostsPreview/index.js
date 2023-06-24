@@ -11,7 +11,7 @@ export default function UserPostsPreview({ user, currentUser }) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getUserPosts(user.username, page, 10)).then(() => setIsLoaded(true))
+        dispatch(getUserPosts(user.username, page, 5)).then(() => setIsLoaded(true))
     }, [dispatch, user, page]);
 
     const posts = useSelector((state) => state.posts.Posts);

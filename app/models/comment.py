@@ -42,7 +42,8 @@ class Comment(db.Model):
         comments = []
         for i in range(qty):
             rand_post = choice(posts)
-            rand_comment = choice(rand_post.comments) if (len(comments) > 0 and randint(0, 1) and len(rand_post.comments)) else None
+            rand_post_comments = rand_post.comments
+            rand_comment = choice(rand_post_comments) if (len(comments) > 0 and randint(0, 1) and len(rand_post_comments)) else None
 
             new_comment = cls(author=choice(users),
                     post=rand_post,

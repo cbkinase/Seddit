@@ -11,7 +11,7 @@ export default function AllPostsPreview({ user }) {
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        dispatch(getAllPosts(page, 10)).then(() => setIsLoaded(true));
+        dispatch(getAllPosts(page, 5)).then(() => setIsLoaded(true));
     }, [dispatch, page]);
 
     const posts = useSelector((state) => state.posts.Posts);
