@@ -9,6 +9,14 @@ def get_post_with_votes(post_id):
     return post
 
 
+def get_post_with_votes_and_comments(post_id):
+    post = db.session.query(Post).options(
+        joinedload(Post.comments),
+        joinedload(Post.votes)
+    ).get(post_id)
+    return post
+
+
 def determine_votes(votes):
     num_upvotes = 0
     num_downvotes = 0
@@ -58,6 +66,7 @@ class Post(db.Model):
 
 
     def to_dict(self):
+        post = get_post_with_votes_and_comments(self.id)
         return {
             'id': self.id,
             'author_info': self.author.to_really_short_dict(),
@@ -67,12 +76,13 @@ class Post(db.Model):
             'attachment': self.attachment,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
-            'num_comments': len(self.comments),
-            'upvotes': determine_votes(self.votes),
-            'reaction_info': {vote.user_id: vote.to_dict() for vote in self.votes},
+            'num_comments': len(post.comments),
+            'upvotes': determine_votes(post.votes),
+            'reaction_info': {vote.user_id: vote.to_dict() for vote in post.votes},
         }
 
     def to_short_dict(self):
+        post = get_post_with_votes_and_comments(self.id)
         return {
             'id': self.id,
             'user_id': self.user_id,
@@ -82,9 +92,9 @@ class Post(db.Model):
             'attachment': self.attachment,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
-            'num_comments': len(self.comments),
-            'upvotes': determine_votes(self.votes),
-            'reaction_info': {vote.user_id: vote.to_dict() for vote in self.votes},
+            'num_comments': len(post.comments),
+            'upvotes': determine_votes(post.votes),
+            'reaction_info': {vote.user_id: vote.to_dict() for vote in post.votes},
         }
 
     def to_shortest_dict(self):

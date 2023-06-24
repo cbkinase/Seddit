@@ -31,10 +31,10 @@ def seed():
     prod_env_val = 'production' # change this from 'production' to seed a lot
 
     base_posts = 300
-    base_comments = 4500
-    base_pv = 10_000
-    base_cv = 100_000
-    scaling_factor = 1
+    base_comments = base_posts * 15
+    base_pv = base_posts * 40
+    base_cv = base_comments * 20
+    scaling_factor = 10
 
     num_users = 30 if environment == prod_env_val else 30
     num_subreddits = 15 if environment == prod_env_val else 15

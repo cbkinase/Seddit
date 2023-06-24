@@ -19,9 +19,10 @@ def search_all():
     except SQLAlchemyError as e:
         print(f"Error executing query: {e}")
         return {"errors": "Query failed"}, 500
+
     return {
-    "posts": [post.to_shortest_dict() for post in posts],
-    "comments": [comment.to_shortest_dict() for comment in comments],
-    "users": [user.to_really_short_dict() for user in users],
-    "subreddits": [subreddit.to_med_dict() for subreddit in subreddits],
+    "posts": [post.to_shortest_dict() for post in posts] if posts else [],
+    "comments": [comment.to_shortest_dict() for comment in comments] if comments else [],
+    "users": [user.to_really_short_dict() for user in users] if users else [],
+    "subreddits": [subreddit.to_med_dict() for subreddit in subreddits] if subreddits else [],
 }
