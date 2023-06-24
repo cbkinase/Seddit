@@ -836,6 +836,12 @@ body {
     min-width: max-content;
 }
 
+.third-nav-sec {
+    min-width: 30%;
+    justify-content: flex-end;
+    display: flex;
+}
+
 /* .head-nav-btn-explore {
     margin-bottom: 4px;
 }
@@ -951,6 +957,19 @@ body {
         /* padding-right: 0px; */
     }
 
+    /* .third-nav-sec {
+        min-width: max-content;
+        align-items: center;
+    } */
+
+    .hide-if-800 {
+        display: none;
+    }
+
+    .signup-btn-proper {
+        margin-top: 1px;
+    }
+
     .subreddit-title-preview {
         /* flex-direction: column; */
         /* justify-content: center;
@@ -1055,6 +1074,12 @@ body {
         padding-right: 10px; */
     }
 
+    .signup-btn-proper span {
+        display: block;
+        width: 60px;
+        min-width: min-content;
+    }
+
     /*
 
     .logout-btn {
@@ -1072,4 +1097,11 @@ body {
     .head-nav-btn-create {
         margin-bottom: 4px;
     } */
+}
+
+@media screen and (max-width: 300px) {
+    .hide-if-300 {
+        display: none;
+    }
+
 }
