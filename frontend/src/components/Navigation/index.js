@@ -98,7 +98,7 @@ function Navigation({ isLoaded }) {
                         </div>
                     </NavLink>
                 </li>
-                <div style={{display: "flex"}}>
+                <div style={{display: "flex", minWidth: "40%", justifyContent: "center"}}>
                     <NavLink
                     style={{textDecoration: "none"}}
                     exact to="/explore">
@@ -115,17 +115,19 @@ function Navigation({ isLoaded }) {
                         <OpenModalButton
                             buttonText="Create"
                             addOnText="&nbsp;a Community"
+                            id="create-comm-header-btn"
                             className="button-leave head-nav-btn head-nav-btn-create"
                             modalComponent={<CreateCommunityModal />}
                         />
                     )}
                 </div>
-                {isLoaded && sessionUser && !onUserOwnPage(sessionUser) && (
+                <div style={{minWidth: "30%", justifyContent: "flex-end", display: "flex"}}>
+                {isLoaded && sessionUser && (
                     <li>
                         <NewProfileButton user={sessionUser} />
                     </li>
                 )}
-                {isLoaded && sessionUser && onUserOwnPage(sessionUser) && (
+                {/* {isLoaded && sessionUser && onUserOwnPage(sessionUser) && (
                     <div style={{display: "flex"}}>
                         <OpenModalButton
                             className="fa fa-cog user-profile-edit-btn"
@@ -139,7 +141,7 @@ function Navigation({ isLoaded }) {
                             Log out
                         </button>
                     </div>
-                )}
+                )} */}
                 {isLoaded && !sessionUser && (
                     <div className="login-signup-btn-container">
                         <OpenModalButton
@@ -157,6 +159,7 @@ function Navigation({ isLoaded }) {
                         />
                     </div>
                 )}
+                </div>
             </ul>
         </div>
     );

@@ -400,6 +400,7 @@ acronym {
     font-size: 16px;
     font-weight: 600;
     min-height: 33px;
+    max-height: 33px;
     justify-content: center;
     letter-spacing: 0.25px;
     line-height: normal;
@@ -445,20 +446,24 @@ body {
     z-index: 1;
     background-color: white;
     max-height: 48px;
+    border-bottom: 1px solid #EDEFF1;
 }
 
 #nav-subcontainer {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
     padding-left: 20px;
     padding-right: 20px;
 }
 
 #main-logo {
+    min-width: 30%;
     height: 48px;
     margin-top: 3px;
+    justify-self: flex-start;
+    display: flex;
 }
 
 #nav-svg-container {
@@ -823,6 +828,14 @@ body {
     border-radius: 0%;
 }
 
+.head-nav-btn-create {
+    min-width: 194.41px;
+}
+
+.head-nav-btn-create > span {
+    min-width: max-content;
+}
+
 /* .head-nav-btn-explore {
     margin-bottom: 4px;
 }
@@ -986,6 +999,11 @@ body {
     .button-join {
         min-height: 30px !important;
         padding-bottom: 4px !important;
+    }
+
+    .head-nav-btn-create {
+        min-width: 78px;
+        max-width: 78px;
     }
 
     .hide-if-small {

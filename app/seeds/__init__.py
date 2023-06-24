@@ -34,7 +34,7 @@ def seed():
     base_comments = base_posts * 15
     base_pv = base_posts * 40
     base_cv = base_comments * 20
-    scaling_factor = 10
+    scaling_factor = 35
 
     num_users = 30 if environment == prod_env_val else 30
     num_subreddits = 15 if environment == prod_env_val else 15

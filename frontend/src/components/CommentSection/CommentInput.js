@@ -19,7 +19,7 @@ export default function CommentInput({
     const [textCommentContent, setTextCommentContent] = useState("");
     const dispatch = useDispatch();
 
-    const styleProps = {width: "100%", display: "flex", flexDirection: "column"};
+    const styleProps = { width: "100%", display: "flex", flexDirection: "column" };
 
     if (isCommentReply) {
         styleProps.marginTop = "15px";
@@ -52,32 +52,52 @@ export default function CommentInput({
         }
     }
 
+    function handleCancel(e) {
+        if (editInProgress) {
+            setIsEditing(false);
+        }
+        setIsReplying(false);
+    }
+
     return (
         <>
-        <div style={styleProps}>
-        {isCommentReply ? null : <p style={{marginBottom: "4px", fontSize: "12px"}}>Comment as <NavLink className="user-commenter-navlink" exact to={`/u/${user.username}`}>{user.username}</NavLink></p>}
+            <div style={styleProps}>
+                {isCommentReply
+                    ? null
+                    :
+                        <p style={{ marginBottom: "4px", fontSize: "12px" }}>
+                            Comment as
+                                <NavLink className="user-commenter-navlink" exact to={`/u/${user.username}`}>
+                                    {user.username}
+                                </NavLink>
+                        </p>}
 
-        <RichTextEditor
-            setTextContent={setTextCommentContent}
-            content={commentContent}
-            setContent={setCommentContent}
-        />
+                <RichTextEditor
+                    setTextContent={setTextCommentContent}
+                    content={commentContent}
+                    setContent={setCommentContent}
+                />
 
-        <div style={{alignSelf: "flex-end", marginTop: "5px"}}>
-        {isCommentReply ? <button onClick={e => {
-            if (editInProgress) {
-                setIsEditing(false);
-            }
-            setIsReplying(false);
-
-            }} className="button-leave-mod" style={{alignSelf: "flex-end"}}>Cancel</button> : null}
-        <button onClick={e => handleSubmit()} style={{alignSelf: "flex-end"}} disabled={textCommentContent.trim().length === 0} className="button-join-mod">
-            {editInProgress
-            ? "Edit"
-            : isCommentReply ? "Reply" : "Comment"}
-            </button>
-        </div>
-        </div>
+                <div style={{ alignSelf: "flex-end", marginTop: "5px", display: "flex" }}>
+                    {isCommentReply
+                        ? <button
+                            onClick={handleCancel}
+                            className="button-leave-mod"
+                            style={{ alignSelf: "flex-end" }}>
+                                Cancel
+                            </button>
+                        : null}
+                    <button
+                        onClick={e => handleSubmit()}
+                        style={{ alignSelf: "flex-end" }}
+                        disabled={textCommentContent.trim().length === 0}
+                        className="button-join-mod">
+                        {editInProgress
+                            ? "Edit"
+                            : isCommentReply ? "Reply" : "Comment"}
+                    </button>
+                </div>
+            </div>
         </>
     )
 }
