@@ -56,6 +56,11 @@
   font-size: 12px;
 }
 
+.dropdown-toggled-container {
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
 .dropdown-toggled-container > li {
   display: flex;
   font-size: 14px;
@@ -90,6 +95,18 @@
 .dropdown-sep {
   border-top: 1px solid #EDEFF1;
   margin-bottom: 5px;
+}
+
+.create-post-nav {
+  align-self: center;
+  padding: 4px 8px;
+  cursor: pointer;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.create-post-nav:hover {
+  background-color: rgba(178, 178, 178, 0.3);
 }
 
 @media screen and (max-width: 1000px) {

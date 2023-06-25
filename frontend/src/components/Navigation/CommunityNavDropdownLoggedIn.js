@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import ellipsisIfLong from "../../utils/ellipsisIfLong";
 import { useHistory } from "react-router-dom";
 
-export default function CommunityNavDropdownLoggedIn({ onModalItemClick, user, setShowMenu }) {
+export default function CommunityNavDropdownLoggedIn({ onModalItemClick, setShowMenu }) {
     const userSubreddits = useSelector(state => state.subreddits.UserSubreddits);
     const subredditsArr = userSubreddits && Object.values(userSubreddits);
     const history = useHistory();
@@ -15,15 +15,13 @@ export default function CommunityNavDropdownLoggedIn({ onModalItemClick, user, s
             <p>YOUR COMMUNITIES</p>
         </li>
 
-        <li onClick={e => onModalItemClick(<CreateCommunityModal />)} className="dropdown-toggled-clickable">
+        <li onClick={e => {
+            onModalItemClick(<CreateCommunityModal />);
+            closeMenu();
+            }} className="dropdown-toggled-clickable">
             <span><i className="fa fa-plus" aria-hidden="true"></i></span>
             <p className="">Create Community</p>
         </li>
-
-        {/* <li onClick={e => {}} className="dropdown-toggled-clickable">
-            <span></span>
-            <p className="dropdown-toggled-panel">Profile</p>
-        </li> */}
 
         {subredditsArr && subredditsArr.map(subreddit => {
             return (
@@ -32,13 +30,11 @@ export default function CommunityNavDropdownLoggedIn({ onModalItemClick, user, s
                     history.push(`/r/${subreddit.name}`);
                     closeMenu();
                     }} style={{display: "flex", alignItems: "center"}} className="dropdown-toggled-clickable">
-                    <span><img style={{height: "20px", width: "20px", borderRadius: "50px"}} src={subreddit.main_pic} /></span>
+                    <span><img alt="" style={{height: "20px", width: "20px", borderRadius: "50px"}} src={subreddit.main_pic} /></span>
                     <p>r/{ellipsisIfLong(subreddit.name, 20, true, 10)}</p>
                 </li>
             )
         })}
-
-
 
         <div className="dropdown-sep"></div>
 
@@ -50,9 +46,5 @@ export default function CommunityNavDropdownLoggedIn({ onModalItemClick, user, s
             <p>Explore <span className="hide-if-800" style={{padding: "0px 0px", margin: "0px 0px"}}>Communities</span></p>
         </li>
 
-        {/* <li onClick={e => {}} className="dropdown-toggled-clickable">
-            <span><i className="fa fa-sign-out-alt" /></span>
-            <p>Log Out</p>
-        </li> */}
     </>
 }
