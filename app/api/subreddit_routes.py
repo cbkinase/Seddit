@@ -43,7 +43,7 @@ def get_user_subreddits():
     Return all subreddits that the user is a member of.
     """
     subreddits = User.query.get(current_user.id).subreddits
-    return {"User Subreddits": {subreddit.name : subreddit.to_dict() for subreddit in subreddits}}
+    return {"Subreddits": {subreddit.name : subreddit.to_med_dict() for subreddit in subreddits}}
 
 
 @subreddit_routes.route("/id/<int:subreddit_id>")

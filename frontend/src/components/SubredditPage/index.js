@@ -16,7 +16,6 @@ import getRawTextContent from "../../utils/getRawTextContent";
 
 export default function SubredditPage({ user }) {
     const { subredditName } = useParams();
-    const subreddit = useSelector((state) => state.subreddits.Subreddits[subredditName]);
 
     function isUserInSubreddit(user, subreddit) {
         return user && subreddit.subscribers[user.username];
@@ -83,6 +82,8 @@ export default function SubredditPage({ user }) {
     //         (subreddit) =>
     //             subreddit.name.toLowerCase() === subredditName.toLowerCase()
     //     )[0];
+
+    const subreddit = useSelector((state) => state.subreddits.Subreddits[subredditName]);
 
     if (hasLoaded && subreddit) {
         found = true;

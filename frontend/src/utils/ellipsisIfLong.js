@@ -1,4 +1,4 @@
-export default function ellipsisIfLong(paragraph, long = 20, shortWord=false) {
+export default function ellipsisIfLong(paragraph, long = 20, shortWord=false, wordLen = 40) {
     if (!paragraph) return null;
     let wordArr = paragraph.split(" ");
     let newStr = "";
@@ -12,7 +12,7 @@ export default function ellipsisIfLong(paragraph, long = 20, shortWord=false) {
         return newStr;
     }
 
-    const cutoff = shortWord ? 40 : 100;
+    const cutoff = shortWord ? wordLen : 100;
     if (wordArr.length < long && paragraph.length > cutoff) {
         return paragraph.slice(0, cutoff) + "...";
     }

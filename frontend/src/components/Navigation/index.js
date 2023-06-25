@@ -10,6 +10,8 @@ import CreateCommunityModal from "../CreateCommunityModal";
 import { logout } from "../../store/session";
 import EditModal from "../EditUserInfoModal";
 import NewProfileButton from "./NewProfileButton";
+import SearchBar from "./SearchBar";
+import CommunityNav from "./CommunityNav";
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector((state) => state.session.user);
@@ -97,9 +99,12 @@ function Navigation({ isLoaded }) {
                             <div className="hide-if-small" style={{marginLeft: "8px"}}>{redditNameSvg}</div>
                         </div>
                     </NavLink>
+                    {/* <SearchBar /> */}
+                    {<CommunityNav user={sessionUser} />}
                 </li>
                 <div style={{display: "flex", minWidth: "40%", justifyContent: "center"}}>
-                    <NavLink
+                    <SearchBar />
+                    {/* <NavLink
                     style={{textDecoration: "none"}}
                     exact to="/explore">
                         <button className="button-join head-nav-btn head-nav-btn-explore hide-if-300">
@@ -119,7 +124,7 @@ function Navigation({ isLoaded }) {
                             className="button-leave head-nav-btn head-nav-btn-create"
                             modalComponent={<CreateCommunityModal />}
                         />
-                    )}
+                    )} */}
                 </div>
                 <div className="third-nav-sec">
                 {isLoaded && sessionUser && (

@@ -3,13 +3,15 @@ import thunk from "redux-thunk";
 import session from "./session";
 import subreddits from "./subreddits";
 import posts from "./posts";
-import comments from "./comments"
+import comments from "./comments";
+import search from "./search"
 
 const rootReducer = combineReducers({
     session,
     subreddits,
     posts,
     comments,
+    search,
 });
 
 let enhancer;
