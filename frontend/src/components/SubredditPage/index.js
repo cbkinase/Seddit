@@ -30,6 +30,7 @@ export default function SubredditPage({ user }) {
     const [numMembers, setNumMembers] = useState(null);
 
     const [isExpanded, setIsExpanded] = useState(false);
+    const [failedLoad, setFailedLoad] = useState(false);
 
     function toggleExpanded() {
       setIsExpanded(!isExpanded);
@@ -66,7 +67,7 @@ export default function SubredditPage({ user }) {
             let data = await dispatch(getSubredditByName(subredditName));
             setHasLoaded(true);
             if (!data) {
-                return;
+                setFailedLoad(true);
             }
             let subreddit = data.Subreddits[subredditName]
             setNumMembers(subreddit.numSubscribers);
@@ -76,28 +77,15 @@ export default function SubredditPage({ user }) {
     }, [dispatch, subredditName, user]);
 
 
-    // let subreddit =
-    //     subreddits &&
-    //     Object.values(subreddits).filter(
-    //         (subreddit) =>
-    //             subreddit.name.toLowerCase() === subredditName.toLowerCase()
-    //     )[0];
-
     const subreddit = useSelector((state) => state.subreddits.Subreddits[subredditName]);
 
     if (hasLoaded && subreddit) {
         found = true;
     }
 
-    // const capitalizeFirstLetter = (word) => {
-    //     return word[0].toUpperCase() + word.slice(1);
-    // };
-
-
-    if (hasLoaded && !subreddit) {
+    if (failedLoad) {
         return <GenericNotFound />
     }
-
 
     return found ? (
         <div>

@@ -110,10 +110,14 @@ function CommunityNav({ user }) {
                     />
                 </div>
             </div>
-            <ul style={{minWidth: "200px"}} className={ulClassName} ref={ulRef}>
+            <ul style={{minWidth: "250px"}} className={ulClassName} ref={ulRef}>
                 <>
                     <div className="dropdown-toggled-container">
-                        {user ? <CommunityNavDropdownLoggedIn onModalItemClick={onModalItemClick} user={user} /> : null}
+                        {user
+                            ? <CommunityNavDropdownLoggedIn
+                                onModalItemClick={onModalItemClick}
+                                user={user}
+                                setShowMenu={setShowMenu} /> : null}
                     </div>
 
                 </>
