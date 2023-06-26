@@ -17,6 +17,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import LoadingSpinner from "./components/LoadingSpinner";
 import AboutMe from "./components/AboutMe";
 import GenericNotFound from "./components/NotFound/GenericNotFound";
+import CreatePostPage from "./components/CreatePostPage";
 
 function App() {
     const dispatch = useDispatch();
@@ -40,6 +41,9 @@ function App() {
                     <Route exact path="/explore">
                         <AboutMe />
                         <AbridgedSubredditDisplay user={user} />
+                    </Route>
+                    <Route exact path="/submit">
+                        <CreatePostPage user={user} />
                     </Route>
                     <Route path="/login">
                         <LoginFormPage />
