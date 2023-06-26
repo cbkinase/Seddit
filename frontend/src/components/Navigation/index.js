@@ -95,7 +95,7 @@ function Navigation({ isLoaded }) {
                     {isLoaded && sessionUser && (
                         <div style={{display: "flex"}}>
                             <CreatePostNav />
-                            <li>
+                            <li className="profile-button-li">
                                 <NewProfileButton user={sessionUser} />
                             </li>
                         </div>

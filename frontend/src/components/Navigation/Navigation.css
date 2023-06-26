@@ -109,6 +109,29 @@
   background-color: rgba(178, 178, 178, 0.3);
 }
 
+.profile-button-li {
+  box-sizing: border-box;
+}
+
+.profile-button-li > div {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 4px;
+}
+
+.profile-button-li:hover {
+  outline: 1px solid rgb(237,239,241);
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 500px) {
+  .profile-button-li > div {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+
 @media screen and (max-width: 1000px) {
   .nav-chev {
     margin-left: 5px;

@@ -113,7 +113,7 @@ export default function CreatePostPage({ user, selectedSubreddit }) {
                     </li>
                 )
             )}
-            <form style={{backgroundColor: "white", borderRadius: "5px", padding: "10px 20px", marginLeft: "25px", marginTop: "7px", display: "flex", flexDirection: "column"}} encType="multipart/form-data" onSubmit={handleSubmit}>
+            <form style={{backgroundColor: "white", borderRadius: "5px", padding: "20px 20px", marginLeft: "25px", marginTop: "7px", display: "flex", flexDirection: "column"}} encType="multipart/form-data" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <input
                         className="create-post-input"
@@ -152,7 +152,8 @@ export default function CreatePostPage({ user, selectedSubreddit }) {
                     )}
                 </div>
 
-                <div style={{height: "25px"}}></div>
+                <div style={{height: "50px"}}></div>
+
                 <div style={{alignSelf: "center"}}>
                     <UploadButton
                         setAttachmentFn={setCommunityPicture}
@@ -163,7 +164,7 @@ export default function CreatePostPage({ user, selectedSubreddit }) {
                     />
                 </div>
 
-                <div style={{height: "25px"}}></div>
+                <div style={{height: "50px"}}></div>
 
                 <div className="form-group">
                     <RichTextEditor
@@ -193,7 +194,7 @@ export default function CreatePostPage({ user, selectedSubreddit }) {
                         </p>
                     )}
                 </div>
-                <div className="form-actions">
+                <div style={{borderTop: "1px solid #EDEFF1", marginTop: "5px", paddingTop: "15px"}} className="form-actions">
                     <button
                         disabled={errors.length}
                         type="submit"
