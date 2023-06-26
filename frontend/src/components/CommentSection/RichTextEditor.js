@@ -8,7 +8,8 @@ function RichTextEditor({ content, setContent, setTextContent, isPost, isCommuni
   const [isFocused, setIsFocused] = useState(false);
   let placeholder = "What are your thoughts?";
 
-  if (isPost || isCommunity) placeholder = "Enter text (optional)";
+  if (isCommunity) placeholder = "Enter text (optional)";
+  if (isPost) placeholder = "Text (optional)";
 
 
   const handleChange = (content, delta, source, editor) => {
@@ -62,6 +63,7 @@ function RichTextEditor({ content, setContent, setTextContent, isPost, isCommuni
       divClassName = "other-rte";
     }
   }
+  if (isFocused && isPost) divClassName = "comment-rte";
   return (
     <div className={divClassName}>
       <ReactQuill

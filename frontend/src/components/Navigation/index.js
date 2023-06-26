@@ -1,21 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-import { NavLink, useLocation, useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-// import ProfileButton from "./ProfileButton";
+import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./Navigation.css";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import OpenModalButton from "../OpenModalButton";
-import CreateCommunityModal from "../CreateCommunityModal";
-import { logout } from "../../store/session";
-import EditModal from "../EditUserInfoModal";
 import NewProfileButton from "./NewProfileButton";
+import SearchBar from "./SearchBar";
+import CommunityNav from "./CommunityNav";
+import CreatePostNav from "./CreatePostNav";
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector((state) => state.session.user);
-    let location = useLocation();
-    const history = useHistory();
-    const dispatch = useDispatch();
 
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
@@ -40,16 +36,6 @@ function Navigation({ isLoaded }) {
     }, [showMenu]);
 
     const closeMenu = () => setShowMenu(false);
-
-    const onUserOwnPage = (user) => {
-        return location.pathname.toLocaleLowerCase().includes(`/u/${user.username.toLocaleLowerCase()}`);
-    };
-
-    const handleLogout = (e) => {
-        e.preventDefault();
-        dispatch(logout());
-        history.push("/")
-    };
 
     const redditNameSvg = (
         <svg
@@ -90,75 +76,48 @@ function Navigation({ isLoaded }) {
     return (
         <div id="nav-container">
             <ul id="nav-subcontainer">
+
                 <li id="main-logo">
                     <NavLink exact to="/">
                         <div id="nav-svg-container">
                             <div>{redditLogoSvg}</div>
-                            <div className="hide-if-small" style={{marginLeft: "8px"}}>{redditNameSvg}</div>
+                            <div className="hide-if-small" style={{ marginLeft: "8px" }}>{redditNameSvg}</div>
                         </div>
                     </NavLink>
+                    {<CommunityNav user={sessionUser} />}
                 </li>
-                <div style={{display: "flex", minWidth: "40%", justifyContent: "center"}}>
-                    <NavLink
-                    style={{textDecoration: "none"}}
-                    exact to="/explore">
-                        <button className="button-join head-nav-btn head-nav-btn-explore hide-if-300">
-                            Explore<span className="diff-text hide-if-small">&nbsp;Communities</span>
-                        </button>
-                    </NavLink>
-                    {isLoaded && sessionUser && (
-                        <span
-                            style={{ marginLeft: "3px", marginRight: "3px" }}
-                        ></span>
-                    )}
-                    {isLoaded && sessionUser && (
-                        <OpenModalButton
-                            buttonText="Create"
-                            addOnText="&nbsp;a Community"
-                            id="create-comm-header-btn"
-                            className="button-leave head-nav-btn head-nav-btn-create"
-                            modalComponent={<CreateCommunityModal />}
-                        />
-                    )}
-                </div>
-                <div className="third-nav-sec">
-                {isLoaded && sessionUser && (
-                    <li>
-                        <NewProfileButton user={sessionUser} />
-                    </li>
-                )}
-                {/* {isLoaded && sessionUser && onUserOwnPage(sessionUser) && (
-                    <div style={{display: "flex"}}>
-                        <OpenModalButton
-                            className="fa fa-cog user-profile-edit-btn"
-                            modalComponent={<EditModal user={sessionUser} />}
-                        />
-                        <button
-                            style={{ marginLeft: "10px" }}
-                            onClick={handleLogout}
-                            className="button-alt logout-btn"
-                        >
-                            Log out
-                        </button>
-                    </div>
-                )} */}
-                {isLoaded && !sessionUser && (
-                    <div className="login-signup-btn-container">
-                        <OpenModalButton
-                            buttonText="Log In"
-                            onItemClick={closeMenu}
-                            modalComponent={<LoginFormModal />}
-                            className="button-alt hide-if-800"
-                        />
 
-                        <OpenModalButton
-                            buttonText="Sign Up"
-                            onItemClick={closeMenu}
-                            modalComponent={<SignupFormModal />}
-                            className="button-main signup-btn-proper"
-                        />
-                    </div>
-                )}
+                <div style={{ display: "flex", minWidth: "40%", justifyContent: "center" }}>
+                    <SearchBar />
+                </div>
+
+                <div className="third-nav-sec">
+                    {isLoaded && sessionUser && (
+                        <div style={{display: "flex"}}>
+                            <CreatePostNav />
+                            <li>
+                                <NewProfileButton user={sessionUser} />
+                            </li>
+                        </div>
+                    )}
+
+                    {isLoaded && !sessionUser && (
+                        <div className="login-signup-btn-container">
+                            <OpenModalButton
+                                buttonText="Log In"
+                                onItemClick={closeMenu}
+                                modalComponent={<LoginFormModal />}
+                                className="button-alt hide-if-800"
+                            />
+
+                            <OpenModalButton
+                                buttonText="Sign Up"
+                                onItemClick={closeMenu}
+                                modalComponent={<SignupFormModal />}
+                                className="button-main signup-btn-proper"
+                            />
+                        </div>
+                    )}
                 </div>
             </ul>
         </div>

@@ -1,0 +1,41 @@
+#comm-parent {
+    display: flex;
+    width: 100%;
+}
+
+#comm-nav-container {
+    margin: 0px 25px;
+    width: 100%;
+    margin-bottom: 3px;
+    height: 70%;
+    align-self: center;
+}
+
+#comm-nav-container:hover {
+    margin-top: -1px;
+    margin-right: 24px;
+    margin-left: 24px;
+    border: 1px solid rgb(237,239,241);
+    border-radius: 5px;
+}
+
+.comm-nav-chev {
+    align-self: center;
+    padding: 0px 5px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media screen and (max-width: 900px) {
+    .hide-if-900 {
+        display: none;
+    }
+
+    .comm-nav-chev {
+        justify-content: flex-start;
+    }
+
+
+
+}

@@ -1,4 +1,5 @@
 const LOAD_SUBREDDITS = "subreddits/LOAD_SUBREDDITS";
+const LOAD_USER_SUBREDDITS = "subreddits/LOAD_USER_SUBREDDITS";
 const ADD_SUBREDDIT = "subreddits/ADD_SUBREDDIT";
 const DELETE_SUBREDDIT = "subreddits/DELETE_SUBREDDIT";
 
@@ -12,6 +13,14 @@ const addSubreddit = (subreddit) => {
 const loadSubreddits = (subreddits, page) => {
     return {
         type: LOAD_SUBREDDITS,
+        subreddits,
+        page,
+    };
+};
+
+const loadUserSubreddits = (subreddits, page) => {
+    return {
+        type: LOAD_USER_SUBREDDITS,
         subreddits,
         page,
     };
@@ -37,6 +46,16 @@ export const getSubreddits = (page, per_page) => async (dispatch) => {
         return data;
     }
 };
+
+export const getUserSubreddits = () => async (dispatch) => {
+    const res = await fetch("/api/s/user");
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(loadUserSubreddits(data));
+        return data;
+    }
+}
 
 export const getSubredditByName = (name) => async (dispatch) => {
     const res = await fetch(`/api/s/name/${name}`);
@@ -94,7 +113,7 @@ export const destroySubreddit = (subreddit) => async (dispatch) => {
     }
 };
 
-const initialState = { Subreddits: {} };
+const initialState = { Subreddits: {}, UserSubreddits: {} };
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
@@ -108,7 +127,20 @@ export default function reducer(state = initialState, action) {
                     }
                 }
             }
-            return action.subreddits;
+            return {
+                ...state,
+                Subreddits: {
+                    ...action.subreddits.Subreddits
+                }
+            }
+        }
+        case LOAD_USER_SUBREDDITS: {
+            return {
+                ...state,
+                UserSubreddits: {
+                    ...action.subreddits.Subreddits
+                }
+            }
         }
         case ADD_SUBREDDIT: {
             return {

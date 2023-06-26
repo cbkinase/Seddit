@@ -112,37 +112,37 @@ acronym {
 .tooltip {
     position: relative;
     display: inline-block;
-    border-bottom: 1px dotted black;
 }
 
 /* TOOLTIPS */
 
 .tooltip .tooltiptext {
     visibility: hidden;
-    width: 120px;
+    width: 80px;
     background-color: black;
     color: #fff;
     text-align: center;
     border-radius: 6px;
     position: absolute;
     z-index: 1;
-    bottom: 125%;
+    top: 130%;
     left: 50%;
-    margin-left: -70px;
+    margin-left: -50px;
     font-size: 12px;
     padding: 7px 10px;
 }
 
+
 .tooltip .tooltiptext::after {
-    content: "";
+    content: " ";
     position: absolute;
-    top: 100%;
+    bottom: 100%;  /* At the top of the tooltip */
     left: 50%;
-    margin-left: -10px;
-    border-width: 10px;
+    margin-left: -5px;
+    border-width: 5px;
     border-style: solid;
-    border-color: black transparent transparent transparent;
-}
+    border-color: transparent transparent black transparent;
+  }
 
 .tooltip:hover .tooltiptext {
     visibility: visible;
@@ -1097,6 +1097,14 @@ body {
     .head-nav-btn-create {
         margin-bottom: 4px;
     } */
+}
+
+@media screen and (max-width: 400px) {
+    .third-nav-sec {
+        margin-right: -10px;
+        padding-left: 5px;
+    }
+
 }
 
 @media screen and (max-width: 300px) {

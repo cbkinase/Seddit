@@ -25,7 +25,7 @@ export default function UserPostsPreview({ user, currentUser }) {
                 {Object.values(posts)
                     .sort(
                         (a, b) =>
-                            b.id - a .id
+                            b.id - a.id
                     )
                     .map((post) => (
                         <IndividualAbridgedPost
