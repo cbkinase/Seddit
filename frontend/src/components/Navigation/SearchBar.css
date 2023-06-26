@@ -31,7 +31,7 @@
 .search-bar-container {
     display: flex;
     justify-content: center;
-    padding: 5px 15px;
+    padding: 2px 15px;
     padding-right: 0px;
     width: 100%;
 }
@@ -58,9 +58,22 @@
     background-color: #F6F7F8;
 }
 
+.search-form:focus-within {
+    border: 1px solid #0079d3;
+}
+
+.search-form.search-hovered {
+    border: 1px solid #0079d3;
+}
+
 #search-button {
     border: none;
     background-color: inherit;
+}
+
+.search-form {
+    height: 29px;
+    margin-bottom: 3px;
 }
 
 

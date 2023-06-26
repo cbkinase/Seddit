@@ -107,7 +107,7 @@ function Navigation({ isLoaded }) {
                                 buttonText="Log In"
                                 onItemClick={closeMenu}
                                 modalComponent={<LoginFormModal />}
-                                className="button-alt hide-if-800"
+                                className="button-alt hide-if-800 adj-button-alt"
                             />
 
                             <OpenModalButton

@@ -222,7 +222,8 @@ acronym {
     background: #ff4742;
     transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
     border: 1px solid #ff4742;
-    border-radius: 0.5rem;
+    /* border-radius: 0.5rem; */
+    border-radius: 9999px;
     box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
     box-sizing: border-box;
     color: #ffffff;
@@ -278,6 +279,10 @@ acronym {
     border-color: grey;
     color: white;
     cursor: not-allowed;
+}
+
+.adj-button-alt {
+    border-radius: 9999px !important;
 }
 
 .button-alt {

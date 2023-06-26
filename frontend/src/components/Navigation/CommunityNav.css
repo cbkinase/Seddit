@@ -12,10 +12,10 @@
 }
 
 #comm-nav-container:hover {
-    margin-top: -1px;
+    /* margin-top: -1px;
     margin-right: 24px;
-    margin-left: 24px;
-    border: 1px solid rgb(237,239,241);
+    margin-left: 24px; */
+    outline: 1px solid rgb(237,239,241);
     border-radius: 5px;
 }
 
@@ -26,6 +26,10 @@
     display: flex;
     justify-content: flex-end;
 }
+
+/* .home-icon-adj {
+    margin-bottom: 4px !important;
+} */
 
 @media screen and (max-width: 900px) {
     .hide-if-900 {

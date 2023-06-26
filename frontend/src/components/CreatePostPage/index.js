@@ -122,6 +122,7 @@ export default function CreatePostPage({ user, selectedSubreddit }) {
                         id="community-name"
                         name="community-name"
                         placeholder="Title"
+                        autoComplete="off"
                         value={communityName}
                         onChange={(event) =>
                             setCommunityName(event.target.value)
