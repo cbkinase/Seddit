@@ -6,41 +6,25 @@ export default function timeSince(date) {
     let seconds = Math.floor((new Date() - date) / 1000);
     let intervalType;
 
-    let interval = Math.floor(seconds / 31536000);
-    if (interval >= 1) {
-        intervalType = 'y';
-    } else {
-        interval = Math.floor(seconds / 2592000);
+    // Array of intervals and their corresponding symbols.
+    const intervals = [
+        { value: 31536000, symbol: 'y' },
+        { value: 2592000, symbol: 'm' },
+        { value: 86400, symbol: 'd' },
+        { value: 3600, symbol: 'h' },
+        { value: 60, symbol: 'm' },
+        { value: 1, symbol: 's' },
+    ];
+
+    for (let i = 0; i < intervals.length; i++) {
+        let interval = Math.floor(seconds / intervals[i].value);
         if (interval >= 1) {
-            intervalType = 'm';
-        } else {
-            interval = Math.floor(seconds / 86400);
-            if (interval >= 1) {
-                intervalType = 'd';
-            } else {
-                interval = Math.floor(seconds / 3600);
-                if (interval >= 1) {
-                    intervalType = "h";
-                } else {
-                    interval = Math.floor(seconds / 60);
-                    if (interval >= 1) {
-                        intervalType = "m";
-                    } else {
-                        interval = seconds;
-                        intervalType = "s";
-                    }
-                }
-            }
+            intervalType = intervals[i].symbol;
+            // If the interval is more than or equal to 1, we found our interval.
+            return interval + intervalType;
         }
     }
 
-    if (interval > 1 || interval === 0) {
-        //   intervalType += 's';
-    }
-
-    if (intervalType === "s" && interval < 10) {
-        return "now"
-    }
-
-    return interval + '' + intervalType;
+    // If the code reaches this point, it means the time since is less than 1 second.
+    return "now";
 };
