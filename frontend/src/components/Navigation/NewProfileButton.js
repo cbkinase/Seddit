@@ -4,6 +4,7 @@ import { logout } from "../../store/session";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import EditModal from "../EditUserInfoModal";
+import formatNumber from "../../utils/formatNumber";
 
 function NewProfileButton({ user }) {
     const dispatch = useDispatch();
@@ -84,7 +85,7 @@ function NewProfileButton({ user }) {
                     </div>
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <img alt="flower" style={{marginRight: "2px"}} src="https://i.gyazo.com/70063a7c7fbfaadec9c88e6eb9f87b2e.png"></img>
-                        <p className="user-dropdown-container-karma">{user.karma} karma</p>
+                        <p className="user-dropdown-container-karma">{formatNumber(user.karma)} karma</p>
                     </div>
                 </div>
                 <div className="nav-chev">

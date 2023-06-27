@@ -7,6 +7,7 @@ import NoPostsUserProfile from "../NoPostsUserProfile";
 import LoadingSpinner from "../LoadingSpinner";
 import ShortComments from "../CommentsShort";
 import GenericNotFound from "../NotFound/GenericNotFound";
+import formatNumber from "../../utils/formatNumber";
 
 export default function UserInfo({ currentUser, subreddits, posts }) {
     const dispatch = useDispatch();
@@ -95,15 +96,15 @@ export default function UserInfo({ currentUser, subreddits, posts }) {
                     </h1>
                     <div className="stats">
                         <div className="stat-item">
-                            <span className="count">{user.karma}</span>
+                            <span className="count">{formatNumber(user.karma)}</span>
                             <span className="label">Karma</span>
                         </div>
                         <div className="stat-item">
-                            <span className="count">{user.num_posts}</span>
+                            <span className="count">{formatNumber(user.num_posts)}</span>
                             <span className="label">Post{user.num_posts !== 1 && "s"}</span>
                         </div>
                         <div className="stat-item">
-                            <span className="count">{user.num_comments}</span>
+                            <span className="count">{formatNumber(user.num_comments)}</span>
                             <span className="label">Comment{user.num_comments !== 1 && "s"}</span>
                         </div>
                     </div>

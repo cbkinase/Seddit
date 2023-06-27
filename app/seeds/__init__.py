@@ -30,30 +30,37 @@ def seed():
 
     prod_env_val = 'production' # change this from 'production' to seed a lot
 
-    base_posts = 300
+    base_users = 30
+    base_subreddits = base_users // 2
+    base_posts = base_users * 20
     base_comments = base_posts * 15
     base_pv = base_posts * 40
     base_cv = base_comments * 20
-    scaling_factor = 35
+    scaling_factor = 30
 
-    num_users = 30 if environment == prod_env_val else 30
-    num_subreddits = 15 if environment == prod_env_val else 15
+    num_users = base_users if environment == prod_env_val else base_users
+    num_subreddits = base_subreddits if environment == prod_env_val else base_subreddits
     num_posts = base_posts if environment == prod_env_val else base_posts * scaling_factor
     num_comments = base_comments if environment == prod_env_val else base_comments * scaling_factor
     num_post_votes = base_pv if environment == prod_env_val else base_pv * scaling_factor
     num_comment_votes = base_cv if environment == prod_env_val else base_cv * scaling_factor
 
+    print(f"Total entities seeded: {num_users + num_subreddits + num_posts + num_comments + num_post_votes + num_comment_votes}")
+
+    print(datetime.datetime.now())
     users = seed_users(num_users)
     subreddits = seed_subreddits(users, num_subreddits)
     posts = seed_posts(users, subreddits, num_posts)
     comments = seed_comments(users, posts, num_comments)
     seed_post_votes(users, posts, num_post_votes)
+    print(datetime.datetime.now())
 
     if environment == "production":
         seed_comment_votes(users, comments, num_comment_votes)
     else:
         seed_comment_votes(users, comments, num_comment_votes)
 
+    print(datetime.datetime.now())
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
@@ -63,5 +70,3 @@ def undo():
     undo_posts()
     undo_subreddits()
     undo_users()
-
-    # Add other undo functions here
