@@ -32,7 +32,7 @@ def seed():
 
     base_users = 30
     base_subreddits = base_users // 2
-    base_posts = base_users * 20
+    base_posts = base_users * 10
     base_comments = base_posts * 15
     base_pv = base_posts * 40
     base_cv = base_comments * 20
