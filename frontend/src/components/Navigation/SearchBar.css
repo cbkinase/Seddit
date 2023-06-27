@@ -60,10 +60,12 @@
 
 .search-form:focus-within {
     border: 1px solid #0079d3;
+    border-radius: 20px 20px 0px 0px;
 }
 
 .search-form.search-hovered {
     border: 1px solid #0079d3;
+    border-radius: 20px 20px 0px 0px;
 }
 
 #search-button {

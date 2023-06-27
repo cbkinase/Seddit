@@ -8,28 +8,35 @@ search_routes = Blueprint('search', __name__)
 
 
 @search_routes.route("/", methods=["POST"])
-def search_all():
-    search = request.get_json().get("search")
+def search():
+    query_for = ["subreddits", "users", "comments", "posts"]
+    req = request.get_json()
+    search = req.get("search")
+    include_only = req.get("include_only")
     page = request.args.get('page', type=int)
     per_page = request.args.get('per_page', type=int)
 
+    if include_only:
+        include_list = include_only.split(",")
+        query_for = [table for table in query_for if table in include_list]
+
     try:
-        posts = db.session.query(Post)\
+        posts = "posts" in query_for and db.session.query(Post)\
             .filter(or_(Post.title.ilike(f"%{search}%"), Post.content.ilike(f"%{search}%")))\
             .order_by(Post.id.desc())\
             .paginate(page=page, per_page=per_page)
 
-        comments = db.session.query(Comment)\
+        comments = "comments" in query_for and db.session.query(Comment)\
             .filter(Comment.content.ilike(f"%{search}%"))\
             .order_by(Comment.id.desc())\
             .paginate(page=page, per_page=per_page)
 
-        users = db.session.query(User)\
+        users = "users" in query_for and db.session.query(User)\
             .filter(User.username.ilike(f"%{search}%"))\
             .order_by(User.id.desc())\
             .paginate(page=page, per_page=per_page)
 
-        subreddits = db.session.query(Subreddit)\
+        subreddits = "subreddits" in query_for and db.session.query(Subreddit)\
             .filter(Subreddit.name.ilike(f"%{search}%"))\
             .order_by(Subreddit.id.desc())\
             .paginate(page=page, per_page=per_page)
