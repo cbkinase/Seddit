@@ -67,11 +67,11 @@ export default function SearchBar() {
                         onMouseEnter={onHover}
                         onMouseLeave={onLeave} />
                     <button type="submit" id="search-button">
-                        <i style={{ fontSize: "18px" }} className="fas fa-search clickable-item"></i>
+                        <i style={{ fontSize: "18px", color: "black" }} className="fas fa-search clickable-item"></i>
                     </button>
                 </form>
             </div>
-            <ul style={{maxHeight: "400px", overflowY: "auto", overflowX: "hidden"}} className={ulClassName} ref={ulRef}>
+            <ul style={{maxHeight: "30vh", overflowY: "auto", overflowX: "hidden"}} className={ulClassName} ref={ulRef}>
                 <SearchPreview query={searchQuery} closeMenu={closeMenu} setSearchQuery={setSearchQuery} />
             </ul>
         </>

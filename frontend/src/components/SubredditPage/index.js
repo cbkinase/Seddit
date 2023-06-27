@@ -75,6 +75,10 @@ export default function SubredditPage({ user }) {
             setUserInSubreddit(isUserInSubreddit(user, subreddit))
         };
         loadAndWait();
+        return () => {
+            setFailedLoad(false);
+            setIsExpanded(false);
+        }
     }, [dispatch, subredditName, user]);
 
 
@@ -230,67 +234,6 @@ export default function SubredditPage({ user }) {
             {subreddit.num_posts >= 1 ? <SubredditPostsPreview user={user} subreddit={subreddit} /> : <NoPostsSubreddit user={user} subreddit={subreddit} />}
         </div>
     ) : (
-        //   <div>
-        //     <div className='subreddit-top-banner'></div>
-        //     <div className='subreddit-title-banner'>
-        //         <div className='subreddit-title'>
-        //             <img className='subreddit-main-pic' src={subreddit.main_pic}></img>
-        //             <h1 className='subreddit-main-name'>
-        //                 {capitalizeFirstLetter(subreddit.name)}
-        //             </h1>
-        // {/* User is not in community already */}
-        // {user &&
-        //     !Object.keys(subreddit.subscribers).includes(
-        //         user.id.toString()
-        //     ) && (
-        //         <button
-        //             id={`subreddit-${subreddit.id}-button`}
-        //             onClick={(e) =>
-        //                 handleJoinCommunity(
-        //                     subreddit.id,
-        //                     user.id,
-        //                     subreddit.name
-        //                 )
-        //             }
-        //             className="button-join adjust-btn-height-subreddit"
-        //         >
-        //             Join Community
-        //         </button>
-        //     )}
-        // {/* User is in community already */}
-        // {user &&
-        //     Object.keys(subreddit.subscribers).includes(
-        //         user.id.toString()
-        //     ) && (
-        //         <button
-        //             onClick={(e) =>
-        //                 handleLeaveCommunity(
-        //                     subreddit.id,
-        //                     user.id,
-        //                     subreddit.name
-        //                 )
-        //             }
-        //             // style={{padding: "2px 20px 2px 20px", lineHeight: 1}}
-        //             id={`subreddit-${subreddit.id}-button`}
-        //             className="button-leave adjust-btn-height-subreddit"
-        //         >
-        //             Joined
-        //         </button>
-        //     )}
-
-        //         </div>
-        //         <div>
-        //         <p className='subreddit-name'>
-        //             r/{subreddit.name}
-        //         </p>
-        //         </div>
-        //     </div>
-
-        //     <div className='subreddit-remaining-info'>
-
-        //     </div>
-
-        //   </div>
        <LoadingSpinner />
     );
 }

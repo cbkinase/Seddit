@@ -96,7 +96,7 @@ function CommunityNav({ user }) {
                     />
                 </div>
             </div>
-            <ul style={{minWidth: "250px"}} className={ulClassName} ref={ulRef}>
+            <ul style={{minWidth: "250px", maxHeight: "40vh", overflowY: "auto"}} className={ulClassName} ref={ulRef}>
                 <>
                     <div className="dropdown-toggled-container">
                         {user
