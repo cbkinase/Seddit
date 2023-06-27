@@ -32,7 +32,7 @@ export default function SearchPreviewResult({ result, type, closeMenu, setSearch
         default: {}
     }
     return (
-        <div onClick={handleClick} className="result-container" style={{display: "flex", flexDirection: "row", width: "100%", alignItems: "center", padding: "2px 0px 2px 16px"}}>
+        <div onClick={handleClick} className="result-container" style={{display: "flex", flexDirection: "row", width: "100%", alignItems: "center", padding: "2px 0px 8px 16px", marginTop: "5px"}}>
             <div>
                 <img height="28px" width="28px" style={{borderRadius: "50%", marginTop: "7px"}} alt="" src={picSrc}></img>
             </div>
