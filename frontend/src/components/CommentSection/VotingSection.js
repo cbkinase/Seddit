@@ -9,9 +9,11 @@ export default function VotingSection({ post, comment, user, currentUser, IsUser
     if (currentUser) {
         user = currentUser;
     }
-    const votingState = userReactedCheck(user, comment);
     const dispatch = useDispatch();
 
+    if (IsUserComments) return null;
+
+    const votingState = userReactedCheck(user, comment);
     let upvoteClassnames = "fa fa-arrow-up comment-upvote-button fa-lg";
     let downvoteClassnames = "fa fa-arrow-down fa-lg comment-downvote-button";
 
