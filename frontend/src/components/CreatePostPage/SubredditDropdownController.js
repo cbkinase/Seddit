@@ -1,5 +1,4 @@
 import CommunityNavDropdownLoggedIn from "../Navigation/CommunityNavDropdownLoggedIn";
-import ellipsisIfLong from "../../utils/ellipsisIfLong";
 import { useRef, useState, useEffect } from "react";
 import useViewportWidth from "../../hooks/useViewportWidth";
 import { getUserSubreddits } from "../../store/subreddits";
@@ -38,20 +37,20 @@ export default function SubredditDropdownController({ user, selectedSubreddit, s
 
     useEffect(() => {
         if (ulRef.current && divRef.current && parentRef.current) {
-          const rect = divRef.current.getBoundingClientRect();
-          ulRef.current.style.top = `${rect.bottom + 7}px`;
-          ulRef.current.style.left = `${rect.left}px`;
+            const rect = divRef.current.getBoundingClientRect();
+            ulRef.current.style.top = `${rect.bottom + 7}px`;
+            ulRef.current.style.left = `${rect.left}px`;
 
-          const parentWidth = parentRef.current.offsetWidth;
-          ulRef.current.style.width = `${parentWidth - 50}px`; // set the width of the dropdown
+            const parentWidth = parentRef.current.offsetWidth;
+            ulRef.current.style.width = `${parentWidth - 50}px`; // set the width of the dropdown
 
         }
-      }, [ulClassName, viewportWidth]);
+    }, [ulClassName, viewportWidth]);
 
     const subreddit = useSelector(state => state.subreddits.UserSubreddits[subredditName]);
 
-    return (<div style={{maxWidth: "350px"}} id="comm-parent" ref={parentRef}>
-        <div style={{backgroundColor: "white", borderRadius: "5px" ,height: "38px", width: "350px", paddingLeft: "5px", paddingRight: "5px"}} id="comm-nav-container" onClick={openMenu} ref={divRef} className="profile-dropdown-container override-border">
+    return (<div style={{ maxWidth: "350px" }} id="comm-parent" ref={parentRef}>
+        <div style={{ backgroundColor: "white", borderRadius: "5px", height: "38px", width: "350px", paddingLeft: "5px", paddingRight: "5px", outline: "none" }} id="comm-nav-container" onClick={openMenu} ref={divRef} className="profile-dropdown-container override-border">
             <div style={{ alignSelf: "center", padding: "0px 5px" }}>
                 {subredditName && subreddit
                     ? <img alt="" style={{ width: "20px", height: "20px", borderRadius: "9999px" }} src={subreddit.main_pic} />
@@ -63,7 +62,7 @@ export default function SubredditDropdownController({ user, selectedSubreddit, s
                         ? `r/${subredditName}`
                         : "Choose a Community"}</p>
             </div>
-            <div style={{justifyContent: "flex-end"}} className="comm-nav-chev">
+            <div style={{ justifyContent: "flex-end" }} className="comm-nav-chev">
                 <i style={{ fontSize: "13px", color: "grey" }}
                     className={!showMenu
                         ? "fas fa-chevron-down"

@@ -68,6 +68,7 @@ export default function SubredditPage({ user }) {
             setHasLoaded(true);
             if (!data) {
                 setFailedLoad(true);
+                return;
             }
             let subreddit = data.Subreddits[subredditName]
             setNumMembers(subreddit.numSubscribers);

@@ -82,7 +82,7 @@ function CommunityNav({ user }) {
                     : <i style={{marginBottom: "5px", fontSize: "17px"}} className="fa fa-home" aria-hidden="true"></i>}
                 </div>
                 <div className="hide-if-900" style={{alignSelf: "center", padding: "0px 5px", marginBottom: "1px"}}>
-                    <p style={{fontFamily: "Arial, sans-serif", color: "#1c1c1c" ,fontWeight: "bold"}}>
+                    <p style={{fontFamily: "Arial, sans-serif", color: "#1c1c1c", fontWeight: "bold"}}>
                         {subredditName && subreddit
                         ? `r/${ellipsisIfLong(subredditName, 20, true, 5)}`
                         : "Home"}</p>

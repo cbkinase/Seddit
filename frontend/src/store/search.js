@@ -29,7 +29,16 @@ export const makeSearch = (query, page, per_page) => async (dispatch) => {
 }
 
 
-const initialState = { users: [], subreddits: [], posts: [], comments: [] }
+const initialState = {
+    users: [],
+    subreddits: [],
+    posts: [],
+    comments: [],
+    // preview: {
+    //     subreddits: [],
+    //     users: [],
+    // },
+}
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
@@ -42,6 +51,15 @@ export default function reducer(state = initialState, action) {
                 comments: [...action.results.comments]
             };
         }
+        // case LOAD_PREVIEW_SEARCH: {
+        //     return {
+        //         ...state,
+        //         preview: {
+        //             users: [...action.results.users],
+        //             subreddits: [...action.results.subreddits],
+        //         }
+        //     };
+        // }
         default:
             return state;
     }

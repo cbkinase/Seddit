@@ -1,0 +1,29 @@
+.search-preview-container {
+    width: 100%;
+    margin: auto;
+    margin-top: -10px;
+}
+
+.preview-tabcontent {
+    /* display: none; */
+    padding: 6px 12px;
+    border-bottom: 2px solid #EDEFF1;
+    border-top: none;
+}
+
+.preview-tabcontent:last-child {
+    border-bottom: none;
+}
+
+.preview-tabcontent h3 {
+    font-size: 14px;
+    line-height: 18px;
+    padding: 12px 16px;
+    font-weight: bold;
+    margin-top: -7px;
+}
+
+.result-container:hover {
+    background-color: rgba(178, 178, 178, 0.2);
+    cursor: pointer;
+  }
