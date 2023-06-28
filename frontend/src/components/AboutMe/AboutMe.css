@@ -11,12 +11,14 @@
     "Lucida Grande", Helvetica, Arial, sans-serif;
     position: fixed;
     right: calc(0.4vw + 50vw - 660px);
-    top: 10.5vh;
+    /* top: 10.5vh; */
+    top: 106px;
     /* right: calc(0.4vw + 50vw - 650px); */
   }
 
   .home-adj-down {
-    top: 15.5vh;
+    /* top: 25.5vh; */
+    top: 156px;
   }
 
   .home-adj-far-down {
