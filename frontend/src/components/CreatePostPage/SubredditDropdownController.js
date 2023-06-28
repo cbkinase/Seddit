@@ -38,7 +38,7 @@ export default function SubredditDropdownController({ user, selectedSubreddit, s
     useEffect(() => {
         if (ulRef.current && divRef.current && parentRef.current) {
             const rect = divRef.current.getBoundingClientRect();
-            ulRef.current.style.top = `${rect.bottom + 7}px`;
+            ulRef.current.style.top = `${rect.bottom + 1}px`;
             ulRef.current.style.left = `${rect.left}px`;
 
             const parentWidth = parentRef.current.offsetWidth;
@@ -71,9 +71,9 @@ export default function SubredditDropdownController({ user, selectedSubreddit, s
                 />
             </div>
         </div>
-        <ul style={{ minWidth: "250px", maxHeight: "30vh", overflowY: "auto" }} className={ulClassName} ref={ulRef}>
+        <ul style={{ minWidth: "250px", maxHeight: "30vh", overflowY: "auto", borderRadius: "5px" }} className={ulClassName} ref={ulRef}>
             <>
-                <div className="dropdown-toggled-container">
+                <div style={{overflowY: "initial"}} className="dropdown-toggled-container">
                     <CommunityNavDropdownLoggedIn
                         setShowMenu={setShowMenu}
                         setSubredditName={setSubredditName} />
