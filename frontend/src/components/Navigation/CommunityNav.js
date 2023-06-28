@@ -74,7 +74,7 @@ function CommunityNav({ user }) {
       }, [ulClassName, viewportWidth]);
 
     return (
-        <div id="comm-parent" ref={parentRef}>
+        <div id="comm-parent" ref={parentRef} style={{maxWidth: "308px"}}>
         <div id="comm-nav-container" onClick={openMenu} ref={divRef} className="profile-dropdown-container">
                 <div style={{alignSelf: "center", padding: "0px 5px"}}>
                     {subredditName && subreddit
@@ -98,7 +98,7 @@ function CommunityNav({ user }) {
             </div>
             <ul style={{minWidth: "250px", maxHeight: "40vh", overflowY: "auto"}} className={ulClassName} ref={ulRef}>
                 <>
-                    <div className="dropdown-toggled-container">
+                    <div style={{overflowY: "initial"}} className="dropdown-toggled-container">
                         {user
                             ? <CommunityNavDropdownLoggedIn
                                 onModalItemClick={onModalItemClick}
