@@ -18,6 +18,7 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import AboutMe from "./components/AboutMe";
 import GenericNotFound from "./components/NotFound/GenericNotFound";
 import CreatePostPage from "./components/CreatePostPage";
+import SearchResults from "./components/SearchResults";
 
 function App() {
     const dispatch = useDispatch();
@@ -70,6 +71,9 @@ function App() {
                     </Route>
                     <Route path="/u/:userName">
                         <UserInfo currentUser={user} />
+                    </Route>
+                    <Route path="/search">
+                        <SearchResults />
                     </Route>
                     <Route path="*">
                         <GenericNotFound />

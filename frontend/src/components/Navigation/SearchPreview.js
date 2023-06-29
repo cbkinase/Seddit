@@ -1,6 +1,7 @@
 import SearchPreviewResult from "./SearchPreviewResult";
 import "./SearchPreview.css";
 import { useState, useEffect } from "react";
+import SearchSeeMore from "./SearchSeeMore";
 
 export default function SearchPreview({ query, closeMenu, setSearchQuery }) {
     const [communities, setCommunities] = useState([]);
@@ -49,12 +50,15 @@ export default function SearchPreview({ query, closeMenu, setSearchQuery }) {
                         })}
                     </div> : null}
                 </>
-                : <p style={{
+                :
+                <p style={{
                     fontSize: "14px",
                     lineHeight: "18px",
                     padding: "12px 16px",
                     fontWeight: "bold",
-                }}>No results found</p>}
+                }}>No results found</p>
+                }
+                {query && <SearchSeeMore closeMenu={closeMenu} searchQuery={query} setSearchQuery={setSearchQuery} />}
         </div>
     )
 
