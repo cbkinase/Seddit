@@ -9,6 +9,7 @@ search_routes = Blueprint('search', __name__)
 
 @search_routes.route("/", methods=["POST"])
 def search():
+    # Query everything by default
     query_for = ["subreddits", "users", "comments", "posts"]
     req = request.get_json()
     search = req.get("search")

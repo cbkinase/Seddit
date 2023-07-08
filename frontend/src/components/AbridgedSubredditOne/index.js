@@ -115,7 +115,7 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
                 </button>
             )}
             {/* User is in community already */}
-            {userInSubreddit && (
+            {user && userInSubreddit && (
                 <button
                     onClick={(e) =>
                         handleLeaveCommunity(
