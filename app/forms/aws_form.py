@@ -6,7 +6,7 @@ from ..aws_helpers import ALLOWED_EXTENSIONS
 
 def create_upload_form(field_name):
     """Factory for creating UploadForms with needed attrs"""
-    allowable_field_types = ["attachment", "avatar"]
+    allowable_field_types = ["attachment", "avatar", "main_pic"]
 
     if field_name not in allowable_field_types:
         raise ValueError(f"Invalid field name '{field_name}'. Valid options are: {', '.join(allowable_field_types)}.")
