@@ -3,7 +3,7 @@ import moment from "moment";
 // import { useDispatch } from "react-redux";
 import SubredditHover from "../SubredditHover";
 import UserHover from "../UserHover";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ellipsisIfLong from "../../utils/ellipsisIfLong";
 import getRawTextContent from "../../utils/getRawTextContent";
 
@@ -14,6 +14,10 @@ export default function IndividualAbridgedSubreddit({ user, subreddit }) {
     }
 
     const [userInSubreddit, setUserInSubreddit] = useState(isUserInSubreddit(user, subreddit));
+
+    useEffect(() => {
+        setUserInSubreddit(isUserInSubreddit(user, subreddit))
+    }, [user, subreddit])
 
     // const dispatch = useDispatch();
     const shortenWord = (word, long = 20) => {
